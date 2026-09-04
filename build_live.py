@@ -43,7 +43,7 @@ CITY_DATA = {
         "title": "Mobile Boat Detailing in Boca Raton, FL | Propwash Marine",
         "meta_description": "Mobile boat detailing in Boca Raton for boats on Lake Boca, the Intracoastal and local canals, from signature washes to ceramic protection.",
         "intro": [
-            "Propwash provides mobile boat detailing for Boca Raton boats along the Intracoastal Waterway, Lake Boca Raton and the Boca Raton Inlet.",
+            "We provide mobile boat detailing for Boca Raton boats along the Intracoastal Waterway, Lake Boca Raton and the Boca Raton Inlet.",
             "We work around marina access, public ramps, private docks, lifts and driveways across the city.",
             "The service plan follows the finish and storage setup, whether the boat needs a single reset or recurring care.",
         ],
@@ -81,7 +81,7 @@ CITY_DATA = {
         "title": "Mobile Boat Detailing in Delray Beach, FL | Propwash Marine",
         "meta_description": "Dockside boat detailing in Delray Beach along the Intracoastal and Lake Boca, including full details, correction, coatings and maintenance.",
         "intro": [
-            "Propwash brings dockside boat detailing to Delray Beach vessels kept along the Intracoastal Waterway and Lake Boca.",
+            "We bring dockside boat detailing to Delray Beach boats kept along the Intracoastal Waterway and Lake Boca.",
             "Service is available around the Delray Beach City Marina, Delray Harbor Club Marina and the city's listed launch points.",
             "We assess the actual finish before shaping a one-time service or ongoing care schedule.",
         ],
@@ -119,7 +119,7 @@ CITY_DATA = {
         "title": "Boat Detailing in Deerfield Beach, FL | Propwash Marine",
         "meta_description": "Boat detailing in Deerfield Beach for vessels near the Hillsboro Inlet, Intracoastal and Hillsboro River, with mobile washes and finish care.",
         "intro": [
-            "Deerfield Beach boat detailing from Propwash reaches vessels around the Intracoastal Waterway, Hillsboro Inlet and Hillsboro River.",
+            "We bring mobile detailing to Deerfield Beach boats around the Intracoastal Waterway, Hillsboro Inlet and Hillsboro River.",
             "Our mobile crew serves boats associated with Cove Marina, Marina One, Pennell's Marine and Pioneer Park access.",
             "Each recommendation accounts for the finish, how the boat is stored and the care it receives between offshore runs.",
         ],
@@ -157,7 +157,7 @@ CITY_DATA = {
         "title": "Boat Detailing in Pompano Beach, FL | Propwash Marine",
         "meta_description": "Mobile boat detailing in Pompano Beach near the Hillsboro Inlet and Intracoastal, with wash, polishing, ceramic and recurring care options.",
         "intro": [
-            "Propwash details Pompano Beach boats based along the Intracoastal Waterway and near the Hillsboro Inlet.",
+            "We detail Pompano Beach boats based along the Intracoastal Waterway and near the Hillsboro Inlet.",
             "We coordinate mobile service for vessels around Sands Harbor Resort & Marina, Aquamarina Hidden Harbour, Hillsboro Inlet Marina and Alsdorf Park.",
             "The work can range from a direct wash to multi-stage finish restoration and scheduled upkeep.",
         ],
@@ -180,7 +180,7 @@ CITY_DATA = {
             ("Keep the outcome on file.", "Post-visit documentation gives the owner a clear record of what the Pompano boat received."),
         ],
         "cta_title": "Plan the next Pompano Beach service.",
-        "cta_body": "Describe the boat and the result you are after. Propwash will review the condition and prepare a practical quote.",
+        "cta_body": "Describe the boat and the result you are after. We will review the condition and prepare a practical quote.",
     },
     "lighthouse-point": {
         "city": "Lighthouse Point",
@@ -195,7 +195,7 @@ CITY_DATA = {
         "title": "Boat Detailing in Lighthouse Point, FL | Propwash Marine",
         "meta_description": "Dockside boat detailing in Lighthouse Point for canal-front boats near the Intracoastal and Hillsboro Inlet, from washes to finish protection.",
         "intro": [
-            "Propwash offers dockside detailing for Lighthouse Point boats throughout the deep-water canal district and along the Intracoastal Waterway.",
+            "We offer dockside detailing for Lighthouse Point boats throughout the deep-water canal district and along the Intracoastal Waterway.",
             "The service area includes vessels at Lighthouse Point Yacht Club and boats positioned for access to the Hillsboro Inlet.",
             "We shape each visit around surface condition, deck area, access and the owner's preferred level of upkeep.",
         ],
@@ -233,7 +233,7 @@ CITY_DATA = {
         "title": "Boat Detailing in Fort Lauderdale, FL | Propwash Marine",
         "meta_description": "Mobile boat detailing in Fort Lauderdale across the New River, Intracoastal and leading marinas, including detailing, correction and coatings.",
         "intro": [
-            "Fort Lauderdale boat detailing from Propwash covers vessels along the New River, Intracoastal Waterway and Port Everglades inlet.",
+            "We provide Fort Lauderdale boat detailing along the New River, Intracoastal Waterway and Port Everglades inlet.",
             "Our service map reaches the supplied marina locations as well as Las Olas Isles, Coral Ridge, Rio Vista and the Seabreeze Boulevard area.",
             "We quote each boat from its condition and surface area instead of assuming every yacht needs the same package.",
         ],
@@ -271,7 +271,7 @@ CITY_DATA = {
         "title": "Mobile Boat Detailing in Palm Beach, FL | Propwash Marine",
         "meta_description": "Private dockside boat detailing in Palm Beach along the Lake Worth Lagoon and Intracoastal, with full details, correction and protection plans.",
         "intro": [
-            "Propwash brings mobile detailing to Palm Beach boats along the Lake Worth Lagoon and Intracoastal Waterway.",
+            "We bring mobile detailing to Palm Beach boats along the Lake Worth Lagoon and Intracoastal Waterway.",
             "Private dockage lines the estates near the Worth Avenue section, while ocean access runs through the Palm Beach (Lake Worth) Inlet by the Port of Palm Beach.",
             "Peanut Island is a nearby anchorage, and every service is planned around the boat's location, condition and care requirements.",
         ],
@@ -309,7 +309,7 @@ CITY_DATA = {
         "title": "Mobile Boat Detailing in Jupiter, FL | Propwash Marine",
         "meta_description": "Mobile boat detailing in Jupiter around the inlet, Loxahatchee River and Intracoastal, with washes, full details and finish protection.",
         "intro": [
-            "Propwash serves Jupiter boats traveling through the Jupiter Inlet, Loxahatchee River and Intracoastal Waterway.",
+            "We serve Jupiter boats traveling through the Jupiter Inlet, Loxahatchee River and Intracoastal Waterway.",
             "Mobile detailing is available around Loggerhead Marina – Jupiter, Jupiter Pointe Club & Marina and the DuBois Park launch area.",
             "We build the work around how the vessel is used, where it stays and what its finish shows on inspection.",
         ],
@@ -347,7 +347,7 @@ CITY_DATA = {
         "title": "Mobile Boat Detailing in Stuart, FL | Propwash Marine",
         "meta_description": "Boat detailing in Stuart around the St. Lucie River, Manatee Pocket and local marinas, including mobile washes, correction and coatings.",
         "intro": [
-            "Propwash provides Stuart boat detailing around the St. Lucie River, St. Lucie Inlet, Manatee Pocket and Intracoastal Waterway.",
+            "We provide Stuart boat detailing around the St. Lucie River, St. Lucie Inlet, Manatee Pocket and Intracoastal Waterway.",
             "The mobile service area includes Sailfish Marina of Stuart, MarineMax Stuart, Finest Kind Marina, Whiticar Boat Works and Sandsprit Park.",
             "Our recommendation follows the boat's present finish and the care it needs between river time and offshore use.",
         ],
