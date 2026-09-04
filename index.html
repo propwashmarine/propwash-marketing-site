@@ -221,15 +221,6 @@
 #pw-redesign-v3 .pw-portalpoints p:before{content:'+'}
 #pw-redesign-v3 #pw-svc-5 .pw-servicepanel>img{object-position:center 72%}
 #pw-redesign-v3 .pw-journalgrid article:nth-child(2)>img{object-position:center 72%}
-#pw-redesign-v3 .pw-walkthroughs{margin-top:38px;padding-top:30px;border-top:1px solid #33475E}
-#pw-redesign-v3 .pw-walkthroughhead{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:20px}
-#pw-redesign-v3 .pw-walkthroughhead h3{font-size:28px;margin-top:8px}
-#pw-redesign-v3 .pw-walkthroughhead>p{max-width:470px;color:#AFC0D1;font-size:12px;line-height:1.75}
-#pw-redesign-v3 .pw-walkthroughrail{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-#pw-redesign-v3 .pw-walkthroughrail article{position:relative;height:310px;overflow:hidden;background:#14283E}
-#pw-redesign-v3 .pw-walkthroughrail article:after{content:'';position:absolute;inset:40% 0 0;background:linear-gradient(transparent,#06111FDD)}
-#pw-redesign-v3 .pw-walkthroughrail video{width:100%;height:100%;object-fit:cover;background:#071625}
-#pw-redesign-v3 .pw-walkthroughrail strong{position:absolute;z-index:1;left:18px;bottom:16px;font:500 15px/1.2 Oswald,Arial,sans-serif;text-transform:uppercase}
 #pw-redesign-v3 .pw-reviewactions{display:flex;gap:18px;align-items:center}
 #pw-redesign-v3 .pw-confirmpage{background:#EAF3FA;color:#0A1A2F;padding:42px;min-height:420px;display:flex;flex-direction:column;justify-content:center}
 #pw-redesign-v3 .pw-quote.pw-confirmactive{display:block;background:#EAF3FA;padding-top:40px;padding-bottom:40px}
@@ -247,7 +238,7 @@
 #pw-redesign-v3 .pw-confirmactions{display:flex;gap:22px;flex-wrap:wrap;margin-top:24px}
 #pw-redesign-v3 .pw-confirmpage>small{margin-top:35px;color:#688096;letter-spacing:.08em}
 @container(max-width:900px){#pw-redesign-v3 .pw-navright .pw-login{display:none}}
-@container(max-width:600px){#pw-redesign-v3 .pw-walkthroughhead{display:block}#pw-redesign-v3 .pw-walkthroughhead>p{margin-top:12px}#pw-redesign-v3 .pw-walkthroughrail{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#pw-redesign-v3 .pw-walkthroughrail article{height:230px}#pw-redesign-v3 .pw-walkthroughrail strong{font-size:11px;left:10px;right:8px}#pw-redesign-v3 .pw-walkthroughrail .pw-play{left:10px}#pw-redesign-v3 .pw-confirmpage{padding:28px 22px}.pw-reviewactions #pw-preview-confirmation{display:none}}
+@container(max-width:600px){#pw-redesign-v3 .pw-confirmpage{padding:28px 22px}.pw-reviewactions #pw-preview-confirmation{display:none}}
 
 
 html{scroll-behavior:smooth;background:#0A1A2F}
@@ -256,17 +247,6 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 #pw-redesign-v3 .pw-hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
 #pw-redesign-v3 .pw-v2hero .pw-nav{position:relative;z-index:3}
 #pw-redesign-v3 .pw-cta:disabled{opacity:.7;cursor:wait;transform:none}
-#pw-redesign-v3 .pw-walkthroughrail{display:flex;gap:14px;align-items:stretch}
-#pw-redesign-v3 .pw-walkitem{position:relative;flex:1 1 0;height:360px;overflow:hidden;background:#14283E;border:1px solid #38516A;color:#F4F8FC;padding:0;text-align:left;transition:flex .55s cubic-bezier(.2,.7,.2,1),border-color .3s,transform .3s;isolation:isolate}
-#pw-redesign-v3 .pw-walkitem.is-active{flex:1.72 1 0;border-color:#70B8FF;transform:translateY(-4px)}
-#pw-redesign-v3 .pw-walkitem:after{content:'';position:absolute;z-index:1;inset:36% 0 0;background:linear-gradient(transparent,#06111FEE);pointer-events:none}
-#pw-redesign-v3 .pw-walkitem video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#071625;transform:scale(1.01);transition:filter .35s,transform .55s}
-#pw-redesign-v3 .pw-walkitem:not(.is-active) video{filter:saturate(.55) brightness(.72)}
-#pw-redesign-v3 .pw-walkitem:hover video{transform:scale(1.04)}
-#pw-redesign-v3 .pw-walkcaption{position:absolute;z-index:2;left:18px;right:18px;bottom:17px;display:grid;gap:6px}
-#pw-redesign-v3 .pw-walkcaption strong{position:static;font:500 17px/1.2 Oswald,Arial,sans-serif;text-transform:uppercase}
-#pw-redesign-v3 .pw-walkcaption small{font-size:10px;line-height:1.45;color:#C6D5E3;opacity:0;transform:translateY(5px);transition:opacity .3s,transform .3s}
-#pw-redesign-v3 .pw-walkitem.is-active .pw-walkcaption small{opacity:1;transform:none}
 #pw-redesign-v3 .pw-metal{overflow:hidden;isolation:isolate;transform-style:preserve-3d}
 #pw-redesign-v3 .pw-metal:before{pointer-events:none}
 #pw-redesign-v3 .pw-metal[aria-pressed=true]{box-shadow:0 17px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.2)}
@@ -293,14 +273,7 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
  #pw-redesign-v3 .pw-mobileactions a{display:grid;place-items:center;min-height:58px;padding:8px 6px;border-right:1px solid #344A61;color:#E9F2FA;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center}
  #pw-redesign-v3 .pw-mobileactions a:last-child{border-right:0;background:#2F91E8;color:#07192D}
 }
-@container(max-width:600px){
- #pw-redesign-v3 .pw-walkthroughrail{display:grid;grid-template-columns:1fr 1fr;gap:9px}
- #pw-redesign-v3 .pw-walkitem{height:225px;min-width:0}
- #pw-redesign-v3 .pw-walkitem.is-active{grid-column:1/-1;height:420px;transform:none}
- #pw-redesign-v3 .pw-walkcaption{left:12px;right:12px;bottom:13px}
- #pw-redesign-v3 .pw-walkcaption strong{font-size:13px}
-}
-@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}#pw-redesign-v3 .pw-gallerymain img{animation:none!important}#pw-redesign-v3 .pw-walkitem{transition:none}}
+@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}#pw-redesign-v3 .pw-gallerymain img{animation:none!important}}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://propwashmarine.com/#business","name":"Propwash Marine Detailing","description":"Mobile and dockside boat detailing across South Florida.","url":"https://propwashmarine.com/","telephone":"+1-561-291-8554","image":"https://propwashmarine.com/assets/v4/hero-poster.webp","areaServed":["Stuart","Boca Raton","Fort Lauderdale"],"sameAs":["https://instagram.com/propwashmarine"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need to be there?","acceptedAnswer":{"@type":"Answer","text":"No. Give us access and we handle it. Photos land in your Owner Portal after the visit."}},{"@type":"Question","name":"How long does a Full Detail take?","acceptedAnswer":{"@type":"Answer","text":"Timing depends on length, condition and the work needed. We confirm the schedule when we quote the boat."}},{"@type":"Question","name":"Wax or ceramic?","acceptedAnswer":{"@type":"Answer","text":"The right choice depends on the boat's finish, use and maintenance plan. Surface preparation comes first."}},{"@type":"Question","name":"How often should we schedule a wash?","acceptedAnswer":{"@type":"Answer","text":"We match the cadence to how the boat is stored and used. Silver offers weekly, bi-weekly or monthly washes. Gold and Platinum offer a custom cadence."}}]}</script>
@@ -381,7 +354,6 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
     <section id="pw-gallery" class="pw-gallery pw-section pw-wrap">
       <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">05 / From the dock</div><h2>Proof in the finish.</h2></div><a class="pw-textlink" href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine </a></div>
       <div class="pw-gallerygrid"><div class="pw-gallerymain"><img data-pw-img="gallery1" id="pw-gallery-feature" alt="Glossy blue hull at the dock"><div class="pw-gallerycap"><h3 id="pw-gallery-name">Dockside ready</h3><p id="pw-gallery-detail">Deep reflection along the waterfront</p></div></div><div class="pw-gallerychoices" role="group" aria-label="Choose a boat-care result to view"><button class="pw-gallerychoice" type="button" data-gallery="gallery1" aria-pressed="true"><img data-pw-img="gallery1" alt=""><span>01 / Dockside ready</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery2" aria-pressed="false"><img data-pw-img="gallery2" alt=""><span>02 / Wherever you are</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery3" aria-pressed="false"><img data-pw-img="gallery3" alt=""><span>03 / Brightwork in focus</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery4" aria-pressed="false"><img data-pw-img="gallery4" alt=""><span>04 / Console clarity</span></button></div></div>
-      <div class="pw-walkthroughs"><div class="pw-walkthroughhead"><div><span class="pw-eyebrow pw-muted">From the dock</span><h3>Walkthroughs in motion.</h3></div><p>Three quick, vertical views of the finished work: a complete walk around, the depth of the gelcoat and the way protected surfaces shed water.</p></div><div class="pw-walkthroughrail" role="group" aria-label="Choose a walkthrough video"><button class="pw-walkitem is-active" type="button" data-walk="0" aria-pressed="true"><video data-pw-video="wajerVideo" aria-hidden="true" muted loop playsinline preload="metadata"></video><span class="pw-walkcaption"><strong>Wajer walkthrough</strong><small>Complete care, bow to stern.</small></span></button><button class="pw-walkitem" type="button" data-walk="1" aria-pressed="false"><video data-pw-video="reflectionVideo" aria-hidden="true" muted loop playsinline preload="metadata"></video><span class="pw-walkcaption"><strong>Gelcoat reflections</strong><small>Depth you can see at the dock.</small></span></button><button class="pw-walkitem" type="button" data-walk="2" aria-pressed="false"><video data-pw-video="beadingVideo" aria-hidden="true" muted loop playsinline preload="metadata"></video><span class="pw-walkcaption"><strong>Water beading</strong><small>Protection working on contact.</small></span></button></div></div>
       <div class="pw-moments"><article><h3>Before the next drive.</h3><p>Trip Ready preparation gets the boat set before you arrive. Two preps per month are included with Platinum.</p><button type="button" class="pw-textlink" data-quote="Trip Ready prep">Explore Trip Ready </button></article><article><h3>Salt off after the trip.</h3><p>Request a focused Freshwater Rinse before or after a run—glass and stainless wiped, covers reset and trash removed.</p><button type="button" class="pw-textlink" data-quote="Freshwater Rinse">Request a rinse </button></article></div>
     </section>
 <section id="pw-journal" class="pw-journal pw-section pw-wrap">
@@ -417,14 +389,13 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 'use strict';
 const root=document.getElementById('pw-redesign-v3');
 if(!root)return;
-const assets={"brandmark":"assets/logo/brandmark.png","wordmark":"assets/logo/wordmark.png","video":"assets/video/hero-v4.mp4","wajerVideo":"assets/video/wajer-walkthrough.mp4","reflectionVideo":"assets/video/gelcoat-reflections.mp4","beadingVideo":"assets/video/water-beading.mp4","hero":"assets/v4/hero-poster.webp","signature":"assets/v4/signature.webp","detailMain":"assets/v4/detailMain.webp","detailBright":"assets/v4/detailBright.webp","detailHatch":"assets/v4/detailHatch.webp","detailInterior":"assets/v4/detailInterior.webp","detailSeats":"assets/v4/detailSeats.webp","detailTop":"assets/v4/detailTop.webp","detailTower":"assets/v4/detailTower.webp","wax":"assets/v4/wax.webp","compound":"assets/v4/compound.webp","ceramic":"assets/v4/ceramic.webp","plans":"assets/v4/plans.jpg","memberSilver":"assets/v4/memberSilver.webp","memberGold":"assets/v4/memberGold.webp","memberPlatinum":"assets/v4/memberPlatinum.webp","dashboard":"assets/v4/dashboard.webp","covers":"assets/v4/covers.webp","gallery1":"assets/v4/gallery1.webp","gallery2":"assets/v4/gallery2.webp","gallery3":"assets/v4/gallery3.webp","gallery4":"assets/v4/gallery4.jpg","blog1":"assets/v4/blog1.webp","blog2":"assets/v4/blog2.webp","blog3":"assets/v4/blog3.webp"};
+const assets={"brandmark":"assets/logo/brandmark.png","wordmark":"assets/logo/wordmark.png","video":"assets/video/hero-v4.mp4","hero":"assets/v4/hero-poster.webp","signature":"assets/v4/signature.webp","detailMain":"assets/v4/detailMain.webp","detailBright":"assets/v4/detailBright.webp","detailHatch":"assets/v4/detailHatch.webp","detailInterior":"assets/v4/detailInterior.webp","detailSeats":"assets/v4/detailSeats.webp","detailTop":"assets/v4/detailTop.webp","detailTower":"assets/v4/detailTower.webp","wax":"assets/v4/wax.webp","compound":"assets/v4/compound.webp","ceramic":"assets/v4/ceramic.webp","plans":"assets/v4/plans.jpg","memberSilver":"assets/v4/memberSilver.webp","memberGold":"assets/v4/memberGold.webp","memberPlatinum":"assets/v4/memberPlatinum.webp","dashboard":"assets/v4/dashboard.webp","covers":"assets/v4/covers.webp","gallery1":"assets/v4/gallery1.webp","gallery2":"assets/v4/gallery2.webp","gallery3":"assets/v4/gallery3.webp","gallery4":"assets/v4/gallery4.jpg","blog1":"assets/v4/blog1.webp","blog2":"assets/v4/blog2.webp","blog3":"assets/v4/blog3.webp"};
 root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});
 const byId=id=>root.querySelector('#'+id);
-const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;video.src=assets.video;const walkVideos=[...root.querySelectorAll('[data-pw-video]')];walkVideos.forEach(v=>{v.muted=true;v.defaultMuted=true;v.src=assets[v.dataset.pwVideo];});
+const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;video.src=assets.video;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-let moving=!reduced,walkInView=false;
-function syncWalkVideos(){walkVideos.forEach(v=>{const active=v.closest('.pw-walkitem')?.classList.contains('is-active');if(moving&&walkInView&&active){const p=v.play();if(p)p.catch(()=>{});}else v.pause();});}
-function syncVideo(){const toggle=byId('pw-video-toggle');toggle.setAttribute('aria-pressed',String(moving));toggle.textContent=moving?'Ⅱ Pause video':'▶ Play video';if(moving){const play=video.play();if(play)play.catch(()=>{toggle.textContent='▶ Play video';toggle.setAttribute('aria-pressed','false');});}else video.pause();syncWalkVideos();}
+let moving=!reduced;
+function syncVideo(){const toggle=byId('pw-video-toggle');toggle.setAttribute('aria-pressed',String(moving));toggle.textContent=moving?'Ⅱ Pause video':'▶ Play video';if(moving){const play=video.play();if(play)play.catch(()=>{toggle.textContent='▶ Play video';toggle.setAttribute('aria-pressed','false');});}else video.pause();}
 function setMotion(){root.classList.toggle('pw-still',!moving);byId('pw-motion').setAttribute('aria-pressed',String(moving));byId('pw-motion').innerHTML='<span>◉</span> Motion '+(moving?'on':'off');syncVideo();}
 setMotion();
 byId('pw-video-toggle').addEventListener('click',()=>{moving=video.paused;setMotion();});
@@ -477,9 +448,8 @@ byId('pw-member-next').addEventListener('click',()=>{if([...byId('pw-member-step
 const designState={header:'balanced',detailLayout:'filmstrip'};function renderOptions(){root.classList.toggle('pw-header-compact',designState.header==='compact');root.classList.toggle('pw-detail-grid',designState.detailLayout==='grid');}renderOptions();if(globalThis.Tweak){const heroTweak=new Tweak({container:root.querySelector('.pw-v2hero'),onChange:renderOptions});heroTweak.addSelect(designState,'header',{label:'Header spacing',options:[{label:'Balanced',value:'balanced'},{label:'Compact',value:'compact'}]});const detailTweak=new Tweak({container:byId('pw-results'),onChange:renderOptions});detailTweak.addSelect(designState,'detailLayout',{label:'Full Detail layout',options:[{label:'Filmstrip',value:'filmstrip'},{label:'Grid',value:'grid'}]});}
 
 
-root.querySelectorAll('.pw-walkitem').forEach((item,index)=>item.addEventListener('click',()=>{root.querySelectorAll('.pw-walkitem').forEach((candidate,i)=>{const active=i===index;candidate.classList.toggle('is-active',active);candidate.setAttribute('aria-pressed',String(active));});walkVideos[index].currentTime=0;syncWalkVideos();}));
-const walkSection=root.querySelector('.pw-walkthroughs'),areaSection=byId('pw-area');
-if('IntersectionObserver' in window){new IntersectionObserver(entries=>{walkInView=entries[0]?.isIntersecting||false;syncWalkVideos();},{threshold:.25}).observe(walkSection);new IntersectionObserver(entries=>{if(entries[0]?.isIntersecting){areaSection.classList.add('pw-route-visible');}},{threshold:.3}).observe(areaSection);}else{walkInView=true;areaSection.classList.add('pw-route-visible');syncWalkVideos();}
+const areaSection=byId('pw-area');
+if('IntersectionObserver' in window){new IntersectionObserver(entries=>{if(entries[0]?.isIntersecting){areaSection.classList.add('pw-route-visible');}},{threshold:.3}).observe(areaSection);}else{areaSection.classList.add('pw-route-visible');}
 
 })();
 </script>

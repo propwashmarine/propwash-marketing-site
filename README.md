@@ -1,6 +1,6 @@
 # Propwash Marine website
 
-Production-ready static website for Propwash Marine Detailing. The site uses the approved V4 design, local production media, a looping hero video, an interactive walkthrough rail, responsive interactions, and separate quote and membership inquiry flows.
+Production-ready static website for Propwash Marine Detailing. The site uses the approved V4 design, local production media, a looping hero video, responsive interactions, and separate quote and membership inquiry flows.
 
 ## Files
 
@@ -9,7 +9,6 @@ Production-ready static website for Propwash Marine Detailing. The site uses the
 - Repository root — Netlify publishes the static site directly with no build step
 - `assets/v4/` — optimized production photography
 - `assets/video/hero-v4.mp4` — full-resolution looping hero video
-- `assets/video/wajer-walkthrough.mp4`, `gelcoat-reflections.mp4`, `water-beading.mp4` — optimized walkthrough videos
 - `assets/logo/` — supplied Propwash logo assets and favicon
 - `src/v4-template.html` — editable design source
 - `src/media-derived/` — accurate renders used for supplied HEIC media and the Owner Portal image
