@@ -787,7 +787,7 @@ for filename in ("brandmark.png", "wordmark.png", "favicon.png"):
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):
     shutil.copy2(ROOT / "assets" / "video" / filename, DIST / "assets" / "video" / filename)
-for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml"):
+for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml", "_redirects"):
     shutil.copy2(ROOT / filename, DIST / filename)
 for city_directory in city_outputs:
     shutil.copytree(city_directory, DIST / city_directory.name)
