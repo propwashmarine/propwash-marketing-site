@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{META_DESCRIPTION}}">
+<link rel="canonical" href="{{CANONICAL_URL}}">
+<link rel="icon" href="../assets/logo/favicon.png" type="image/png">
+<meta name="theme-color" content="#0A1A2F">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{META_DESCRIPTION}}">
+<meta property="og:url" content="{{CANONICAL_URL}}">
+<meta property="og:image" content="{{HERO_ABSOLUTE_URL}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+{{SHARED_STYLES}}
+html{scroll-behavior:smooth}body{margin:0;background:#0A1A2F;color:#F4F8FC;font-family:Inter,Arial,sans-serif}
+#pw-redesign-v3{--pw-navy:#0A1A2F;--pw-deep:#071523;--pw-panel:#15283E;--pw-blue:#70B8FF;--pw-white:#F4F8FC;--pw-muted:#A9B8C9;--pw-line:#34465C;container-type:inline-size;overflow:hidden}
+#pw-redesign-v3 .pw-citynav{position:relative;z-index:5;background:#0A1A2FEF}
+#pw-redesign-v3 .pw-citynav .pw-logo{min-width:0}
+#pw-redesign-v3 .pw-citynav .pw-wordmark img{width:128px;height:auto;object-fit:contain}
+#pw-redesign-v3 .pw-cityhero{position:relative;min-height:660px;display:flex;align-items:end;isolation:isolate;border-bottom:1px solid var(--pw-line)}
+#pw-redesign-v3 .pw-cityhero>img{position:absolute;inset:0;width:100%;height:100%;z-index:-2;object-position:center 54%}
+#pw-redesign-v3 .pw-cityhero:after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(6,19,33,.96) 0%,rgba(6,19,33,.8) 48%,rgba(6,19,33,.25) 100%),linear-gradient(0deg,rgba(6,19,33,.86),transparent 50%)}
+#pw-redesign-v3 .pw-cityherobody{padding-top:110px;padding-bottom:78px;max-width:820px}
+#pw-redesign-v3 .pw-breadcrumbs{display:flex;gap:10px;align-items:center;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#C3D0DE;margin-bottom:29px}
+#pw-redesign-v3 .pw-breadcrumbs a{border-bottom:1px solid #748AA0;padding-bottom:3px}
+#pw-redesign-v3 .pw-cityhero h1{font-size:clamp(56px,8.2cqw,100px);line-height:1.01;letter-spacing:-.025em;max-width:820px}
+#pw-redesign-v3 .pw-cityintro{display:grid;gap:9px;max-width:650px;margin-top:29px}
+#pw-redesign-v3 .pw-cityintro p{font-size:15px;line-height:1.72;color:#D5E0EB}
+#pw-redesign-v3 .pw-cityheroactions{display:flex;gap:14px;flex-wrap:wrap;margin-top:31px}
+#pw-redesign-v3 .pw-citylocal{background:#10243B;border-bottom:1px solid var(--pw-line);display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+#pw-redesign-v3 .pw-citylocallists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px}
+#pw-redesign-v3 .pw-citylocallists>div:only-child{grid-column:1/-1}
+#pw-redesign-v3 .pw-citylocallists h3{font-size:15px;letter-spacing:.08em;color:#D9E4EF;margin:0 0 15px}
+#pw-redesign-v3 .pw-citylocal ul{list-style:none;padding:0;margin:0;border-top:1px solid #425268}
+#pw-redesign-v3 .pw-citylocal li{padding:18px 0;border-bottom:1px solid #425268;font:400 23px/1.2 Oswald,Arial,sans-serif;text-transform:uppercase}
+#pw-redesign-v3 .pw-citylocal p{font-size:13px;line-height:1.8;color:#B9C7D5;margin-top:18px}
+#pw-redesign-v3 .pw-cityservices{background:#E8EFF6;color:#0A1A2F}
+#pw-redesign-v3 .pw-cityservices .pw-muted{color:#52657A}
+#pw-redesign-v3 .pw-cityservices .pw-sectionhead>p{max-width:500px;color:#40546A;line-height:1.8}
+#pw-redesign-v3 .pw-cityservicegrid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #AEBFD0;border-left:1px solid #AEBFD0}
+#pw-redesign-v3 .pw-cityservice{padding:28px 25px 31px;border-right:1px solid #AEBFD0;border-bottom:1px solid #AEBFD0;min-height:205px}
+#pw-redesign-v3 .pw-cityservice span{display:block;font-size:10px;color:#5E7287;letter-spacing:.12em;margin-bottom:31px}
+#pw-redesign-v3 .pw-cityservice h3{font-size:23px;margin-bottom:12px}
+#pw-redesign-v3 .pw-cityservice p{font-size:12px;line-height:1.75;color:#40546A}
+#pw-redesign-v3 .pw-cityprocess{background:#0D2035}
+#pw-redesign-v3 .pw-cityprocess .pw-sectionhead>p{max-width:490px;line-height:1.8}
+#pw-redesign-v3 .pw-citysteps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #425268;border-left:1px solid #425268}
+#pw-redesign-v3 .pw-citystep{padding:30px 23px 33px;border-right:1px solid #425268;border-bottom:1px solid #425268;min-height:265px}
+#pw-redesign-v3 .pw-citystep>span{font:400 38px/1 Oswald,Arial,sans-serif;color:#7590AB}
+#pw-redesign-v3 .pw-citystep h3{font-size:19px;margin:31px 0 12px}
+#pw-redesign-v3 .pw-citystep p{font-size:12px;line-height:1.8;color:#AFBDCD}
+#pw-redesign-v3 .pw-cityneighbors{display:flex;justify-content:space-between;gap:25px;align-items:center;padding-top:27px;padding-bottom:27px;border-top:1px solid #425268;background:#10243B}
+#pw-redesign-v3 .pw-cityneighborlinks{display:flex;gap:12px;flex-wrap:wrap}
+#pw-redesign-v3 .pw-cityneighborlinks a{border:1px solid #52667B;padding:12px 15px;font-size:11px}
+#pw-redesign-v3 .pw-cityneighborlinks a:hover{border-color:#70B8FF;color:#70B8FF}
+#pw-redesign-v3 .pw-citycta{display:grid;grid-template-columns:1fr .8fr;gap:55px;align-items:end;background:#15283E;padding-top:72px;padding-bottom:72px;border-top:1px solid #425268}
+#pw-redesign-v3 .pw-citycta h2{font-size:clamp(45px,6.4cqw,76px)}
+#pw-redesign-v3 .pw-citycta p{font-size:14px;line-height:1.8;color:#C2CFDC;margin:22px 0 27px;max-width:500px}
+#pw-redesign-v3 .pw-citycontact{border-top:1px solid #53687D;padding-top:22px;display:grid;gap:12px;font-size:12px;color:#C7D4E2}
+#pw-redesign-v3 .pw-citycontact a:first-child{font:400 31px/1 Oswald,Arial,sans-serif;color:#F4F8FC}
+#pw-redesign-v3 .pw-cityfooter .pw-logo{min-width:0}
+#pw-redesign-v3 .pw-cityfooter .pw-wordmark img{width:128px;height:auto;object-fit:contain}
+@container(max-width:800px){#pw-redesign-v3 .pw-citynav .pw-navlinks{display:none}#pw-redesign-v3 .pw-cityhero{min-height:620px}#pw-redesign-v3 .pw-cityservicegrid{grid-template-columns:repeat(2,1fr)}#pw-redesign-v3 .pw-citysteps{grid-template-columns:repeat(2,1fr)}#pw-redesign-v3 .pw-citylocal,#pw-redesign-v3 .pw-citycta{grid-template-columns:1fr}#pw-redesign-v3 .pw-cityneighbors{align-items:flex-start;flex-direction:column}}
+@container(max-width:520px){#pw-redesign-v3 .pw-nav{min-height:79px}#pw-redesign-v3 .pw-navright .pw-login{display:none}#pw-redesign-v3 .pw-cityhero{min-height:570px}#pw-redesign-v3 .pw-cityherobody{padding-top:82px;padding-bottom:55px}#pw-redesign-v3 .pw-cityhero h1{font-size:50px}#pw-redesign-v3 .pw-cityservicegrid,#pw-redesign-v3 .pw-citysteps,#pw-redesign-v3 .pw-citylocallists{grid-template-columns:1fr}#pw-redesign-v3 .pw-citylocallists>div:only-child{grid-column:auto}#pw-redesign-v3 .pw-cityservice,#pw-redesign-v3 .pw-citystep{min-height:0}#pw-redesign-v3 .pw-sectionhead{align-items:start;flex-direction:column}#pw-redesign-v3 .pw-cityneighborlinks{display:grid;width:100%}#pw-redesign-v3 .pw-footertop{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{{BUSINESS_SCHEMA}}</script>
+<script type="application/ld+json">{{BREADCRUMB_SCHEMA}}</script>
+</head>
+<body>
+<div id="pw-redesign-v3">
+  <header class="pw-citynav">
+    <nav class="pw-nav pw-wrap" aria-label="Primary navigation">
+      <a class="pw-logo" href="/" aria-label="Propwash Marine Detailing home"><img src="../assets/logo/brandmark.png" alt=""><span class="pw-wordmark"><img src="../assets/logo/wordmark.png" alt="Propwash"><small>MARINE DETAILING</small></span></a>
+      <div class="pw-navlinks"><a href="/">Home</a><a href="/#pw-services">Services</a><a href="/#pw-area">Service area</a></div>
+      <div class="pw-navright"><a class="pw-login" href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a class="pw-cta" href="/#pw-quote">Get a quote <span class="pw-arrow">→</span></a></div>
+    </nav>
+  </header>
+  <main>
+    <section class="pw-cityhero">
+      <img src="{{HERO_SRC}}" alt="Boat detailing near {{CITY}}, FL">
+      <div class="pw-cityherobody pw-wrap">
+        <nav class="pw-breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>{{CITY}}</span></nav>
+        <div class="pw-kicker pw-eyebrow">Mobile service / {{COUNTY}}</div>
+        <h1>Boat Detailing in {{CITY}}, FL</h1>
+        <div class="pw-cityintro">{{INTRO_HTML}}</div>
+        <div class="pw-cityheroactions"><a class="pw-cta" href="/#pw-quote">Tell us the boat <span class="pw-arrow">→</span></a><a class="pw-cta pw-outline" href="/#pw-services">View services</a></div>
+      </div>
+    </section>
+{{LOCAL_BLOCK}}
+    <section class="pw-cityservices pw-section pw-wrap">
+      <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">Services for {{CITY}}</div><h2>{{SERVICES_HEADING}}</h2></div><p>{{SERVICES_LEAD}}</p></div>
+      <div class="pw-cityservicegrid">{{SERVICES_HTML}}</div>
+    </section>
+    <section class="pw-cityprocess pw-section pw-wrap">
+      <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">A clear dockside process</div><h2>{{PROCESS_HEADING}}</h2></div><p>{{PROCESS_LEAD}}</p></div>
+      <div class="pw-citysteps">{{STEPS_HTML}}</div>
+    </section>
+    <nav class="pw-cityneighbors pw-wrap" aria-label="Nearby service areas"><span class="pw-eyebrow">Nearby service areas</span><div class="pw-cityneighborlinks">{{NEIGHBOR_LINKS}}</div></nav>
+    <section class="pw-citycta pw-wrap">
+      <div><div class="pw-kicker pw-eyebrow pw-muted">A quote built for the boat</div><h2>{{CTA_TITLE}}</h2><p>{{CTA_BODY}}</p><a class="pw-cta" href="/#pw-quote">Request a quote <span class="pw-arrow">→</span></a></div>
+      <div class="pw-citycontact"><span class="pw-eyebrow">Meet us dockside</span><a href="tel:+15612918554">(561) 291-8554</a><a href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine</a></div>
+    </section>
+  </main>
+  <footer class="pw-footer pw-wrap pw-cityfooter"><div class="pw-footertop"><div class="pw-footerintro"><a class="pw-logo" href="/"><img src="../assets/logo/brandmark.png" alt=""><span class="pw-wordmark"><img src="../assets/logo/wordmark.png" alt="Propwash"><small>MARINE DETAILING</small></span></a><p>Mobile and dockside detailing for boats that run hard. Based in South Florida.</p></div><div class="pw-footerlinks"><span class="pw-eyebrow">Explore</span><a href="/">Home</a><a href="/#pw-services">Services</a><a href="/#pw-area">Service area</a><a href="/#pw-quote">Get a quote</a></div><div class="pw-footerlinks"><span class="pw-eyebrow">Meet us dockside</span><a href="tel:+15612918554">(561) 291-8554</a><a href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a></div></div><div class="pw-footerbottom"><span>© 2026 Propwash Marine Detailing LLC</span><span>Run hard. Look right.</span></div></footer>
+</div>
+</body>
+</html>
