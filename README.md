@@ -6,7 +6,7 @@ Production-ready static website for Propwash Marine Detailing. The site uses the
 
 - `index.html` — deployable site
 - `thank-you.html` — confirmation page for quote and membership submissions
-- `dist/` — clean publishing folder containing only the live site and required media
+- Repository root — Netlify publishes the static site directly with no build step
 - `assets/v4/` — optimized production photography
 - `assets/video/hero-v4.mp4` — full-resolution looping hero video
 - `assets/video/wajer-walkthrough.mp4`, `gelcoat-reflections.mp4`, `water-beading.mp4` — optimized walkthrough videos
