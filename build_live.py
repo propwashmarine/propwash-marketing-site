@@ -122,7 +122,7 @@ markup = require_replace(
 markup = require_replace(
     markup,
     '</footer></div>\n<section id="pw-membership-page"',
-    '</footer><nav class="pw-mobileactions" aria-label="Quick actions"><a href="tel:+19043866658">Call</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a quote</a></nav></div>\n<section id="pw-membership-page"',
+    '</footer><nav class="pw-mobileactions" aria-label="Quick actions"><a href="tel:+15612918554">Call</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a quote</a></nav></div>\n<section id="pw-membership-page"',
 )
 
 markup = require_replace(
@@ -286,7 +286,7 @@ business_schema = {
     "name": "Propwash Marine Detailing",
     "description": "Mobile and dockside boat detailing across South Florida.",
     "url": "https://propwashmarine.com/",
-    "telephone": "+1-904-386-6658",
+    "telephone": "+1-561-291-8554",
     "image": "https://propwashmarine.com/assets/v4/hero-poster.webp",
     "areaServed": ["Stuart", "Boca Raton", "Fort Lauderdale"],
     "sameAs": ["https://instagram.com/propwashmarine"],
