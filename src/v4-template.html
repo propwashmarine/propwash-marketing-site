@@ -220,6 +220,16 @@
 #pw-redesign-v3 .pw-confirmpage>small{margin-top:35px;color:#688096;letter-spacing:.08em}
 @container(max-width:900px){#pw-redesign-v3 .pw-navright .pw-login{display:none}}
 @container(max-width:600px){#pw-redesign-v3 .pw-confirmpage{padding:28px 22px}.pw-reviewactions #pw-preview-confirmation{display:none}}
+/* Latest Work gallery — cursor-following spotlight */
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice{isolation:isolate}
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice>span{position:relative;z-index:2}
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle 200px at var(--mx,50%) var(--my,50%),rgba(30,144,255,.16),rgba(30,144,255,0) 70%);opacity:0;transition:opacity .35s ease}
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice:after{content:'';position:absolute;left:0;right:0;top:0;height:1px;z-index:1;pointer-events:none;background:#1E90FF;opacity:.15;transition:opacity .35s ease;-webkit-mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice:hover:before{opacity:1}
+#pw-redesign-v3 #pw-gallery .pw-gallerychoice:hover:after{opacity:.6;-webkit-mask:radial-gradient(90px 100% at var(--mx,50%) 50%,#000,transparent);mask:radial-gradient(90px 100% at var(--mx,50%) 50%,#000,transparent)}
+#pw-redesign-v3.pw-still #pw-gallery .pw-gallerychoice:hover:before{opacity:0}
+#pw-redesign-v3.pw-still #pw-gallery .pw-gallerychoice:hover:after{opacity:.15;-webkit-mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
+@media(prefers-reduced-motion:reduce){#pw-redesign-v3 #pw-gallery .pw-gallerychoice:hover:before{opacity:0}#pw-redesign-v3 #pw-gallery .pw-gallerychoice:hover:after{opacity:.15;-webkit-mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}}
 
 </style>
 <div id="pw-redesign-v3">
@@ -368,6 +378,14 @@ byId('pw-dashboard-expand').addEventListener('click',()=>{const expanded=byId('p
 
 const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
 root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery;byId('pw-gallery-feature').src=assets[key];byId('pw-gallery-feature').alt=gallery[key][0]+' from the Propwash work gallery';byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(byId('pw-gallery-feature'));}));
+// Latest Work gallery — cursor-following spotlight (opacity-only, rAF-throttled)
+const spotCards=root.querySelectorAll('#pw-gallery .pw-gallerychoice');
+let spotFrame=0,spotCard=null,spotX='50',spotY='50';
+function paintSpot(){spotFrame=0;if(spotCard){spotCard.style.setProperty('--mx',spotX+'%');spotCard.style.setProperty('--my',spotY+'%');}}
+if(!reduced)spotCards.forEach(card=>{
+ card.addEventListener('pointermove',e=>{if(!moving)return;const r=card.getBoundingClientRect();spotCard=card;spotX=((e.clientX-r.left)/r.width*100).toFixed(1);spotY=((e.clientY-r.top)/r.height*100).toFixed(1);if(!spotFrame)spotFrame=requestAnimationFrame(paintSpot);});
+ card.addEventListener('pointerleave',()=>{if(spotFrame){cancelAnimationFrame(spotFrame);spotFrame=0;}if(spotCard===card)spotCard=null;card.style.removeProperty('--mx');card.style.removeProperty('--my');});
+});
 const form=byId('pw-quote-form'),boat=byId('pw-form-boat'),contact=byId('pw-form-contact'),done=byId('pw-form-done');
 const PW_HISTORY_KEY='pwView';
 function currentView(){return history.state&&history.state[PW_HISTORY_KEY]||'main';}
