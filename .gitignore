@@ -1,2 +1,4 @@
 *.zip
 .git-root-backup/
+assets/v3/
+dist/
