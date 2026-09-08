@@ -490,6 +490,7 @@ def render_city_page(slug: str, data: dict, shared_styles: str) -> str:
 
 
 source = TEMPLATE.read_text()
+head_links = re.search(r"<head>([\s\S]*?)</head>", source).group(1).strip()
 styles = re.search(r"<style>([\s\S]*?)</style>", source).group(1)
 markup_start = source.index('<div id="pw-redesign-v3">')
 markup_end = source.index("<script>", markup_start)
@@ -726,7 +727,6 @@ document = f'''<!doctype html>
 <title>South Florida Mobile Boat Detailing | Propwash Marine</title>
 <meta name="description" content="Dockside boat detailing from Stuart to Fort Lauderdale. Signature washes, Full Details, correction, wax, ceramic coating and recurring maintenance plans.">
 <link rel="canonical" href="https://propwashmarine.com/">
-<link rel="icon" href="assets/logo/favicon.png" type="image/png">
 <meta name="theme-color" content="#0A1A2F">
 <meta property="og:type" content="website">
 <meta property="og:title" content="South Florida Mobile Boat Detailing | Propwash Marine">
@@ -734,7 +734,7 @@ document = f'''<!doctype html>
 <meta property="og:image" content="https://propwashmarine.com/assets/v4/hero-poster.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+{head_links}
 <style>{styles}{live_css}</style>
 <script type="application/ld+json">{json.dumps(business_schema, separators=(",", ":"))}</script>
 <script type="application/ld+json">{json.dumps(faq_schema, separators=(",", ":"))}</script>
@@ -779,7 +779,7 @@ if DIST.exists():
 (DIST / "assets" / "logo").mkdir(parents=True)
 (DIST / "assets" / "video").mkdir(parents=True)
 shutil.copytree(OUT, DIST / "assets" / "v4")
-for filename in ("brandmark.png", "wordmark.png", "favicon.png"):
+for filename in ("brandmark.png", "wordmark.png", "favicon.png", "favicon-32x32.png", "favicon-16x16.png", "apple-touch-icon.png", "favicon.ico"):
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):
     shutil.copy2(ROOT / "assets" / "video" / filename, DIST / "assets" / "video" / filename)
