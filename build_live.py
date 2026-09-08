@@ -560,11 +560,7 @@ markup = require_replace(
 )
 markup = markup.replace("preload=\"auto\"", "preload=\"metadata\"")
 markup = markup.replace("Captured from the current My Slip portal for this design review.", "Your real service history, visit photos and payments in one place.")
-markup = markup.replace("Run hard. Look right. / V4 design concept for approval", "Run hard. Look right. / South Florida dockside detailing")
-markup = markup.replace(
-    '<a href="#pw-area">Stuart → Fort Lauderdale</a><a href="#pw-quote">Get a quote</a>',
-    '<a href="#pw-area">Stuart → Fort Lauderdale</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a quote</a>',
-)
+markup = markup.replace("Run hard. Look right. / V4 design concept for approval", "Run hard. Look right. / South Florida Dockside Detailing")
 
 markup = require_replace(
     markup,
