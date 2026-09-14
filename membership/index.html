@@ -311,6 +311,13 @@ html{scroll-behavior:smooth}body{margin:0;background:#0A1A2F;color:#F4F8FC;font-
 #pw-redesign-v3 .pw-membercontact a:first-child{font:400 31px/1 Oswald,Arial,sans-serif;color:#F4F8FC}
 #pw-redesign-v3 .pw-cityfooter .pw-logo{min-width:0}
 #pw-redesign-v3 .pw-cityfooter .pw-wordmark img{width:128px;height:auto;object-fit:contain}
+#pw-redesign-v3 .pw-hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
+#pw-redesign-v3 .pw-leadsection{background:#10243B;border-top:1px solid var(--pw-line);border-bottom:1px solid var(--pw-line)}
+#pw-redesign-v3 .pw-leadsection+.pw-leadsection{border-top:0}
+#pw-redesign-v3 .pw-leadsection .pw-form{max-width:680px}
+#pw-redesign-v3 .pw-formnote:empty{display:none}
+#pw-redesign-v3 .pw-formnote.pw-formerror{color:var(--pw-amber)}
+#pw-redesign-v3 .pw-leadsection .pw-confirm{max-width:680px}
 @container(max-width:800px){#pw-redesign-v3 .pw-citynav .pw-navlinks{display:none}#pw-redesign-v3 .pw-membertiergrid{grid-template-columns:1fr}#pw-redesign-v3 .pw-memberexplore,#pw-redesign-v3 .pw-membercta{grid-template-columns:1fr}}
 @container(max-width:520px){#pw-redesign-v3 .pw-nav{min-height:79px}#pw-redesign-v3 .pw-navright .pw-login{display:none}#pw-redesign-v3 .pw-memberherobody{padding-top:82px;padding-bottom:50px}#pw-redesign-v3 .pw-memberhero h1{font-size:44px}#pw-redesign-v3 .pw-sectionhead{align-items:start;flex-direction:column}#pw-redesign-v3 .pw-footertop{grid-template-columns:1fr}}
 </style>
@@ -334,7 +341,7 @@ html{scroll-behavior:smooth}body{margin:0;background:#0A1A2F;color:#F4F8FC;font-
         <div class="pw-kicker pw-eyebrow">Membership plans</div>
         <h1>Boat Detailing Membership Plans</h1>
         <p class="pw-memberintro">One boat, your level of care. Every Propwash membership keeps salt off on a schedule you set, with photos after every visit so you always know it's been looked after. The difference between the tiers is how much you want us to handle — from a clean boat on repeat, to a boat that's fully managed between trips. Every plan is custom quoted to your boat, and every new plan starts with a Full Detail.</p>
-        <div class="pw-memberheroactions"><a class="pw-cta" href="/#pw-quote">Get a free quote <span class="pw-arrow" aria-hidden="true"></span></a><a class="pw-cta pw-outline" href="#pw-membertable">Compare the tiers</a></div>
+        <div class="pw-memberheroactions"><a class="pw-cta" href="#pw-lead-quote">Get a free quote <span class="pw-arrow" aria-hidden="true"></span></a><a class="pw-cta pw-outline" href="#pw-membertable">Compare the tiers</a></div>
       </div>
     </section>
     <section class="pw-membertiers pw-section pw-wrap">
@@ -345,21 +352,21 @@ html{scroll-behavior:smooth}body{margin:0;background:#0A1A2F;color:#F4F8FC;font-
           <div class="pw-membertag">Keeps it clean.</div>
           <em>Essential care.</em>
           <p>Silver is the simplest way to never let salt build up again. Recurring washes on the schedule you set — weekly, bi-weekly or monthly — with a full exterior wash and salt rinse every single visit, and a photo when we're done. You're locked into your rotation, so there's no chasing us down. Set it once; we keep the salt off from there.</p>
-          <a class="pw-textlink" href="/#pw-quote">Get a free quote </a>
+          <a class="pw-textlink" href="#pw-lead-quote">Get a free quote </a>
         </article>
         <article class="pw-membertier">
           <div class="pw-membertierhead"><h2>Gold</h2></div>
           <div class="pw-membertag">Keeps it maintained.</div>
           <em>Complete maintenance. Our core plan.</em>
           <p>Gold keeps a working boat maintained year-round without you thinking about it. Everything in Silver, plus a complete Full Detail every month — oxidation and rust off the gelcoat, mold off the seats, hatches and compartments cleaned out, a deep interior. You get priority scheduling ahead of standard washes and your own assigned detailer who learns the boat over time. You put in the hours on the water; we make sure the salt never catches up.</p>
-          <a class="pw-textlink" href="/#pw-quote">Get a free quote </a>
+          <a class="pw-textlink" href="#pw-lead-quote">Get a free quote </a>
         </article>
         <article class="pw-membertier">
           <div class="pw-membertierhead"><h2>Platinum</h2><span class="pw-memberinvite">Invite only</span></div>
           <div class="pw-membertag">We manage your boat.</div>
           <em>By invitation. Capped at 15 boats.</em>
           <p>Platinum is the closest thing there is to having someone manage your boat for you. Everything in Gold, plus two Trip Ready preps a month — you show up and she's ready to run: wiped down, canvas off, coolers iced, water and drinks stocked, electronics on, lines stowed. On-call washdowns between visits, a 24-hour response window, spot reporting from your Slip, and top priority on the calendar. Invite-only and capped at 15 boats, so the list stays short on purpose.</p>
-          <a class="pw-textlink" href="/#pw-quote">Request an invite </a>
+          <a class="pw-textlink" href="#pw-lead-invite">Request an invite </a>
         </article>
       </div>
     </section>
@@ -415,11 +422,93 @@ html{scroll-behavior:smooth}body{margin:0;background:#0A1A2F;color:#F4F8FC;font-
       </div>
     </section>
     <section class="pw-membercta pw-wrap">
-      <div><div class="pw-kicker pw-eyebrow pw-muted">Find your fit</div><h2>Curious where your boat fits?</h2><p>Tell us what you run, where it sits and how you use it, and we'll recommend the right plan.</p><a class="pw-cta" href="/#pw-quote">Get a free quote <span class="pw-arrow" aria-hidden="true"></span></a><p class="pw-membertagline">Salt never sleeps. Neither do we.</p></div>
+      <div><div class="pw-kicker pw-eyebrow pw-muted">Find your fit</div><h2>Curious where your boat fits?</h2><p>Tell us what you run, where it sits and how you use it, and we'll recommend the right plan.</p><a class="pw-cta" href="#pw-lead-quote">Get a free quote <span class="pw-arrow" aria-hidden="true"></span></a><p class="pw-membertagline">Salt never sleeps. Neither do we.</p></div>
       <div class="pw-membercontact"><span class="pw-eyebrow">Meet us dockside</span><a href="tel:+15612918554">(561) 291-8554</a><a href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine</a></div>
+    </section>
+    <section id="pw-lead-quote" class="pw-leadsection pw-section pw-wrap">
+      <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">Get a quote</div><h2>Tell us about<br> your boat.</h2></div><p>Silver or Gold, or not sure yet — send the details and we'll follow up with a plan.</p></div>
+      <form id="pw-lead-quote-form" class="pw-form pw-leadform">
+        <input type="hidden" name="type" value="quote">
+        <label class="pw-hp" aria-hidden="true">Leave this field empty<input name="company" tabindex="-1" autocomplete="off"></label>
+        <div class="pw-formfields">
+          <div class="pw-field"><label for="pw-lq-length">Boat length (ft)</label><input id="pw-lq-length" name="boatLength" type="number" min="1" max="300" step=".1" placeholder="e.g. 32" required></div>
+          <div class="pw-field"><label for="pw-lq-make">Make / model (optional)</label><input id="pw-lq-make" name="makeModel" placeholder="e.g. Valhalla 39"></div>
+          <div class="pw-field pw-full"><label for="pw-lq-location">Where the boat sits</label><input id="pw-lq-location" name="boatLocation" placeholder="Marina + Slip, lift or address" required></div>
+          <div class="pw-field pw-full"><label for="pw-lq-interest">Service interest</label><select id="pw-lq-interest" name="serviceInterest"><option>Not sure – recommend</option><option>Silver</option><option>Gold</option></select></div>
+          <div class="pw-field"><label for="pw-lq-first">First name</label><input id="pw-lq-first" name="firstName" autocomplete="given-name" required></div>
+          <div class="pw-field"><label for="pw-lq-last">Last name</label><input id="pw-lq-last" name="lastName" autocomplete="family-name" required></div>
+          <div class="pw-field"><label for="pw-lq-phone">Phone</label><input id="pw-lq-phone" name="phone" type="tel" autocomplete="tel" placeholder="e.g. (561) 555-0123" required></div>
+          <div class="pw-field"><label for="pw-lq-email">Email</label><input id="pw-lq-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          <div class="pw-field pw-full"><label for="pw-lq-source">How did you hear about us? (optional)</label><select id="pw-lq-source" name="referralSource"><option value="">Select one</option><option>Google</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>Nextdoor</option><option>Referral</option><option>Marina</option><option>Other</option></select></div>
+          <div class="pw-field pw-full"><label for="pw-lq-notes">Notes (optional)</label><textarea id="pw-lq-notes" name="notes" placeholder="Condition, deadlines, anything else"></textarea></div>
+        </div>
+        <div class="pw-formactions"><button class="pw-cta" type="submit">Send request</button></div>
+        <p class="pw-formnote" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section id="pw-lead-invite" class="pw-leadsection pw-section pw-wrap">
+      <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">Platinum invite</div><h2>Request an<br> invite.</h2></div><p>Platinum is invite-only and capped at 15 boats. Tell us about the boat and we'll follow up.</p></div>
+      <form id="pw-lead-invite-form" class="pw-form pw-leadform">
+        <input type="hidden" name="type" value="invite">
+        <label class="pw-hp" aria-hidden="true">Leave this field empty<input name="company" tabindex="-1" autocomplete="off"></label>
+        <div class="pw-formfields">
+          <div class="pw-field"><label for="pw-li-length">Boat length (ft)</label><input id="pw-li-length" name="boatLength" type="number" min="1" max="300" step=".1" placeholder="e.g. 45" required></div>
+          <div class="pw-field"><label for="pw-li-make">Make / model (optional)</label><input id="pw-li-make" name="makeModel" placeholder="e.g. Valhalla 39"></div>
+          <div class="pw-field pw-full"><label for="pw-li-location">Where the boat sits</label><input id="pw-li-location" name="boatLocation" placeholder="Marina + Slip, lift or address" required></div>
+          <div class="pw-field"><label for="pw-li-first">First name</label><input id="pw-li-first" name="firstName" autocomplete="given-name" required></div>
+          <div class="pw-field"><label for="pw-li-last">Last name</label><input id="pw-li-last" name="lastName" autocomplete="family-name" required></div>
+          <div class="pw-field"><label for="pw-li-phone">Phone</label><input id="pw-li-phone" name="phone" type="tel" autocomplete="tel" placeholder="e.g. (561) 555-0123" required></div>
+          <div class="pw-field"><label for="pw-li-email">Email</label><input id="pw-li-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+          <div class="pw-field pw-full"><label for="pw-li-why">What made you interested in Platinum? (optional)</label><textarea id="pw-li-why" name="platinumInterest" placeholder="Tell us a bit more"></textarea></div>
+        </div>
+        <div class="pw-formactions"><button class="pw-cta" type="submit">Request an invite</button></div>
+        <p class="pw-formnote" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
   <footer class="pw-footer pw-wrap pw-cityfooter"><div class="pw-footertop"><div class="pw-footerintro"><a class="pw-logo" href="/"><img src="../assets/logo/brandmark.png" alt=""><span class="pw-wordmark"><img src="../assets/logo/wordmark.png" alt="Propwash"><small>MARINE DETAILING</small></span></a><p>Mobile and dockside detailing for boats that run hard. Based in South Florida.</p></div><div class="pw-footerlinks"><span class="pw-eyebrow">Explore</span><a href="/">Home</a><a href="/#pw-services">Services</a><a href="/membership/">Membership</a><a href="/#pw-area">Service area</a><a href="/#pw-quote">Get a quote</a></div><div class="pw-footerlinks"><span class="pw-eyebrow">Meet us dockside</span><a href="tel:+15612918554">(561) 291-8554</a><a href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a></div></div><div class="pw-footerbottom"><span>© 2026 Propwash Marine Detailing LLC</span><span>Run hard. Look right.</span></div></footer>
 </div>
+<script>
+(function(){
+  function byId(id){return document.getElementById(id);}
+  ['pw-lead-quote-form','pw-lead-invite-form'].forEach(function(formId){
+    var form=byId(formId);
+    if(!form)return;
+    var note=form.querySelector('.pw-formnote');
+    var button=form.querySelector('.pw-formactions button');
+    var defaultLabel=button.textContent;
+    form.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!form.reportValidity())return;
+      var payload={};
+      new FormData(form).forEach(function(value,key){payload[key]=value;});
+      button.disabled=true;
+      button.textContent='Sending…';
+      note.textContent='';
+      note.classList.remove('pw-formerror');
+      fetch('/.netlify/functions/lead-intake',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      }).then(function(res){
+        if(!res.ok)throw new Error('bad status');
+        return res.json();
+      }).then(function(data){
+        if(!data||data.ok!==true)throw new Error('not ok');
+        var confirmBox=document.createElement('div');
+        confirmBox.className='pw-confirm';
+        confirmBox.setAttribute('aria-live','polite');
+        confirmBox.innerHTML='<h3>We’ve got your boat.</h3><p>We’ll follow up shortly.</p>';
+        form.replaceWith(confirmBox);
+      }).catch(function(){
+        button.disabled=false;
+        button.textContent=defaultLabel;
+        note.textContent='Something went wrong — call or text us at (561) 291-8554.';
+        note.classList.add('pw-formerror');
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
