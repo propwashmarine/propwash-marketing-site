@@ -9,6 +9,7 @@ import subprocess
 ROOT = Path(__file__).parent
 TEMPLATE = ROOT / "src" / "v4-template.html"
 CITY_TEMPLATE = ROOT / "src" / "city-template.html"
+MEMBERSHIP_TEMPLATE = ROOT / "src" / "membership-template.html"
 MEDIA = Path("/Volumes/Jack's Hard Drive/Propwash/Website Media")
 DERIVED = ROOT / "src" / "media-derived"
 OUT = ROOT / "assets" / "v4"
@@ -489,6 +490,80 @@ def render_city_page(slug: str, data: dict, shared_styles: str) -> str:
     )
 
 
+def render_membership_page(shared_styles: str) -> str:
+    canonical_url = f"{BASE_URL}/membership/"
+    city_names = dict(CITY_ORDER)
+    city_links_html = "\n".join(
+        f'          <a href="/boat-detailing-{slug}/">{escape(city)}</a>'
+        for slug, city in ((item, city_names[item]) for item, _ in CITY_ORDER)
+    )
+    business_schema = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": f"{canonical_url}#business",
+        "name": "Propwash Marine Detailing",
+        "url": canonical_url,
+        "telephone": "+1-561-291-8554",
+        "areaServed": ["Stuart", "Boca Raton", "Fort Lauderdale"],
+        "sameAs": ["https://instagram.com/propwashmarine"],
+    }
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "Membership", "item": canonical_url},
+        ],
+    }
+    faq_schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is included in a boat detailing membership?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Every Propwash membership includes recurring exterior washes and salt rinses on the schedule you set, with photos after every visit. Gold and Platinum add a complete Full Detail every month, and Platinum adds Trip Ready prep and between-visit care.",
+                },
+            },
+            {
+                "@type": "Question",
+                "name": "How much does a boat detailing membership cost?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Every plan is custom quoted based on the boat's length, condition and how it is used. Contact Propwash Marine Detailing at (561) 291-8554 for a free quote.",
+                },
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between Silver, Gold and Platinum?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Silver keeps the boat clean with recurring washes. Gold adds a monthly Full Detail and priority scheduling. Platinum is invite-only and adds Trip Ready prep, between-visit washdowns and top scheduling priority.",
+                },
+            },
+        ],
+    }
+    hero_image = "assets/v4/memberGold.webp"
+    return render_tokens(
+        MEMBERSHIP_TEMPLATE.read_text(),
+        {
+            "TITLE": escape("Boat Detailing Membership Plans | Propwash Marine Detailing"),
+            "META_DESCRIPTION": escape("Recurring boat detailing membership plans in South Florida — Silver, Gold and Platinum. Washes, monthly Full Details and Trip Ready care, custom quoted for your boat."),
+            "CANONICAL_URL": canonical_url,
+            "OG_TITLE": escape("Boat Detailing Membership Plans | Propwash Marine"),
+            "OG_DESCRIPTION": escape("Silver, Gold and Platinum plans for boats that get used. South Florida, dockside."),
+            "HERO_ABSOLUTE_URL": f"{BASE_URL}/{hero_image}",
+            "CITY_LINKS_HTML": city_links_html,
+            "SHARED_STYLES": shared_styles,
+            "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
+            "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
+            "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
+        },
+    )
+
+
 source = TEMPLATE.read_text()
 head_links = re.search(r"<head>([\s\S]*?)</head>", source).group(1).strip()
 styles = re.search(r"<style>([\s\S]*?)</style>", source).group(1)
@@ -759,8 +834,15 @@ for slug, data in CITY_DATA.items():
     city_file.write_text(city_document)
     city_outputs.append(city_directory)
 
+membership_directory = ROOT / "membership"
+if membership_directory.exists():
+    shutil.rmtree(membership_directory)
+membership_directory.mkdir(parents=True)
+(membership_directory / "index.html").write_text(render_membership_page(styles))
+
 sitemap_entries = [
-    f"  <url><loc>{BASE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>"
+    f"  <url><loc>{BASE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>",
+    f"  <url><loc>{BASE_URL}/membership/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>",
 ]
 sitemap_entries.extend(
     f"  <url><loc>{BASE_URL}/boat-detailing-{slug}/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>"
@@ -783,11 +865,13 @@ for filename in ("brandmark.png", "wordmark.png", "favicon.png", "favicon-32x32.
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):
     shutil.copy2(ROOT / "assets" / "video" / filename, DIST / "assets" / "video" / filename)
-for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml", "_redirects"):
+for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml", "llms.txt", "_redirects"):
     shutil.copy2(ROOT / filename, DIST / filename)
 for city_directory in city_outputs:
     shutil.copytree(city_directory, DIST / city_directory.name)
+shutil.copytree(membership_directory, DIST / membership_directory.name)
 print(f"Built {ROOT / 'index.html'} ({len(document.encode()):,} bytes)")
 print(f"Built {len(city_outputs)} city landing page(s): {', '.join(path.name for path in city_outputs)}")
+print(f"Built the membership landing page at {membership_directory}")
 print(f"Created {len(image_sources)} optimized production images and the full hero video")
 print(f"Prepared deployable folder at {DIST}")
