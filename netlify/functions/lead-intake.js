@@ -110,8 +110,8 @@ async function sendLeadEmail(type, record) {
 
   const subject =
     type === "invite"
-      ? `Platinum invite request — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`
-      : `New quote request — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`;
+      ? `[Propwash Lead] Platinum invite — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`
+      : `[Propwash Lead] Quote request — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`;
 
   const rows = buildFieldRows(type, record)
     .map(([label, value]) => `<tr><td style="padding:4px 12px 4px 0;color:#667;"><strong>${esc(label)}</strong></td><td style="padding:4px 0;">${esc(value) || "—"}</td></tr>`)

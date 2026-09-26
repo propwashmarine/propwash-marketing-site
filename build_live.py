@@ -11,6 +11,10 @@ TEMPLATE = ROOT / "src" / "v4-template.html"
 CITY_TEMPLATE = ROOT / "src" / "city-template.html"
 MEMBERSHIP_TEMPLATE = ROOT / "src" / "membership-template.html"
 MEDIA = Path("/Volumes/Jack's Hard Drive/Propwash/Website Media")
+# When the source media drive isn't mounted (any machine but Jack's), the build
+# reuses the already-optimized assets committed under assets/v4 instead of
+# re-deriving them. Behavior is identical when the drive IS present.
+MEDIA_AVAILABLE = MEDIA.exists()
 DERIVED = ROOT / "src" / "media-derived"
 OUT = ROOT / "assets" / "v4"
 DIST = ROOT / "dist"
@@ -572,17 +576,18 @@ markup_end = source.index("<script>", markup_start)
 markup = source[markup_start:markup_end].strip()
 script = re.search(r"<script>([\s\S]*?)</script>", source).group(1)
 
-if OUT.exists():
+if OUT.exists() and MEDIA_AVAILABLE:
     shutil.rmtree(OUT)
 OUT.mkdir(parents=True, exist_ok=True)
 (ROOT / "assets" / "logo").mkdir(parents=True, exist_ok=True)
 (ROOT / "assets" / "video").mkdir(parents=True, exist_ok=True)
 
-if not (ROOT / "assets" / "logo" / "brandmark.png").exists():
-    shutil.copy2(MEDIA / "L01.png", ROOT / "assets" / "logo" / "brandmark.png")
-if not (ROOT / "assets" / "logo" / "wordmark.png").exists():
-    shutil.copy2(MEDIA / "L02.png", ROOT / "assets" / "logo" / "wordmark.png")
-shutil.copy2(MEDIA / "H01.mp4", ROOT / "assets" / "video" / "hero-v4.mp4")
+if MEDIA_AVAILABLE:
+    if not (ROOT / "assets" / "logo" / "brandmark.png").exists():
+        shutil.copy2(MEDIA / "L01.png", ROOT / "assets" / "logo" / "brandmark.png")
+    if not (ROOT / "assets" / "logo" / "wordmark.png").exists():
+        shutil.copy2(MEDIA / "L02.png", ROOT / "assets" / "logo" / "wordmark.png")
+    shutil.copy2(MEDIA / "H01.mp4", ROOT / "assets" / "video" / "hero-v4.mp4")
 
 image_sources = {
     "hero": MEDIA / "H02.jpg",
@@ -594,7 +599,7 @@ image_sources = {
     "detailSeats": MEDIA / "S02 Seats.jpg",
     "detailTop": DERIVED / "hardtop.png",
     "detailTower": MEDIA / "DSC04465 copy.jpg",
-    "wax": MEDIA / "S03.JPG",
+    "wax": DERIVED / "wax.jpg",
     "compound": MEDIA / "S04 copy.JPG",
     "ceramic": MEDIA / "S05.jpg",
     "plans": MEDIA / "New Maintenance Plan Photo.JPG",
@@ -621,12 +626,22 @@ asset_urls = {
 for key, path in image_sources.items():
     legacy_name = "hero-poster.webp" if key == "hero" else f"{key}.webp"
     legacy = ROOT / "assets" / "v3" / legacy_name
-    if key not in {"plans", "gallery4"} and legacy.exists():
+    if key not in {"plans", "gallery4", "wax"} and legacy.exists():
         filename = legacy_name
         shutil.copy2(legacy, OUT / filename)
-    else:
+    elif MEDIA_AVAILABLE and path.exists():
         filename = f"{key}.jpg"
         save_image(path, OUT / filename, 1800 if key == "plans" else 2200, 82)
+    else:
+        # Media drive absent: reuse the asset already committed under assets/v4.
+        candidates = (
+            ["hero-poster.webp"] if key == "hero" else [f"{key}.webp", f"{key}.jpg"]
+        )
+        filename = next((name for name in candidates if (OUT / name).exists()), None)
+        if filename is None:
+            raise RuntimeError(
+                f"No committed asset for '{key}' and the media drive is unavailable"
+            )
     asset_urls[key] = f"assets/v4/{filename}"
 
 markup = require_replace(
@@ -823,6 +838,180 @@ document = f'''<!doctype html>
 
 (ROOT / "index.html").write_text(document)
 
+def render_services_page(shared_styles: str) -> str:
+    canonical_url = f"{BASE_URL}/services/"
+    services = [
+        ("Signature Wash", "A thorough exterior wash and salt rinse — hull sides, deck, glass, non-skid and rails, dried down by hand. The baseline that keeps salt and grime from setting in between bigger jobs."),
+        ("Full Detail", "The complete reset: wash, then brightwork, rust and mild stain removal, hatch lips, compartments, seats and interior. Where most boats start before going onto a plan."),
+        ("Wax Protection", "A Full Detail followed by machine-applied wax for added gloss and a real layer of protection. Best for a finish that is already in good shape and needs to stay that way."),
+        ("Compound + Polish", "Machine compounding and polishing to cut oxidation, chalking and light scratches out of the gelcoat, bringing back depth and shine before protection goes on."),
+        ("Ceramic Coating", "A longer-lasting ceramic layer over corrected gelcoat for serious gloss, easier washing and months of protection. Prep is matched to the boat — we never coat over oxidation or wax."),
+        ("Teak Care", "Cleaning, brightening and finishing for teak decks and accents so the wood stays protected and warm instead of graying out."),
+        ("Interior Deep Cleaning", "Seats, headliners, compartments, coolers and cabin surfaces cleaned and conditioned, with attention to the spots that trap moisture and odor."),
+        ("Hull Cleaning Coordination", "We coordinate in-water hull and running-gear cleaning with trusted divers, so the bottom is handled alongside the topside work."),
+        ("Trip Ready Prep", "Before a trip we get the boat show-ready — exterior wiped down, glass cleared, canvas handled and cabin set — so you step on and go."),
+    ]
+    steps = [
+        ("Tell us the boat", "Send the length, where it sits and what you are after. Photos help but are not required."),
+        ("We quote the scope", "We recommend the right work and put a price in writing, matched to the boat's condition and how it is used."),
+        ("We come to the boat", "Mobile and dockside from Stuart to Fort Lauderdale — your Slip, lift, trailer or driveway."),
+        ("You see the results", "Photos after every visit, and a plan to keep it that way if you want recurring care."),
+    ]
+    services_html = "".join(
+        f'<article class="pw-cityservice"><span>{i:02d}</span><h3>{escape(name)}</h3><p>{escape(desc)}</p></article>'
+        for i, (name, desc) in enumerate(services, 1)
+    )
+    steps_html = "".join(
+        f'<article class="pw-citystep"><span>{i:02d}</span><h3>{escape(name)}</h3><p>{escape(desc)}</p></article>'
+        for i, (name, desc) in enumerate(steps, 1)
+    )
+    business_schema = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": f"{canonical_url}#business",
+        "name": "Propwash Marine Detailing",
+        "url": canonical_url,
+        "telephone": "+1-561-291-8554",
+        "areaServed": ["Stuart", "Boca Raton", "Fort Lauderdale"],
+        "sameAs": ["https://instagram.com/propwashmarine"],
+    }
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "Services", "item": canonical_url},
+        ],
+    }
+    service_schema = {
+        "@context": "https://schema.org",
+        "@type": "OfferCatalog",
+        "name": "Boat detailing services",
+        "itemListElement": [
+            {"@type": "Offer", "itemOffered": {"@type": "Service", "name": name, "description": desc}}
+            for name, desc in services
+        ],
+    }
+    return render_tokens(
+        (ROOT / "src" / "services-template.html").read_text(),
+        {
+            "SHARED_STYLES": shared_styles,
+            "SERVICES_HTML": services_html,
+            "STEPS_HTML": steps_html,
+            "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
+            "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
+            "SERVICE_SCHEMA": json.dumps(service_schema, separators=(",", ":")),
+        },
+    )
+
+
+def render_gallery_page(shared_styles: str) -> str:
+    canonical_url = f"{BASE_URL}/gallery/"
+    items = [
+        ("gallery1", "Dockside ready", "Glossy boat hull reflecting the waterfront at the dock"),
+        ("detailTower", "Deck to tower", "Polished hardtop and tower on a center console boat"),
+        ("gallery3", "Brightwork in focus", "Restored brightwork and polished stainless on a boat"),
+        ("wax", "Machine-applied protection", "Machine-applying wax to a boat hull"),
+        ("detailSeats", "Seats ready to ride", "Cleaned and conditioned boat seats and cushions"),
+        ("gallery4", "Console clarity", "Clean boat helm with polished stainless catching the light"),
+        ("detailInterior", "Inside counts", "Detailed boat interior and cabin surfaces"),
+        ("ceramic", "Ceramic gloss", "Ceramic-coated boat hull with deep gloss and reflection"),
+        ("detailMain", "The complete reset", "Boat after a complete Full Detail"),
+    ]
+    gallery_html = "".join(
+        f'<figure class="pw-galleryitem"><img src="../{asset_urls[key]}" alt="{escape(alt)}" loading="lazy"><figcaption>{escape(cap)}</figcaption></figure>'
+        for key, cap, alt in items
+    )
+    hero_src = "../" + asset_urls["detailTower"]
+    business_schema = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": f"{canonical_url}#business",
+        "name": "Propwash Marine Detailing",
+        "url": canonical_url,
+        "telephone": "+1-561-291-8554",
+        "areaServed": ["Stuart", "Boca Raton", "Fort Lauderdale"],
+        "sameAs": ["https://instagram.com/propwashmarine"],
+    }
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "Gallery", "item": canonical_url},
+        ],
+    }
+    return render_tokens(
+        (ROOT / "src" / "gallery-template.html").read_text(),
+        {
+            "SHARED_STYLES": shared_styles,
+            "GALLERY_HTML": gallery_html,
+            "HERO_SRC": hero_src,
+            "HERO_ABSOLUTE_URL": f"{BASE_URL}/{asset_urls['detailTower']}",
+            "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
+            "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
+        },
+    )
+
+
+def render_faq_page(shared_styles: str) -> str:
+    canonical_url = f"{BASE_URL}/faq/"
+    faqs = [
+        ("What areas do you serve?", "We're based in Boca Raton and work mobile and dockside from Stuart down to Fort Lauderdale — your Slip, lift, trailer or driveway. Just outside that stretch? Ask us and we'll let you know."),
+        ("Do you come to my boat?", "Yes. We're a mobile and dockside service, so we bring everything to wherever the boat sits. You don't need to haul it anywhere."),
+        ("Do I need to be there?", "No, as long as we have access to the boat and water/power where needed. Many clients leave a key or gate code and we send photos when we're done."),
+        ("How much does it cost?", "Every job is quoted to the boat — its length, condition and how it's used all move the number. Tell us about the boat and we'll put a price in writing. Quotes are free."),
+        ("How do I get a quote?", "Send the boat's length, where it sits and what you're after through the quote form or give us a call. Photos help but aren't required, and we can recommend the right scope if you're not sure."),
+        ("What's the difference between a wash, a Full Detail and a coating?", "A wash is recurring maintenance cleaning that keeps salt and grime off. A Full Detail is a deep reset — brightwork, stains, compartments and interior. Wax or a ceramic coating goes on top to add gloss and protection that lasts."),
+        ("Wax or ceramic — which do I need?", "It depends on the boat's condition and how long you want the protection to last. Wax is a great refresh on a finish that's already in shape; ceramic lasts far longer but needs corrected gelcoat first. We never coat over oxidation or wax."),
+        ("How often should I schedule a wash?", "It comes down to how much the boat is used and whether it's covered or in the open. Weekly, bi-weekly and monthly are all common — we'll recommend a cadence and you set the schedule."),
+        ("Do you work on boats over 50 feet?", "Yes. Larger boats and yachts are quoted for the added surface area and time, but they're well within what we handle."),
+        ("Do you offer hull or bottom cleaning?", "We coordinate in-water hull and running-gear cleaning with trusted divers, so the bottom can be handled alongside the topside work."),
+        ("What happens if it rains?", "We'll reschedule to the next good window — no charge for weather. Recurring plans build this in, so a rained-out visit just shifts."),
+        ("How do memberships work?", "Memberships put recurring work on a simple plan at member rates — Silver keeps it clean, Gold keeps it maintained, and Platinum manages the boat for you. Every plan is quoted to your boat. See the membership page for details."),
+    ]
+    faq_html = "".join(
+        f"<details class=\"pw-faqitem\"><summary>{escape(q)}</summary><p>{escape(a)}</p></details>"
+        for q, a in faqs
+    )
+    faq_schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}}
+            for q, a in faqs
+        ],
+    }
+    business_schema = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": f"{canonical_url}#business",
+        "name": "Propwash Marine Detailing",
+        "url": canonical_url,
+        "telephone": "+1-561-291-8554",
+        "areaServed": ["Stuart", "Boca Raton", "Fort Lauderdale"],
+        "sameAs": ["https://instagram.com/propwashmarine"],
+    }
+    breadcrumb_schema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{BASE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": "FAQ", "item": canonical_url},
+        ],
+    }
+    return render_tokens(
+        (ROOT / "src" / "faq-template.html").read_text(),
+        {
+            "SHARED_STYLES": shared_styles,
+            "FAQ_HTML": faq_html,
+            "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
+            "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
+            "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
+        },
+    )
+
+
 city_outputs = []
 for slug, data in CITY_DATA.items():
     city_directory = ROOT / f"boat-detailing-{slug}"
@@ -840,9 +1029,30 @@ if membership_directory.exists():
 membership_directory.mkdir(parents=True)
 (membership_directory / "index.html").write_text(render_membership_page(styles))
 
+services_directory = ROOT / "services"
+if services_directory.exists():
+    shutil.rmtree(services_directory)
+services_directory.mkdir(parents=True)
+(services_directory / "index.html").write_text(render_services_page(styles))
+
+gallery_directory = ROOT / "gallery"
+if gallery_directory.exists():
+    shutil.rmtree(gallery_directory)
+gallery_directory.mkdir(parents=True)
+(gallery_directory / "index.html").write_text(render_gallery_page(styles))
+
+faq_directory = ROOT / "faq"
+if faq_directory.exists():
+    shutil.rmtree(faq_directory)
+faq_directory.mkdir(parents=True)
+(faq_directory / "index.html").write_text(render_faq_page(styles))
+
 sitemap_entries = [
     f"  <url><loc>{BASE_URL}/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>",
     f"  <url><loc>{BASE_URL}/membership/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>",
+    f"  <url><loc>{BASE_URL}/services/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>",
+    f"  <url><loc>{BASE_URL}/gallery/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>",
+    f"  <url><loc>{BASE_URL}/faq/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>",
 ]
 sitemap_entries.extend(
     f"  <url><loc>{BASE_URL}/boat-detailing-{slug}/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>"
@@ -870,6 +1080,9 @@ for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml", "l
 for city_directory in city_outputs:
     shutil.copytree(city_directory, DIST / city_directory.name)
 shutil.copytree(membership_directory, DIST / membership_directory.name)
+shutil.copytree(services_directory, DIST / services_directory.name)
+shutil.copytree(gallery_directory, DIST / gallery_directory.name)
+shutil.copytree(faq_directory, DIST / faq_directory.name)
 print(f"Built {ROOT / 'index.html'} ({len(document.encode()):,} bytes)")
 print(f"Built {len(city_outputs)} city landing page(s): {', '.join(path.name for path in city_outputs)}")
 print(f"Built the membership landing page at {membership_directory}")

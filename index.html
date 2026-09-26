@@ -260,6 +260,57 @@
 @keyframes pw-fm-sweep{0%{opacity:0;transform:translateX(-3400px)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateX(13000px)}}
 @media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-footermark .pw-fm-fill{clip-path:none;opacity:0}#pw-redesign-v3 .pw-footer:hover .pw-fm-fill{clip-path:none;opacity:1}#pw-redesign-v3 .pw-footermark .pw-fm-sheen{display:none}}
 
+/* ===== Mobile membership: horizontal pill-tag selector (appended) ===== */
+@container (max-width:600px){
+  #pw-redesign-v3 .pw-v2plans{
+    display:flex;
+    gap:8px;
+    margin-top:22px;
+    padding:11px 0;
+    position:sticky;
+    top:0;
+    z-index:6;
+    background:#0D2035;
+  }
+  #pw-redesign-v3 .pw-v2plans .pw-metal{
+    flex:1 1 0;
+    display:block;
+    min-height:0;
+    padding:11px 6px;
+    text-align:center;
+    background:#142942;
+    border:1px solid #33445B;
+    border-radius:3px;
+    box-shadow:none;
+    transform:none;
+    color:#B8C4D2;
+    isolation:auto;
+  }
+  #pw-redesign-v3 .pw-v2plans .pw-metal:before,
+  #pw-redesign-v3 .pw-v2plans .pw-metal:after{display:none}
+  #pw-redesign-v3 .pw-v2plans .pw-metalover,
+  #pw-redesign-v3 .pw-v2plans .pw-metaltag,
+  #pw-redesign-v3 .pw-v2plans .pw-metaldesc,
+  #pw-redesign-v3 .pw-v2plans .pw-metalextras,
+  #pw-redesign-v3 .pw-v2plans .pw-metalrule,
+  #pw-redesign-v3 .pw-v2plans .pw-metalaction{display:none}
+  #pw-redesign-v3 .pw-v2plans .pw-metal strong{font-size:14px;line-height:1;letter-spacing:.02em;color:inherit}
+  /* tier colour-coding — unselected: tinted name + border */
+  #pw-redesign-v3 .pw-v2plans .pw-silver{border-color:#55657A}
+  #pw-redesign-v3 .pw-v2plans .pw-silver strong{color:#CBD8E8}
+  #pw-redesign-v3 .pw-v2plans .pw-gold{border-color:#6D5F3E}
+  #pw-redesign-v3 .pw-v2plans .pw-gold strong{color:#D9BC82}
+  #pw-redesign-v3 .pw-v2plans .pw-platinum{border-color:#345B82}
+  #pw-redesign-v3 .pw-v2plans .pw-platinum strong{color:#6FB0FF}
+  /* selected: filled with the tier's colour */
+  #pw-redesign-v3 .pw-v2plans .pw-silver[aria-pressed=true]{background:#C4D4E6;border-color:#C4D4E6}
+  #pw-redesign-v3 .pw-v2plans .pw-silver[aria-pressed=true] strong{color:#0A1A2F}
+  #pw-redesign-v3 .pw-v2plans .pw-gold[aria-pressed=true]{background:#D9BC82;border-color:#D9BC82}
+  #pw-redesign-v3 .pw-v2plans .pw-gold[aria-pressed=true] strong{color:#0A1A2F}
+  #pw-redesign-v3 .pw-v2plans .pw-platinum[aria-pressed=true]{background:#1E90FF;border-color:#1E90FF}
+  #pw-redesign-v3 .pw-v2plans .pw-platinum[aria-pressed=true] strong{color:#FFFFFF}
+  #pw-redesign-v3 .pw-planpanel{padding-top:18px}
+}
 
 html{scroll-behavior:smooth;background:#0A1A2F}
 body{margin:0;background:#0A1A2F;overflow-x:hidden}
@@ -308,7 +359,7 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
   <div class="pw-v2scrim"></div>
   <header class="pw-nav pw-wrap">
     <a href="#pw-top" class="pw-logo" aria-label="Propwash Marine Detailing home"><img class="pw-brandmark" data-pw-img="brandmark" alt=""><span class="pw-wordmark"><img data-pw-img="wordmark" alt="Propwash"><small>MARINE DETAILING</small></span></a>
-    <nav class="pw-navlinks" aria-label="Main navigation"><a href="#pw-services">Services</a><a href="#pw-membership">Membership</a><a href="#pw-results">Results</a><a href="#pw-area">Service area</a><a href="#pw-portal">Owner Portal</a></nav>
+    <nav class="pw-navlinks" aria-label="Main navigation"><a href="/services/">Services</a><a href="/gallery/">Gallery</a><a href="/membership/">Membership</a><a href="/faq/">FAQ</a></nav>
     <div class="pw-navright"><a class="pw-login" href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a class="pw-cta" href="#pw-quote">Get a quote</a><button class="pw-menubtn" id="pw-menu" type="button" aria-controls="pw-mobilemenu" aria-expanded="false">Menu +</button></div>
   </header>
   <nav class="pw-mobilemenu" id="pw-mobilemenu" aria-label="Mobile navigation" hidden><a href="#pw-services">Services</a><a href="#pw-membership">Membership</a><a href="#pw-results">Results</a><a href="#pw-area">Service area</a><a href="#pw-portal">Owner Portal</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a quote</a></nav>
@@ -328,7 +379,7 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
         <div class="pw-servicelist">
           <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="true" aria-controls="pw-svc-0" data-service="0"><span class="pw-num">01</span><span class="pw-servicename">Signature Wash</span><span class="pw-plus">−</span></button><div class="pw-servicecopy" id="pw-svc-0"><div class="pw-servicepanel"><img data-pw-img="signature" alt="Signature Wash in progress"><div><span class="pw-eyebrow">One-time care</span><h3>A proper wash. No plan required.</h3><p>A thorough one-time exterior wash and salt rinse. No membership required. We assess the boat's condition and confirm when a Full Detail would be the better starting point.</p><button type="button" class="pw-textlink" data-quote="Signature Wash">Custom quote </button></div></div></div></div>
           <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-1" data-service="1"><span class="pw-num">02</span><span class="pw-servicename">Full Detail</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-1" hidden><div class="pw-servicepanel"><img data-pw-img="detailMain" alt="Full Detail in progress"><div><span class="pw-eyebrow">Complete reset</span><h3>Every surface gets attention.</h3><p>A complete reset: wash, brightwork, rust and stain removal, hatch lips, compartments and interior cleaning. Explore every surface in the gallery below.</p><a class="pw-textlink" href="#pw-results">See the Full Detail </a></div></div></div></div>
-          <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-2" data-service="2"><span class="pw-num">03</span><span class="pw-servicename">Wax Protection</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-2" hidden><div class="pw-servicepanel"><img data-pw-img="wax" alt="Wax protection on a detailed boat"><div><span class="pw-eyebrow">Gloss + protection</span><h3>Finish the detail with wax.</h3><p>A Full Detail followed by machine-applied wax. Added gloss and protection for a finish that is already in shape.</p><button type="button" class="pw-textlink" data-quote="Wax Protection">Custom quote </button></div></div></div></div>
+          <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-2" data-service="2"><span class="pw-num">03</span><span class="pw-servicename">Wax Protection</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-2" hidden><div class="pw-servicepanel"><img data-pw-img="wax" alt="Propwash detailer machine-applying wax sealant to a boat hull for gloss and protection"><div><span class="pw-eyebrow">Gloss + protection</span><h3>Finish the detail with wax.</h3><p>A Full Detail followed by machine-applied wax. Added gloss and protection for a finish that is already in shape.</p><button type="button" class="pw-textlink" data-quote="Wax Protection">Custom quote </button></div></div></div></div>
           <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-3" data-service="3"><span class="pw-num">04</span><span class="pw-servicename">Compound + Polish</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-3" hidden><div class="pw-servicepanel"><img data-pw-img="compound" alt="Compound and polish work"><div><span class="pw-eyebrow">Correction</span><h3>Bring the finish back.</h3><p>Gelcoat correction matched to the oxidation. Every compound includes its finishing polish. When the surface needs more, wet sanding becomes part of the correction plan.</p><button type="button" class="pw-textlink" data-quote="Compound + Polish">Custom quote </button></div></div></div></div>
           <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-4" data-service="4"><span class="pw-num">05</span><span class="pw-servicename">Ceramic Coating</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-4" hidden><div class="pw-servicepanel"><img data-pw-img="ceramic" alt="Water behavior on a ceramic-protected boat"><div><span class="pw-eyebrow">Long-term protection</span><h3>Preparation first. Ceramic second.</h3><p>We correct the surface before coating and match the package to the boat. The result is visible gloss, easier maintenance and protection built on proper preparation.</p><button type="button" class="pw-textlink" data-quote="Ceramic Coating">Custom quote </button></div></div></div></div>
           <div class="pw-serviceitem"><button class="pw-servicetrigger" type="button" aria-expanded="false" aria-controls="pw-svc-5" data-service="5"><span class="pw-num">06</span><span class="pw-servicename">Maintenance Plans</span><span class="pw-plus">+</span></button><div class="pw-servicecopy" id="pw-svc-5" hidden><div class="pw-servicepanel"><img data-pw-img="plans" alt="Boat maintained at the dock"><div><span class="pw-eyebrow">Recurring care</span><h3>Keep the boat ready.</h3><p>Maintenance washes live here: recurring care, a schedule built around your boat, stain prevention, visit photos and a record after every service. Choose Silver, Gold or Platinum.</p><a class="pw-textlink" href="#pw-membership">Explore membership </a></div></div></div></div>
@@ -375,7 +426,7 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 </section>
     <section id="pw-gallery" class="pw-gallery pw-section pw-wrap">
       <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">05 / From the dock</div><h2>Proof in the finish.</h2></div><a class="pw-textlink" href="https://instagram.com/propwashmarine" target="_blank" rel="noopener">@propwashmarine </a></div>
-      <div class="pw-gallerygrid"><div class="pw-gallerymain"><img data-pw-img="gallery1" id="pw-gallery-feature" alt="Glossy blue hull at the dock"><div class="pw-gallerycap"><h3 id="pw-gallery-name">Dockside ready</h3><p id="pw-gallery-detail">Deep reflection along the waterfront</p></div></div><div class="pw-gallerychoices" role="group" aria-label="Choose a boat-care result to view"><button class="pw-gallerychoice" type="button" data-gallery="gallery1" aria-pressed="true"><img data-pw-img="gallery1" alt=""><span>01 / Dockside ready</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery2" aria-pressed="false"><img data-pw-img="gallery2" alt=""><span>02 / Wherever you are</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery3" aria-pressed="false"><img data-pw-img="gallery3" alt=""><span>03 / Brightwork in focus</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery4" aria-pressed="false"><img data-pw-img="gallery4" alt=""><span>04 / Console clarity</span></button></div></div>
+      <div class="pw-gallerygrid"><div class="pw-gallerymain"><img data-pw-img="gallery1" id="pw-gallery-feature" alt="Glossy blue hull at the dock"><div class="pw-gallerycap"><h3 id="pw-gallery-name">Dockside ready</h3><p id="pw-gallery-detail">Deep reflection along the waterfront</p></div></div><div class="pw-gallerychoices" role="group" aria-label="Choose a boat-care result to view"><button class="pw-gallerychoice" type="button" data-gallery="gallery1" aria-pressed="true"><img data-pw-img="gallery1" alt="Glossy blue boat hull reflecting the waterfront at the dock"><span>01 / Dockside ready</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery2" aria-pressed="false"><img data-pw-img="gallery2" alt="Boat receiving professional detailing at its lift, trailer or slip"><span>02 / Wherever you are</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery3" aria-pressed="false"><img data-pw-img="gallery3" alt="Restored brightwork, transom and engines on a detailed boat"><span>03 / Brightwork in focus</span></button><button class="pw-gallerychoice" type="button" data-gallery="gallery4" aria-pressed="false"><img data-pw-img="gallery4" alt="Clean boat helm with polished stainless steel catching the light"><span>04 / Console clarity</span></button></div></div>
       <div class="pw-moments"><article><h3>Before the next drive.</h3><p>Trip Ready preparation gets the boat set before you arrive. Two preps per month are included with Platinum.</p><button type="button" class="pw-textlink" data-quote="Trip Ready prep">Explore Trip Ready </button></article><article><h3>Salt off after the trip.</h3><p>Request a focused Freshwater Rinse before or after a run—glass and stainless wiped, covers reset and trash removed.</p><button type="button" class="pw-textlink" data-quote="Freshwater Rinse">Request a rinse </button></article></div>
     </section>
 <section id="pw-journal" class="pw-journal pw-section pw-wrap">
@@ -410,10 +461,10 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 'use strict';
 const root=document.getElementById('pw-redesign-v3');
 if(!root)return;
-const assets={"brandmark":"assets/logo/brandmark.png","wordmark":"assets/logo/wordmark.png","video":"assets/video/hero-v4.mp4","hero":"assets/v4/hero-poster.webp","signature":"assets/v4/signature.webp","detailMain":"assets/v4/detailMain.webp","detailBright":"assets/v4/detailBright.webp","detailHatch":"assets/v4/detailHatch.webp","detailInterior":"assets/v4/detailInterior.webp","detailSeats":"assets/v4/detailSeats.webp","detailTop":"assets/v4/detailTop.webp","detailTower":"assets/v4/detailTower.webp","wax":"assets/v4/wax.webp","compound":"assets/v4/compound.webp","ceramic":"assets/v4/ceramic.webp","plans":"assets/v4/plans.jpg","memberSilver":"assets/v4/memberSilver.webp","memberGold":"assets/v4/memberGold.webp","memberPlatinum":"assets/v4/memberPlatinum.webp","dashboard":"assets/v4/dashboard.webp","covers":"assets/v4/covers.webp","gallery1":"assets/v4/gallery1.webp","gallery2":"assets/v4/gallery2.webp","gallery3":"assets/v4/gallery3.webp","gallery4":"assets/v4/gallery4.jpg","blog1":"assets/v4/blog1.webp","blog2":"assets/v4/blog2.webp","blog3":"assets/v4/blog3.webp"};
+const assets={"brandmark":"assets/logo/brandmark.png","wordmark":"assets/logo/wordmark.png","video":"assets/video/hero-v4.mp4","hero":"assets/v4/hero-poster.webp","signature":"assets/v4/signature.webp","detailMain":"assets/v4/detailMain.webp","detailBright":"assets/v4/detailBright.webp","detailHatch":"assets/v4/detailHatch.webp","detailInterior":"assets/v4/detailInterior.webp","detailSeats":"assets/v4/detailSeats.webp","detailTop":"assets/v4/detailTop.webp","detailTower":"assets/v4/detailTower.webp","wax":"assets/v4/wax.jpg","compound":"assets/v4/compound.webp","ceramic":"assets/v4/ceramic.webp","plans":"assets/v4/plans.jpg","memberSilver":"assets/v4/memberSilver.webp","memberGold":"assets/v4/memberGold.webp","memberPlatinum":"assets/v4/memberPlatinum.webp","dashboard":"assets/v4/dashboard.webp","covers":"assets/v4/covers.webp","gallery1":"assets/v4/gallery1.webp","gallery2":"assets/v4/gallery2.webp","gallery3":"assets/v4/gallery3.webp","gallery4":"assets/v4/gallery4.jpg","blog1":"assets/v4/blog1.webp","blog2":"assets/v4/blog2.webp","blog3":"assets/v4/blog3.webp"};
 root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});
 const byId=id=>root.querySelector('#'+id);
-const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;video.src=assets.video;
+const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;if(window.matchMedia('(max-width:700px)').matches){video.removeAttribute('autoplay');video.preload='none';}else{video.src=assets.video;}
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let moving=!reduced;
 function syncVideo(){const toggle=byId('pw-video-toggle');toggle.setAttribute('aria-pressed',String(moving));toggle.textContent=moving?'Ⅱ Pause video':'▶ Play video';if(moving){const play=video.play();if(play)play.catch(()=>{toggle.textContent='▶ Play video';toggle.setAttribute('aria-pressed','false');});}else video.pause();}
@@ -441,7 +492,7 @@ function selectPlan(name,withMotion=true){
  byId('pw-plan-action').textContent=plan.action;byId('pw-plan-quote').dataset.member=name;byId('pw-plan-image-label').textContent=name+' membership';multiline('pw-plan-image-head',plan.imageHead);byId('pw-plan-perk-label').textContent=plan.perkLabel;byId('pw-plan-perk').textContent=plan.perk;byId('pw-plan-cadence').textContent=plan.cadence;byId('pw-plan-priority').textContent=plan.priority;root.querySelector('.pw-planimage img').src=assets[{Silver:'memberSilver',Gold:'memberGold',Platinum:'memberPlatinum'}[name]];
  if(withMotion)animate(byId('pw-planpanel'));
 }
-root.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>selectPlan(btn.dataset.plan)));
+root.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>{selectPlan(btn.dataset.plan);if(window.matchMedia('(max-width:600px)').matches){const sw=root.querySelector('.pw-v2plans');if(sw)sw.scrollIntoView({behavior:'smooth',block:'start'});}}));
 selectPlan('Platinum',false);
 byId('pw-dashboard-expand').addEventListener('click',()=>{const expanded=byId('pw-portal').classList.toggle('pw-expanded');byId('pw-dashboard-expand').setAttribute('aria-expanded',String(expanded));byId('pw-dashboard-expand').firstChild.textContent=expanded?'Return to overview ':'Take a closer look ';});
 
