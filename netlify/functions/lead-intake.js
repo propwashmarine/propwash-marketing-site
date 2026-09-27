@@ -7,7 +7,9 @@
 // visitor and never blocks the lead.
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
-const FROM_ADDRESS = "Propwash Leads <onboarding@resend.dev>";
+// Must be on a Resend-verified domain (propwashmarine.com). Not a real inbox;
+// replies go to the customer via reply_to.
+const FROM_ADDRESS = "Propwash Leads <leads@propwashmarine.com>";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const REQUIRED_FIELDS = ["boatLength", "boatLocation", "firstName", "lastName", "phone", "email"];
@@ -129,8 +131,9 @@ function buildFieldRows(type, record) {
 
 async function sendLeadEmail(type, record) {
   const apiKey = process.env.RESEND_API_KEY;
-  const notifyEmail = process.env.LEAD_NOTIFY_EMAIL;
-  if (!apiKey || !notifyEmail) {
+  // LEAD_NOTIFY_EMAIL may list several recipients, comma-separated.
+  const notifyEmail = (process.env.LEAD_NOTIFY_EMAIL || "").split(",").map((e) => e.trim()).filter(Boolean);
+  if (!apiKey || !notifyEmail.length) {
     throw new Error("RESEND_API_KEY or LEAD_NOTIFY_EMAIL is not configured.");
   }
 
