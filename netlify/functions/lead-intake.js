@@ -1,4 +1,6 @@
-// Single intake point for the membership page's lead forms (quote + invite).
+// Single intake point for the site's lead forms: quote requests (/membership/
+// and homepage) and membership inquiries (/membership/ Platinum invite and the
+// homepage Silver/Gold/Platinum form).
 // The Base44 portal is the system of record: writeToBackend() runs first and
 // decides the visitor's result. The Resend admin email is a best-effort
 // notification after it — an email failure is logged, never shown to the
@@ -82,6 +84,19 @@ function esc(value) {
   }[ch]));
 }
 
+const TIERS = ["Silver", "Gold", "Platinum"];
+
+// Tier for an "invite": the homepage form sends membershipPlan; the
+// /membership/ form only sends invites for Platinum.
+function tierOf(record) {
+  const plan = clean(record.membershipPlan);
+  return TIERS.find((t) => t.toLowerCase() === plan.toLowerCase()) || "Platinum";
+}
+
+function pageOf(record) {
+  return record.formSource === "home" ? "propwashmarine.com (homepage)" : "propwashmarine.com/membership/";
+}
+
 function buildFieldRows(type, record) {
   const rows = [
     ["First name", record.firstName],
@@ -99,7 +114,15 @@ function buildFieldRows(type, record) {
       ["Notes", record.notes]
     );
   } else {
-    rows.push(["What interested them in Platinum", record.platinumInterest]);
+    rows.push(
+      ["Membership tier", tierOf(record)],
+      ["What interested them in Platinum", record.platinumInterest],
+      ["Storage", record.storage],
+      ["Preferred wash cadence", record.washCadence],
+      ["What they want handled", record.careGoals],
+      ["How they heard about us", record.referralSource],
+      ["Notes", record.notes]
+    );
   }
   return rows;
 }
@@ -113,7 +136,7 @@ async function sendLeadEmail(type, record) {
 
   const subject =
     type === "invite"
-      ? `[Propwash Lead] Platinum invite — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`
+      ? `[Propwash Lead] ${tierOf(record) === "Platinum" ? "Platinum invite" : `${tierOf(record)} membership inquiry`} — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`
       : `[Propwash Lead] Quote request — ${record.firstName} ${record.lastName} (${record.boatLength}ft)`;
 
   const rows = buildFieldRows(type, record)
@@ -124,7 +147,7 @@ async function sendLeadEmail(type, record) {
     <p><strong>Phone:</strong> ${esc(record.phone)}<br>
     <strong>Email:</strong> ${esc(record.email)}</p>
     <table cellpadding="0" cellspacing="0">${rows}</table>
-    <p style="color:#889;font-size:12px;">Submitted from propwashmarine.com/membership/ — ${type === "invite" ? "Platinum invite request" : "quote request"}.</p>
+    <p style="color:#889;font-size:12px;">Submitted from ${esc(pageOf(record))} — ${type === "invite" ? `${tierOf(record)} membership request` : "quote request"}.${record.photoAttached ? " A boat photo was attached — see the Netlify Forms submission." : ""}</p>
   `;
 
   const res = await fetch(RESEND_ENDPOINT, {
@@ -149,7 +172,7 @@ async function sendLeadEmail(type, record) {
 }
 
 // Write the lead into the Base44 portal. type "quote" -> Lead (Leads tab,
-// stage "New"); type "invite" -> MembershipRequest for Platinum (Membership
+// stage "New"); type "invite" -> MembershipRequest for its tier (Membership
 // Requests, "New Request"). Throws on failure; the handler decides the response.
 const BASE44_LEAD_URL = "https://propwash.base44.app/functions/createLead";
 const BASE44_MEMBERSHIP_URL = "https://propwash.base44.app/functions/createMembershipRequest";
@@ -206,7 +229,13 @@ function toLead(r) {
     location: clean(r.boatLocation),
     service: clean(r.serviceInterest),
     source: LEAD_SOURCE_ALIASES[referral] || referral || "Website",
-    notes: [clean(r.notes), extraNotes([["Heard about us", referral]])].filter(Boolean).join("\n\n"),
+    notes: [
+      clean(r.notes),
+      extraNotes([
+        ["Heard about us", referral],
+        ["Boat photo", r.photoAttached ? "attached — see the Netlify Forms submission" : ""],
+      ]),
+    ].filter(Boolean).join("\n\n"),
   };
 }
 
@@ -215,13 +244,20 @@ function toMembershipRequest(r) {
     customer_name: `${clean(r.firstName)} ${clean(r.lastName)}`.trim(),
     customer_email: clean(r.email),
     phone: clean(r.phone),
-    requested_tier: "Platinum",
+    requested_tier: tierOf(r),
     boat_length: clean(r.boatLength),
     maker: clean(r.makeModel),
     source: "Website",
     notes: [
       clean(r.platinumInterest),
-      extraNotes([["Boat location", r.boatLocation], ["Heard about us", r.referralSource], ["Notes", r.notes]]),
+      clean(r.careGoals),
+      extraNotes([
+        ["Boat location", r.boatLocation],
+        ["Storage", r.storage],
+        ["Preferred wash cadence", r.washCadence],
+        ["Heard about us", r.referralSource],
+        ["Notes", r.notes],
+      ]),
     ].filter(Boolean).join("\n\n"),
   };
 }
