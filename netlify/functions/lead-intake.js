@@ -1,7 +1,8 @@
 // Single intake point for the membership page's lead forms (quote + invite).
-// Phase 1: always email the lead via Resend.
-// Phase 2: writeToBackend() then records it in the Base44 portal. The email
-// always goes first, so a Base44 failure can never lose a lead.
+// The Base44 portal is the system of record: writeToBackend() runs first and
+// decides the visitor's result. The Resend admin email is a best-effort
+// notification after it — an email failure is logged, never shown to the
+// visitor and never blocks the lead.
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const FROM_ADDRESS = "Propwash Leads <onboarding@resend.dev>";
@@ -39,21 +40,23 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: "Please provide a valid email address." });
   }
 
-  try {
-    await sendLeadEmail(type, record);
-  } catch (err) {
-    console.error("lead-intake: email send failed", err);
-    return json(500, { ok: false, error: "Could not send notification email." });
-  }
-
+  let saved = true;
   try {
     await writeToBackend({ type, ...record });
   } catch (err) {
-    // A backend failure must never block the email or the response — the
-    // email already captured the lead.
-    console.error("lead-intake: writeToBackend failed", err);
+    saved = false;
+    console.error(`lead-intake: BASE44 WRITE FAILED (${type}) — lead NOT saved to portal: ${err.message}`);
   }
 
+  // Still email when the Base44 write failed: the email is then the only
+  // copy of the lead.
+  try {
+    await sendLeadEmail(type, record);
+  } catch (err) {
+    console.error(`lead-intake: EMAIL SEND FAILED (${type}) — ${saved ? "lead is saved in Base44" : "lead was NOT saved anywhere"}: ${err.message}`);
+  }
+
+  if (!saved) return json(500, { ok: false, error: "Could not save your request." });
   return json(200, { ok: true });
 };
 
@@ -145,10 +148,9 @@ async function sendLeadEmail(type, record) {
   }
 }
 
-// Phase 2: write the lead into the Base44 portal. type "quote" -> Lead
-// (Leads tab, stage "New"); type "invite" -> MembershipRequest for Platinum
-// (Membership Requests, "New Request"). Runs after the email, and the handler
-// swallows its errors, so a Base44 outage never blocks the email or response.
+// Write the lead into the Base44 portal. type "quote" -> Lead (Leads tab,
+// stage "New"); type "invite" -> MembershipRequest for Platinum (Membership
+// Requests, "New Request"). Throws on failure; the handler decides the response.
 const BASE44_LEAD_URL = "https://propwash.base44.app/functions/createLead";
 const BASE44_MEMBERSHIP_URL = "https://propwash.base44.app/functions/createMembershipRequest";
 const BASE44_TIMEOUT_MS = 8000; // stay inside Netlify's 10s function limit
