@@ -1,7 +1,7 @@
 // Single intake point for the membership page's lead forms (quote + invite).
-// Phase 1 (tonight): always email the lead via Resend.
-// Phase 2 (later): writeToBackend() gains a Base44 write. Nothing else changes —
-// that isolation is the entire point of routing both forms through one function.
+// Phase 1: always email the lead via Resend.
+// Phase 2: writeToBackend() then records it in the Base44 portal. The email
+// always goes first, so a Base44 failure can never lose a lead.
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 const FROM_ADDRESS = "Propwash Leads <onboarding@resend.dev>";
@@ -145,10 +145,81 @@ async function sendLeadEmail(type, record) {
   }
 }
 
-// Phase 2 hook. Routing (once implemented): type "quote" -> Base44 Lead
-// entity (Leads tab); type "invite" -> Base44 MembershipRequest entity
-// (Membership requests section). No-op tonight so a backend failure can
-// never block the email or the response above.
+// Phase 2: write the lead into the Base44 portal. type "quote" -> Lead
+// (Leads tab, stage "New"); type "invite" -> MembershipRequest for Platinum
+// (Membership Requests, "New Request"). Runs after the email, and the handler
+// swallows its errors, so a Base44 outage never blocks the email or response.
+const BASE44_LEAD_URL = "https://propwash.base44.app/functions/createLead";
+const BASE44_MEMBERSHIP_URL = "https://propwash.base44.app/functions/createMembershipRequest";
+const BASE44_TIMEOUT_MS = 8000; // stay inside Netlify's 10s function limit
+
+// Referral options on the form that the Lead.source enum spells differently.
+const LEAD_SOURCE_ALIASES = { Nextdoor: "Next Door" };
+
 async function writeToBackend(record) {
-  return; // TODO Base44
+  const apiKey = (process.env.BASE44_API_KEY || "").trim();
+  if (!apiKey) throw new Error("BASE44_API_KEY is not configured.");
+  const authHeader = process.env.BASE44_AUTH_HEADER || "Authorization";
+  const authPrefix = process.env.BASE44_AUTH_PREFIX ?? "Bearer";
+
+  const [url, body] = record.type === "invite"
+    ? [BASE44_MEMBERSHIP_URL, toMembershipRequest(record)]
+    : [BASE44_LEAD_URL, toLead(record)];
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      [authHeader]: authPrefix ? `${authPrefix} ${apiKey}` : apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(BASE44_TIMEOUT_MS),
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Base44 ${record.type} write failed ${res.status}: ${text.slice(0, 300)}`);
+  }
+  const created = await res.json().catch(() => ({}));
+  console.log(`lead-intake: Base44 ${record.type} created ${created.id || "(no id)"}`);
+}
+
+function clean(value) {
+  return typeof value === "string" ? value.trim() : value == null ? "" : String(value);
+}
+
+// Free-text extras the Base44 record has no dedicated field for.
+function extraNotes(pairs) {
+  return pairs.filter(([, v]) => clean(v)).map(([label, v]) => `${label}: ${clean(v)}`).join("\n");
+}
+
+function toLead(r) {
+  const referral = clean(r.referralSource);
+  return {
+    first_name: clean(r.firstName),
+    last_name: clean(r.lastName),
+    phone: clean(r.phone),
+    email: clean(r.email),
+    length_ft: clean(r.boatLength),
+    maker: clean(r.makeModel),
+    location: clean(r.boatLocation),
+    service: clean(r.serviceInterest),
+    source: LEAD_SOURCE_ALIASES[referral] || referral || "Website",
+    notes: [clean(r.notes), extraNotes([["Heard about us", referral]])].filter(Boolean).join("\n\n"),
+  };
+}
+
+function toMembershipRequest(r) {
+  return {
+    customer_name: `${clean(r.firstName)} ${clean(r.lastName)}`.trim(),
+    customer_email: clean(r.email),
+    phone: clean(r.phone),
+    requested_tier: "Platinum",
+    boat_length: clean(r.boatLength),
+    maker: clean(r.makeModel),
+    source: "Website",
+    notes: [
+      clean(r.platinumInterest),
+      extraNotes([["Boat location", r.boatLocation], ["Heard about us", r.referralSource], ["Notes", r.notes]]),
+    ].filter(Boolean).join("\n\n"),
+  };
 }
