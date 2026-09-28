@@ -10,6 +10,7 @@ ROOT = Path(__file__).parent
 TEMPLATE = ROOT / "src" / "v4-template.html"
 CITY_TEMPLATE = ROOT / "src" / "city-template.html"
 MEMBERSHIP_TEMPLATE = ROOT / "src" / "membership-template.html"
+LEGAL_CONTENT = ROOT / "src" / "legal"
 MEDIA = Path("/Volumes/Jack's Hard Drive/Propwash/Website Media")
 # When the source media drive isn't mounted (any machine but Jack's), the build
 # reuses the already-optimized assets committed under assets/v4 instead of
@@ -19,6 +20,21 @@ DERIVED = ROOT / "src" / "media-derived"
 OUT = ROOT / "assets" / "v4"
 DIST = ROOT / "dist"
 BASE_URL = "https://propwashmarine.com"
+
+LEGAL_PAGES = {
+    "privacy": {
+        "title": "Privacy Policy — Propwash Marine Detailing",
+        "description": "Privacy Policy for Propwash Marine Detailing LLC.",
+    },
+    "terms": {
+        "title": "Terms of Service — Propwash Marine Detailing",
+        "description": "Terms of Service for Propwash Marine Detailing LLC.",
+    },
+    "refund": {
+        "title": "Refund & Cancellation Policy — Propwash Marine Detailing",
+        "description": "Refund and Cancellation Policy for Propwash Marine Detailing LLC.",
+    },
+}
 
 CITY_ORDER = [
     ("stuart", "Stuart"),
@@ -568,9 +584,107 @@ def render_membership_page(shared_styles: str) -> str:
     )
 
 
+def render_legal_page(
+    slug: str,
+    page: dict[str, str],
+    shared_styles: str,
+    shared_header: str,
+    shared_mobile_nav: str,
+    shared_footer: str,
+) -> str:
+    legal_content = (LEGAL_CONTENT / f"{slug}.html").read_text()
+    canonical_url = f"{BASE_URL}/{slug}"
+    legal_css = """
+html{background:#0A1A2F;-webkit-text-size-adjust:100%}
+body{margin:0;background:#0A1A2F;overflow-x:hidden}
+#pw-redesign-v3{width:100%;min-height:100vh}
+#pw-redesign-v3 .pw-nav{background:#0A1A2F}
+#pw-redesign-v3 .pw-legal-body{background:#F4F8FC;color:#1A2635;padding:0 4.5%;color-scheme:light}
+#pw-redesign-v3 main.wrap{width:min(100%,840px);margin:0 auto;padding:76px 0 104px;font-size:17px;line-height:1.78}
+#pw-redesign-v3 main.wrap h1{font-size:clamp(46px,7.1cqw,76px);font-weight:600;line-height:1;letter-spacing:-.025em;color:#0A1A2F;margin:0 0 12px;text-wrap:balance}
+#pw-redesign-v3 main.wrap .updated{color:#5B6B7D;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:0}
+#pw-redesign-v3 main.wrap .policy-nav{display:flex;gap:0;flex-wrap:wrap;margin:35px 0 42px;border-top:1px solid #B9C8D8;border-bottom:1px solid #B9C8D8}
+#pw-redesign-v3 main.wrap .policy-nav a{display:inline-flex;align-items:center;min-height:48px;padding:9px 18px;border-right:1px solid #B9C8D8;color:#33465B;font-size:11px;font-weight:600;letter-spacing:.055em;text-transform:uppercase;transition:background .2s,color .2s}
+#pw-redesign-v3 main.wrap .policy-nav a:hover{background:#DDEAF7;color:#0A1A2F}
+#pw-redesign-v3 main.wrap .policy-nav a.current{background:#0A1A2F;color:#F4F8FC}
+#pw-redesign-v3 main.wrap .intro{margin:0 0 50px;padding:24px 28px;border-left:4px solid #1E90FF;background:#E8F1FA;color:#26384B;font-size:18px;line-height:1.75}
+#pw-redesign-v3 main.wrap h2{display:flex;align-items:baseline;gap:14px;margin:48px 0 16px;padding-bottom:11px;border-bottom:1px solid #C7D3DF;color:#0A1A2F;font-size:25px;font-weight:500;line-height:1.25;letter-spacing:.005em;text-transform:uppercase;text-wrap:balance}
+#pw-redesign-v3 main.wrap h2 .num{flex:0 0 auto;color:#1E90FF;font-size:14px;letter-spacing:.08em}
+#pw-redesign-v3 main.wrap p{margin:0 0 17px;text-wrap:pretty}
+#pw-redesign-v3 main.wrap ul{margin:0 0 23px;padding-left:25px}
+#pw-redesign-v3 main.wrap li{margin:0 0 9px;padding-left:4px}
+#pw-redesign-v3 main.wrap strong{color:#0A1A2F;font-weight:600}
+#pw-redesign-v3 main.wrap a{color:#0867BC;text-decoration:underline;text-decoration-color:#1E90FF66;text-underline-offset:3px}
+#pw-redesign-v3 main.wrap a:hover{color:#034D91;text-decoration-color:#034D91}
+#pw-redesign-v3 main.wrap .callout{margin:0 0 22px;padding:24px 28px;border:1px solid #B9D8F7;background:#E8F1FA}
+#pw-redesign-v3 .pw-footer{margin:0}
+#pw-redesign-v3 .pw-footer-tagline{color:#F4F8FC;font-family:Oswald,'Arial Narrow',Arial,sans-serif;font-size:18px;line-height:1.3;text-transform:uppercase}
+@container(max-width:700px){#pw-redesign-v3 main.wrap{padding:52px 0 75px;font-size:16px;line-height:1.72}#pw-redesign-v3 main.wrap h1{font-size:44px}#pw-redesign-v3 main.wrap .policy-nav{display:grid;grid-template-columns:1fr;margin:27px 0 34px}#pw-redesign-v3 main.wrap .policy-nav a{border-right:0;border-bottom:1px solid #B9C8D8;padding:8px 14px}#pw-redesign-v3 main.wrap .policy-nav a:last-child{border-bottom:0}#pw-redesign-v3 main.wrap .intro{padding:20px 19px;margin-bottom:40px;font-size:16px}#pw-redesign-v3 main.wrap h2{margin-top:40px;font-size:22px}#pw-redesign-v3 main.wrap .callout{padding:20px 19px}}
+@container(max-width:430px){#pw-redesign-v3 .pw-logo .pw-brandmark{display:block}#pw-redesign-v3 .pw-footerlinks{font-size:12px}}
+@media print{#pw-redesign-v3 .pw-nav,#pw-redesign-v3 .pw-mobilemenu,#pw-redesign-v3 .pw-footer,#pw-redesign-v3 main.wrap .policy-nav{display:none!important}#pw-redesign-v3 .pw-legal-body{background:#fff;padding:0}#pw-redesign-v3 main.wrap{width:100%;padding:0;color:#000}}
+"""
+    menu_script = """
+const menuButton=document.getElementById('pw-menu');
+const mobileMenu=document.getElementById('pw-mobilemenu');
+if(menuButton&&mobileMenu){menuButton.addEventListener('click',()=>{const open=mobileMenu.hidden;mobileMenu.hidden=!open;menuButton.setAttribute('aria-expanded',String(open));menuButton.textContent=open?'Close −':'Menu +';});}
+"""
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{escape(page["title"])}</title>
+<meta name="description" content="{escape(page["description"])}">
+<link rel="canonical" href="{canonical_url}">
+<meta name="theme-color" content="#0A1A2F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="/assets/logo/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/logo/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/logo/apple-touch-icon.png" sizes="180x180">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>{shared_styles}{legal_css}</style>
+</head>
+<body>
+<div id="pw-redesign-v3">
+{shared_header}
+{shared_mobile_nav}
+<div class="pw-legal-body">
+{legal_content}
+</div>
+{shared_footer}
+</div>
+<script>{menu_script}</script>
+</body>
+</html>
+'''
+
+
 source = TEMPLATE.read_text()
 head_links = re.search(r"<head>([\s\S]*?)</head>", source).group(1).strip()
 styles = re.search(r"<style>([\s\S]*?)</style>", source).group(1)
+shared_header = re.search(r'<header class="pw-nav pw-wrap">[\s\S]*?</header>', source).group(0)
+shared_mobile_nav = re.search(r'<nav class="pw-mobilemenu"[\s\S]*?</nav>', source).group(0)
+shared_footer = re.search(r'<footer class="pw-footer pw-wrap">[\s\S]*?</footer>', source).group(0)
+for old, new in (
+    ('data-pw-img="brandmark"', 'src="/assets/logo/brandmark.png"'),
+    ('data-pw-img="wordmark"', 'src="/assets/logo/wordmark.png"'),
+):
+    shared_header = shared_header.replace(old, new)
+    shared_footer = shared_footer.replace(old, new)
+shared_header = re.sub(r'href="#([^"]+)"', r'href="/#\1"', shared_header).replace('href="/#pw-top"', 'href="/"')
+shared_mobile_nav = re.sub(r'href="#([^"]+)"', r'href="/#\1"', shared_mobile_nav)
+shared_footer = re.sub(r'href="#([^"]+)"', r'href="/#\1"', shared_footer)
+shared_footer = shared_footer.replace('href="/#dP"', 'href="#dP"').replace('href="/#dW"', 'href="#dW"')
+shared_footer = shared_footer.replace(
+    "Run hard. Look right. / V4 design concept for approval",
+    "Run hard. Look right. / South Florida Dockside Detailing",
+)
+shared_footer = require_replace(
+    shared_footer,
+    '<p>Mobile and dockside detailing for boats that run hard. Based in Boca Raton, Florida.</p>',
+    '<p>Mobile and dockside detailing for boats that run hard. Based in Boca Raton, Florida.</p><p class="pw-footer-tagline">Salt never sleeps. Neither do we.</p>',
+)
 markup_start = source.index('<div id="pw-redesign-v3">')
 markup_end = source.index("<script>", markup_start)
 markup = source[markup_start:markup_end].strip()
@@ -1032,6 +1146,14 @@ if membership_directory.exists():
 membership_directory.mkdir(parents=True)
 (membership_directory / "index.html").write_text(render_membership_page(styles))
 
+legal_outputs = []
+for slug, page in LEGAL_PAGES.items():
+    legal_file = ROOT / f"{slug}.html"
+    legal_file.write_text(
+        render_legal_page(slug, page, styles, shared_header, shared_mobile_nav, shared_footer)
+    )
+    legal_outputs.append(legal_file)
+
 services_directory = ROOT / "services"
 if services_directory.exists():
     shutil.rmtree(services_directory)
@@ -1078,7 +1200,7 @@ for filename in ("brandmark.png", "wordmark.png", "favicon.png", "favicon-32x32.
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):
     shutil.copy2(ROOT / "assets" / "video" / filename, DIST / "assets" / "video" / filename)
-for filename in ("index.html", "thank-you.html", "robots.txt", "sitemap.xml", "llms.txt", "_redirects"):
+for filename in ("index.html", "thank-you.html", "privacy.html", "terms.html", "refund.html", "robots.txt", "sitemap.xml", "llms.txt", "_redirects"):
     shutil.copy2(ROOT / filename, DIST / filename)
 for city_directory in city_outputs:
     shutil.copytree(city_directory, DIST / city_directory.name)
@@ -1089,5 +1211,6 @@ shutil.copytree(faq_directory, DIST / faq_directory.name)
 print(f"Built {ROOT / 'index.html'} ({len(document.encode()):,} bytes)")
 print(f"Built {len(city_outputs)} city landing page(s): {', '.join(path.name for path in city_outputs)}")
 print(f"Built the membership landing page at {membership_directory}")
+print(f"Built {len(legal_outputs)} legal page(s): {', '.join(path.name for path in legal_outputs)}")
 print(f"Created {len(image_sources)} optimized production images and the full hero video")
 print(f"Prepared deployable folder at {DIST}")
