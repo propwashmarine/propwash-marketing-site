@@ -260,7 +260,7 @@ CITY_DATA = {
         ],
         "services_lead": "Fort Lauderdale's range of dockage and vessel sizes calls for care that scales from a clean center console to a multi-deck yacht.",
         "services_heading": "Care scaled to the yacht.",
-        "process_lead": "Detailed access information keeps a Fort Lauderdale appointment organized across busy marinas, riverfront slips and residential docks.",
+        "process_lead": "Detailed access information keeps a Fort Lauderdale appointment organized across busy marinas, riverfront Slips and residential docks.",
         "process_heading": "Organized across the waterfront.",
         "services": [
             ("Signature Wash", "A comprehensive exterior wash resets a frequently used Fort Lauderdale boat without turning the visit into a full detail."),
