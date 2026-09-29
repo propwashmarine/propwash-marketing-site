@@ -552,7 +552,7 @@ def render_membership_page(shared_styles: str) -> str:
                 "name": "How much does a boat detailing membership cost?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Every plan is custom quoted based on the boat's length, condition and how it is used. Contact Propwash Marine Detailing at (561) 291-8554 for a free quote.",
+                    "text": "Every plan is custom quoted based on the boat's length, condition and how it is used. Contact us at (561) 291-8554 for a free quote.",
                 },
             },
             {
