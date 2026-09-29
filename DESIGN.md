@@ -182,7 +182,9 @@ Rules:
 - **Outline CTA** `.pw-cta.pw-outline`: transparent, off-white text, `#536073` border. On hover it fills with the panel color.
 - **Nav CTA**: `padding:12px 17px`, `min-height:44px`, 10px.
 - **Text link** `.pw-textlink`: inline, 12px/500, 1px bottom border `#627286`, `min-height:44px`.
-- Labels in use: "Get a quote", "Request a quote", "Explore the work", "Tell us the boat", "See membership plans", "Compare the tiers", "Send request".
+- **Quote CTA label:** always "Get a free quote", everywhere it appears: buttons, nav, hero,
+  footer, mobile menu and form labels.
+- Other labels in use: "Request a quote", "Explore the work", "Tell us the boat", "See membership plans", "Compare the tiers", "Send request".
 
 ### Kicker / eyebrow
 `.pw-kicker` puts a 26×2px `--blue` bar before a numbered eyebrow:
@@ -364,8 +366,9 @@ button labels and form notes.
    the owner directly as "you/your".
 2. **"Full Detail" and "Slip" are always capitalized**, including in running text, alt text
    and headings ("at your Slip", "My Slip", "a separately quoted Full Detail").
-3. **No prices.** No dollar amounts, rates, "starting at", or discounts. Work is custom quoted,
-   and the copy says so ("Every plan is custom quoted", "We quote it straight").
+3. **No prices.** No dollar figures, rates or discounts in copy (including "starting at").
+   Work is custom quoted, and the copy says so ("Every plan is custom quoted", "We quote it
+   straight"). "Free quote" is allowed. Never call a service or feature "free".
 4. **No superlatives or stock marketing language.** No "best", "premier", "top-rated",
    "world-class", "unmatched", "luxury experience", "second to none", and so on. Say what we do
    and how.
@@ -403,8 +406,9 @@ Paste this when asking an agent to build or change a Propwash page:
 > behind a 26×2px blue rule with a `NN / Label` number. Square corners, 1px rules, no
 > card shadows. Photos under navy gradient scrims. Section padding 80/62/52px, gutters 4.5%.
 > Responsive with `@container` at 900/800/700/600/520px. Respect reduced motion.
-> Copy: the company speaks as we/us/our and addresses the owner as you/your. Capitalize "Full Detail" and "Slip". No prices, no
-> superlatives or stock marketing phrases, no BBB claims. Short, plain, specific sentences.
+> Copy: the company speaks as we/us/our and addresses the owner as you/your. Capitalize "Full Detail" and "Slip". Quote CTA is always
+> "Get a free quote". No dollar figures, rates or discounts, and never call a service or
+> feature "free". No superlatives or stock marketing phrases, no BBB claims. Short, plain, specific sentences.
 
 Quick checks before shipping:
 - [ ] Every color used appears in section 2.
