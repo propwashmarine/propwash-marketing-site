@@ -781,7 +781,7 @@ markup = require_replace(markup, "<!-- PW_CITY_LINKS -->", city_location_links)
 markup = require_replace(
     markup,
     '</footer></div>\n<section id="pw-membership-page"',
-    '</footer><nav class="pw-mobileactions" aria-label="Quick actions"><a href="tel:+15612918554">Call</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a quote</a></nav></div>\n<section id="pw-membership-page"',
+    '</footer><nav class="pw-mobileactions" aria-label="Quick actions"><a href="tel:+15612918554">Call</a><a href="https://propwash.base44.app/login" target="_blank" rel="noopener">Client login</a><a href="#pw-quote">Get a free quote</a></nav></div>\n<section id="pw-membership-page"',
 )
 
 markup = require_replace(
