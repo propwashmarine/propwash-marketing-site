@@ -9,6 +9,11 @@ same change.
 All styles are scoped under `#pw-redesign-v3`, which is also the query container
 (`container-type:inline-size`). Class names use the `pw-` prefix.
 
+> **Build-time CSS:** `build_live.py` injects additional CSS when it builds the site
+> (for example, the coast route graphic in the service-area section). Those styles are
+> not in `src/` and are not documented here. Read `build_live.py` before changing
+> anything those styles affect.
+
 ---
 
 ## 1. Visual Theme
@@ -34,24 +39,42 @@ tidy.
 
 ## 2. Color Roles
 
+### Blue tokens
+
+There is one brand blue. Define it as two tokens:
+
+| Token | Hex | Use |
+|---|---|---|
+| `--blue` | `#1E90FF` | **The only brand blue**, site-wide: buttons, links, accents, kicker rule, active states |
+| `--blue-light` | `#70B8FF` | A tint of `--blue`, **only** for text and links on navy backgrounds |
+
+The current CSS still uses a single `--pw-blue` variable: `#1E90FF` on the homepage and
+membership page, `#70B8FF` on the city, services, gallery and FAQ pages. When those pages
+are converged, split it into `--blue` and `--blue-light` and keep `--blue` at `#1E90FF`
+on every page.
+
 ### Brand core
 
 | Role | Token | Hex | Where it is used |
 |---|---|---|---|
 | Navy (base) | `--pw-navy` | `#0A1A2F` | Page and body background, `theme-color`, input fills, text on blue buttons, light-section text |
-| Electric blue (action) | `--pw-blue` (homepage) | `#1E90FF` | Primary CTA fill, kicker rule, hero H1 and tagline accent word, active tab and selector underline, Platinum selection |
+| Electric blue (action) | `--blue` (currently `--pw-blue` on the homepage) | `#1E90FF` | Primary CTA fill, kicker rule, hero H1 and tagline accent word, active tab and selector underline, Platinum selection |
 | Graphite (surface) | `--pw-panel` (homepage) / `--pw-graphite` (membership) | `#1C2A3A` | Mobile menu, bills and outline-button hover on the homepage; membership tier cards |
 | Amber (attention) | `--pw-amber` | `#F5A623` | **Only** the "by invitation" badge (`.pw-memberinvite`, text `#1C160B`) and form error notes (`.pw-formnote.pw-formerror`) |
 | Green (confirmed) | `--pw-green` | `#33C48B` | **Only** "yes" marks in the membership comparison table (`.pw-yes`) and "Completed" status in the Slip portal mock (`.pw-completed`) |
 
 ### Neutrals and text
 
+The **homepage values** for background, dividers and muted text are canonical. The subpage
+templates (city, services, gallery, FAQ, membership) use a different set, listed in
+*Legacy subpage values* below.
+
 | Role | Hex | Notes |
 |---|---|---|
 | Primary text (off-white) | `#F4F8FC` (`--pw-white`) | Never pure white for body text. `#FFFFFF` appears only in the footer mark "P" fill and the selected Platinum pill label |
-| Muted text | `#A4B1C0` homepage / `#A9B8C9` subpages (`--pw-muted`) | Secondary copy, captions, meta rows |
+| Muted text | `#A4B1C0` (`--pw-muted`) | Secondary copy, captions, meta rows |
 | Bright secondary text | `#C1CCD8`, `#D5E0EB`, `#D9E3ED` | Hero and intro paragraphs over imagery |
-| Hairline | `#2A3A4D` homepage / `#34465C` subpages (`--pw-line`) | Section borders, row dividers |
+| Hairline | `#2A3A4D` (`--pw-line`) | Section borders, row dividers |
 | Stronger hairline | `#425268` | Plan selector, location list, CTA-band tops, city/FAQ grids |
 | Input border | `#566779` (quote form), `#526A82` (member form) | |
 | Outline button border | `#536073` | |
@@ -61,14 +84,28 @@ tidy.
 
 | Hex | Used for |
 |---|---|
-| `#071523` (`--pw-deep`, subpages) / `#0B1828` (`--pw-deep`, homepage) | Footer, trust strip, proof line, portal frames |
+| `#0B1828` (`--pw-deep`) | Footer, trust strip, proof line, portal frames |
 | `#0A1A2F` | Default sections |
 | `#0B192A` | Full Detail viewer section |
 | `#0D2035` | Membership, process steps, FAQ hero, comparison table |
 | `#10243B` | Service-area band, city local section, neighbor links, lead forms |
 | `#12263C` | Dock journal |
-| `#15283E` (`--pw-panel`, subpages) | Quote section and closing CTA bands on every page |
+| `#15283E` | Quote section and closing CTA bands on every page |
 | `#E8F1FA` (`--pw-ice`) / `#E8EFF6` / `#EAF3FA` | Light sections: homepage services, subpage service grid, form confirmation |
+
+### Legacy subpage values — converge during redesign
+
+The subpage templates redefine these variables. They are documented so the current
+pages can be read correctly. Do not use them in new work. Replace them with the canonical
+values above during the redesign.
+
+| Variable | Legacy subpage value | Canonical value |
+|---|---|---|
+| `--pw-deep` | `#071523` | `#0B1828` |
+| `--pw-panel` | `#15283E` | `#1C2A3A` |
+| `--pw-line` | `#34465C` | `#2A3A4D` |
+| `--pw-muted` | `#A9B8C9` | `#A4B1C0` |
+| `--pw-blue` | `#70B8FF` | `#1E90FF` (`--blue`); use `--blue-light` for text and links on navy |
 
 On light sections, text is `#0A1A2F`, secondary text is `#44566A`/`#40546A`, lines are
 `#B4C4D4`/`#AEBFD0`, and the link/active blue darkens to `#0969C5` / `#0866BC`.
@@ -78,7 +115,7 @@ On light sections, text is `#0A1A2F`, secondary text is `#44566A`/`#40546A`, lin
 | Hex | Role |
 |---|---|
 | `#4FA9FF` | Focus outline (`3px solid`, `outline-offset:5px`), CTA hover fill, nav link hover |
-| `#70B8FF` | `--pw-blue` on subpages (city, services, gallery, FAQ): link hovers, FAQ `+` marks, home-base marker. It is the lighter blue for text and marks on dark backgrounds |
+| `#70B8FF` | `--blue-light`: text and links on navy only (link hovers, FAQ `+` marks, home-base marker). Never for buttons or fills |
 | `#3197FA` | Selected Full Detail thumbnail border and inset underline |
 
 ### Membership tier colors (used only in tier contexts)
@@ -148,7 +185,7 @@ Rules:
 - Labels in use: "Get a quote", "Request a quote", "Explore the work", "Tell us the boat", "See membership plans", "Compare the tiers", "Send request".
 
 ### Kicker / eyebrow
-`.pw-kicker` puts a 26×2px `--pw-blue` bar before a numbered eyebrow:
+`.pw-kicker` puts a 26×2px `--blue` bar before a numbered eyebrow:
 `01 / The right work`, `02 / Full Detail, up close`, `03 / A higher standard of care`, and so on.
 Home sections are numbered in order.
 
@@ -322,7 +359,7 @@ keep tables readable, and nothing should cause a horizontal page scroll.
 These rules apply to every string on the site, including alt text, meta descriptions,
 button labels and form notes.
 
-1. **We, us, our.** The company always speaks in the first-person plural. Never "I", "me"
+1. **We, us, our (confirmed).** The company always speaks in the first-person plural. Never "I", "me"
    or "my", and never the company name in the third person ("Propwash offers…"). Address
    the owner directly as "you/your".
 2. **"Full Detail" and "Slip" are always capitalized**, including in running text, alt text
@@ -356,16 +393,17 @@ Lauderdale, at your Slip, lift or driveway."
 Paste this when asking an agent to build or change a Propwash page:
 
 > Build inside `#pw-redesign-v3` using the existing `pw-` classes and the tokens in DESIGN.md.
-> Base background navy `#0A1A2F`, text `#F4F8FC`, muted `#A9B8C9`, hairlines `#34465C`.
-> Electric blue `#1E90FF` for primary CTAs and active states. `#70B8FF` for link and mark
-> accents on subpages. Graphite `#1C2A3A` for card surfaces. Amber `#F5A623` only for the
-> invitation badge and form errors. Green `#33C48B` only for yes/completed marks.
+> Base background navy `#0A1A2F`, text `#F4F8FC`, muted `#A4B1C0`, hairlines `#2A3A4D`,
+> deep `#0B1828` (homepage values are canonical; the subpage set is legacy).
+> `--blue` `#1E90FF` is the only brand blue: buttons, links, accents, active states.
+> `--blue-light` `#70B8FF` only for text and links on navy. Graphite `#1C2A3A` for card
+> surfaces. Amber `#F5A623` only for the invitation badge and form errors. Green `#33C48B` only for yes/completed marks.
 > Headings in Oswald, uppercase, weight 500 (600 for hero), tight negative tracking,
 > sized with `clamp(…cqw…)`. Body in Inter 15px/1.65. Eyebrows 11px uppercase .16em
 > behind a 26×2px blue rule with a `NN / Label` number. Square corners, 1px rules, no
 > card shadows. Photos under navy gradient scrims. Section padding 80/62/52px, gutters 4.5%.
 > Responsive with `@container` at 900/800/700/600/520px. Respect reduced motion.
-> Copy: we/us/our voice only. Capitalize "Full Detail" and "Slip". No prices, no
+> Copy: the company speaks as we/us/our and addresses the owner as you/your. Capitalize "Full Detail" and "Slip". No prices, no
 > superlatives or stock marketing phrases, no BBB claims. Short, plain, specific sentences.
 
 Quick checks before shipping:
