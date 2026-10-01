@@ -269,9 +269,8 @@ The older `.pw-slipshell` / `.pw-realportal` frames are no longer used on the ho
 longer tilt.
 
 ### Gallery
-Homepage: a large main image (min 450px, zooms to 1.03 on hover over 600ms) beside a
-two-by-two thumbnail grid; thumbnails brighten on hover. On mobile the thumbnails and the
-"moments" become swipe rows. Gallery page:
+The homepage no longer has a gallery section: "Every surface, every detail" ends with a
+"See the gallery" link to `/gallery/`, and every former `#pw-gallery` link points there. Gallery page:
 a three-column grid, 290px images, **4px radius** with a `#21374F` border, and Oswald 16px
 captions over a bottom scrim.
 
@@ -405,9 +404,8 @@ same way:
 
 Reveal styles must be applied by script. If the script fails or never runs, all content is
 visible. In the template this is `.pw-reveal` / `.pw-in-view`: each direct child of a `#pw-main`
-section reveals once, card groups (`.pw-steps`, `.pw-v2plans`, `.pw-journalgrid`,
-`.pw-gallerychoices`, `.pw-moments`, `.pw-portalfeatures`) stagger their children, and anything
-already on screen at load never animates.
+section reveals once, card groups (`.pw-steps`, `.pw-v2plans`, `.pw-journalgrid`) stagger their
+children, and anything already on screen at load never animates.
 
 ### Status
 The 2026 homepage redesign removed the motion that broke these rules: the hero and gallery drift
