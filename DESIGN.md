@@ -285,7 +285,7 @@ Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–
 ## 5. Layout
 
 - **Gutters:** `.pw-wrap` uses `padding-left/right: 4.5%`. The full-bleed trust strip and proof line use percentages as well.
-- **Section rhythm:** `.pw-section` padding is 80px top and bottom, 62px at ≤900px and 52px at ≤700px. Closing CTA bands use 62–72px.
+- **Section rhythm:** `.pw-section` padding is 112px top and bottom above 700px and 40px at ≤700px. Section heads sit 56px above their content (24px on mobile).
 - **Section heads:** `.pw-sectionhead` is a flex row with the H2 on the left and a short muted
   paragraph (max 265–310px) on the right, aligned to the bottom. It stacks at ≤700px.
 - **Grids are asymmetric:** `1.45fr 1fr` (hero head), `.93fr 1.07fr` (services), `1.35fr 1fr`
@@ -368,7 +368,10 @@ same way:
 - Color and focus changes still happen, without transitions.
 
 Reveal styles must be applied by script. If the script fails or never runs, all content is
-visible.
+visible. In the template this is `.pw-reveal` / `.pw-in-view`: each direct child of a `#pw-main`
+section reveals once, card groups (`.pw-steps`, `.pw-v2plans`, `.pw-journalgrid`,
+`.pw-gallerychoices`, `.pw-moments`, `.pw-portalfeatures`) stagger their children, and anything
+already on screen at load never animates.
 
 ### Current site vs this standard
 The live homepage predates this section. These pieces break the rules above and should be
