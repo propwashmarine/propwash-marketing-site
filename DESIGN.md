@@ -30,7 +30,8 @@ tidy.
   Structure comes from 1px lines, not shadows or fills.
 - **Imagery:** full-bleed photography of real boats and real work, covered by
   navy gradient scrims so the white text stays readable. The homepage hero is a
-  looping video. On narrow screens a still image replaces it.
+  full-screen still photograph. The looping hero video is retired until a cinematic
+  hero meets the rules in section 6 (Future).
 - **Signature details:** numbered kickers (`01 / The right work`), a 26×2px
   electric-blue rule before eyebrows, the skewed hero tagline, the metal-finish
   membership cards, and the oversized PROPWASH footer mark that fills on hover.
@@ -198,9 +199,10 @@ with a `#F4F8FC25` bottom rule. Below 800px the links collapse into a bordered `
 that opens a two-column `.pw-mobilemenu` on the panel color.
 
 ### Hero
-- **Homepage:** full-bleed looping video (`pw-v2hero`) with the scrim, a small blue H1, the
-  skewed Oswald tagline, a 15px intro (max 520px), two CTAs, and a bottom row with a
-  pause-video control (`#0A1A2F8F` fill, translucent border).
+- **Homepage:** full-screen (`100svh`) still photograph (`pw-v2hero`, `.pw-hero-still`) under an
+  even navy scrim, with the copy anchored to the bottom: a small blue H1, the skewed Oswald
+  tagline, a 15px intro (max 520px) and two CTAs. Nothing in the hero animates on load. The
+  `#pw-hero-video` and `#pw-video-toggle` elements stay in the markup, hidden, for the script.
 - **Subpages:** `.pw-cityhero` photo hero, 520–660px tall, content aligned to the bottom,
   breadcrumbs → kicker → H1 → intro → actions.
 
@@ -379,7 +381,6 @@ replaced during the redesign:
 
 | Current | Rule it breaks |
 |---|---|
-| Hero image `pw-ocean-drift`, 18s infinite (scale 1.02→1.09) | Constantly moving |
 | Gallery `pw-finish-drift`, 13s infinite (injected by `build_live.py`) | Constantly moving |
 | Metal card −5px lift with a diagonal sheen sweep | Lift above 2px; several effects at once |
 | Slip shell `rotateY(-5deg)` tilt that flattens on hover | Rotation |
