@@ -836,14 +836,6 @@ script = script.replace(
     "root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});",
 )
 
-script = require_replace(
-    script,
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery;byId('pw-gallery-feature').src=assets[key];byId('pw-gallery-feature').alt=gallery[key][0]+' from the Propwash work gallery';byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(byId('pw-gallery-feature'));}));""",
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-const galleryDrift={gallery1:['1.4%','-.5%'],gallery2:['-1.1%','.6%'],gallery3:['.8%','-.8%'],gallery4:['-1.3%','-.3%']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery,feature=byId('pw-gallery-feature');feature.src=assets[key];feature.alt=gallery[key][0]+' from the Propwash work gallery';feature.style.setProperty('--pw-drift-x',galleryDrift[key][0]);feature.style.setProperty('--pw-drift-y',galleryDrift[key][1]);feature.style.animation='none';requestAnimationFrame(()=>{feature.style.animation='';});byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(feature);}));""",
-)
 
 enhancements = """
 const areaSection=byId('pw-area');
@@ -886,20 +878,16 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 #pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b{background:#70B8FF;transform:translateX(-50%) scale(1)}
 #pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:first-of-type{transform:translateX(0) scale(1)}
 #pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:last-of-type{transform:translateX(-100%) scale(1)}
-#pw-redesign-v3 .pw-gallerymain img{--pw-drift-x:1.2%;--pw-drift-y:-.5%;animation:pw-finish-drift 13s ease-in-out infinite alternate;transform-origin:center}
-#pw-redesign-v3 .pw-gallerymain:hover img{animation-duration:7s}
-@keyframes pw-finish-drift{from{transform:scale(1.035) translate(0,0)}to{transform:scale(1.075) translate(var(--pw-drift-x),var(--pw-drift-y))}}
 #pw-redesign-v3 .pw-mobileactions{display:none}
 #pw-redesign-v3.pw-still .pw-routetrack i{transition:none;transform:scaleX(1)}
 #pw-redesign-v3.pw-still .pw-coastroute b{transition:none;background:#70B8FF}
-#pw-redesign-v3.pw-still .pw-gallerymain img{animation:none;transform:scale(1.035)}
 @container(max-width:700px){
  #pw-redesign-v3 #pw-home-view{padding-bottom:62px}
  #pw-redesign-v3 .pw-mobileactions{position:fixed;z-index:50;display:grid;grid-template-columns:.72fr 1fr 1.2fr;left:0;right:0;bottom:0;min-height:58px;background:#081728F5;border-top:1px solid #4A6077;box-shadow:0 -12px 30px rgba(1,9,18,.3);backdrop-filter:blur(13px)}
  #pw-redesign-v3 .pw-mobileactions a{display:grid;place-items:center;min-height:58px;padding:8px 6px;border-right:1px solid #344A61;color:#E9F2FA;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center}
  #pw-redesign-v3 .pw-mobileactions a:last-child{border-right:0;background:#2F91E8;color:#07192D}
 }
-@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}#pw-redesign-v3 .pw-gallerymain img{animation:none!important}}
+@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}}
 """
 
 faq_schema = {

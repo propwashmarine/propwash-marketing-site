@@ -248,8 +248,9 @@ tilts `perspective(1300px) rotateY(-5deg)` and flattens on hover. Tabs are 11px 
 blue underline when active.
 
 ### Gallery
-Homepage: a large main image (min 450px, zooms 1.04 on hover) beside a two-by-two thumbnail
-grid with a cursor-following blue radial spotlight (`rgba(30,144,255,.16)`). Gallery page:
+Homepage: a large main image (min 450px, zooms to 1.03 on hover over 600ms) beside a
+two-by-two thumbnail grid; thumbnails brighten on hover. On mobile the thumbnails and the
+"moments" become swipe rows. Gallery page:
 a three-column grid, 290px images, **4px radius** with a `#21374F` border, and Oswald 16px
 captions over a bottom scrim.
 
@@ -381,7 +382,6 @@ replaced during the redesign:
 
 | Current | Rule it breaks |
 |---|---|
-| Gallery `pw-finish-drift`, 13s infinite (injected by `build_live.py`) | Constantly moving |
 | Metal card −5px lift with a diagonal sheen sweep | Lift above 2px; several effects at once |
 | Slip shell `rotateY(-5deg)` tilt that flattens on hover | Rotation |
 | Footer mark fill and single sheen sweep on hover | Large decorative motion |
