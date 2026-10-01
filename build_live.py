@@ -764,7 +764,6 @@ markup = require_replace(
     '<button class="pw-motion" id="pw-motion" type="button" aria-pressed="true" hidden><span>◉</span> Motion on</button><button class="pw-motion" id="pw-preview-confirmation" type="button" hidden>Preview confirmation</button>',
 )
 markup = markup.replace("preload=\"auto\"", "preload=\"metadata\"")
-markup = markup.replace("Captured from the current My Slip portal for this design review.", "Your real service history, visit photos and payments in one place.")
 markup = markup.replace("Run hard. Look right. / V4 design concept for approval", "Run hard. Look right. / South Florida Dockside Detailing")
 
 markup = require_replace(

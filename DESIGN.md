@@ -252,11 +252,21 @@ Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries t
 `#AFBFD1`–`#C4D1DE`. Green `#33C48B` 600 marks only affirmative cells. Tables sit in a
 horizontal-scroll wrapper with `min-width:510–540px`.
 
-### Owner Portal / My Slip frames
-`.pw-slipshell` and `.pw-realportal` are deep-navy frames with a `#425268`/`#45586D` border and
-the site's only large shadows (`0 25px 70px #020A1466`, `0 22px 65px #0004`). The slip shell
-tilts `perspective(1300px) rotateY(-5deg)` and flattens on hover. Tabs are 11px with a 2px
-blue underline when active.
+### Owner Portal phone carousel
+Six real portal screenshots (`assets/portal/portal-1…6-*.webp`, 600×1182, white status band
+cropped) in a carousel: three phones at a time from 701px (290px wide at desktop, row capped at
+978px), 44px outline prev/next buttons that disable at the ends, scroll-snap, and keyboard
+scrolling on the focusable row. Below 700px it is a swipe row with the next phone peeking in.
+Captions use the portal copy; the interior-care copy sits in the text column.
+
+### Phone frame (device mockup)
+Drawn in CSS only, no image files: a 1.5px metallic edge (gradient border-box from `#A4B1C0`
+through `#1C2A3A` to `#8BA0B5`), a 6px `#05080C` bezel, screen corners at `13cqw` of the phone
+width with the frame radius = screen radius + bezel, a Dynamic Island (31% wide, 3.4:1, black),
+left action/volume buttons and a right power button in `#566779`, and a two-layer shadow. The
+strip above each screenshot is the portal header navy `#0A1B2D`. Phones lift 2px on hover.
+The older `.pw-slipshell` / `.pw-realportal` frames are no longer used on the homepage and no
+longer tilt.
 
 ### Gallery
 Homepage: a large main image (min 450px, zooms to 1.03 on hover over 600ms) beside a
@@ -310,7 +320,8 @@ Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–
 - **Measure:** intro copy max 520–650px. FAQ answers max 740px. Forms max 680–860px.
 - **Depth:** flat by default. Shadows are only for floating product frames (portal, slip
   shell) and the selected membership card.
-- **Radius:** 0. The only exceptions are gallery-page tiles (4px), mobile tier pills (3px), the
+- **Radius:** 0. The only exceptions are device mockups (phone frames: screen `13cqw`, frame = screen
+  radius + bezel), gallery-page tiles (4px), mobile tier pills (3px), the
   comparison handle and portal bullet dots (circles).
 - **Motion:** see section 6.
 
@@ -393,7 +404,6 @@ replaced during the redesign:
 
 | Current | Rule it breaks |
 |---|---|
-| Slip shell `rotateY(-5deg)` tilt that flattens on hover | Rotation |
 | Footer mark fill and single sheen sweep on hover | Large decorative motion |
 | `pw-in` starting at opacity .2, over .35s/.75s `ease-out` | Use the tokens above |
 
