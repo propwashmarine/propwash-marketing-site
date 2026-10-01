@@ -417,6 +417,12 @@ html{color-scheme:dark}
   #pw-redesign-v3 .pw-steps>div{scroll-snap-align:start;min-width:0;border-top:1px solid var(--pw-line);padding-top:16px}
   #pw-redesign-v3 .pw-stepnumber{font-size:32px;margin-bottom:10px}
 }
+
+/* ===== Services ===== */
+@container (max-width:700px){
+  #pw-redesign-v3 .pw-servicetrigger{padding:13px 0}
+  #pw-redesign-v3 .pw-servicepanel>img{height:160px}
+}
 </style>
 <div id="pw-redesign-v3">
   <a class="pw-skip" href="#pw-main">Skip to content</a>
@@ -608,6 +614,7 @@ root.querySelectorAll('[data-quote]').forEach(btn=>btn.addEventListener('click',
 if(!reduced&&'IntersectionObserver' in window){const REVEAL_GROUPS='.pw-steps,.pw-v2plans,.pw-journalgrid,.pw-gallerychoices,.pw-moments,.pw-portalfeatures';const revealer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;const el=entry.target;revealer.unobserve(el);(el.matches(REVEAL_GROUPS)?[...el.children]:[el]).forEach((c,i)=>{const step=Math.min(i,3);c.style.transitionDelay=(step*60)+'ms';c.classList.add('pw-in-view');setTimeout(()=>{c.style.transitionDelay='';},700+step*60);});});},{rootMargin:'0px 0px -12% 0px'});const fold=window.innerHeight;root.querySelectorAll('#pw-main > section > *').forEach(el=>{if(el.getBoundingClientRect().top<fold)return;(el.matches(REVEAL_GROUPS)?[...el.children]:[el]).forEach(c=>c.classList.add('pw-reveal'));revealer.observe(el);});}
 function pwCollapse(target,label,openLabel,mode){const b=document.createElement('button');b.type='button';b.className='pw-more';if(!target.id)target.id='pw-more-'+Math.random().toString(36).slice(2,8);b.setAttribute('aria-controls',target.id);b.setAttribute('aria-expanded','false');b.textContent=label;const attr=mode==='clamp'?'data-pw-clamp':'data-pw-collapsed';target.setAttribute(attr,'');b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));b.textContent=open?openLabel:label;open?target.removeAttribute(attr):target.setAttribute(attr,'');});return b;}
 function narrow(){return root.getBoundingClientRect().width<=700;}
+if(narrow()){root.querySelectorAll('.pw-servicetrigger[aria-expanded="true"]').forEach(trigger=>trigger.click());}
 
 function showDetailOverview(){root.querySelectorAll('[data-detail]').forEach(b=>b.setAttribute('aria-pressed','false'));byId('pw-detail-feature').src=assets.detailMain;byId('pw-detail-feature').alt='Propwash Full Detail in progress';byId('pw-detail-count').textContent='01 / 07';byId('pw-detail-title').textContent='The complete reset.';byId('pw-detail-caption').textContent='A Full Detail reaches beyond the obvious surfaces. Click this large image any time to return here.';animate(byId('pw-detail-feature'));}
 byId('pw-detail-reset').addEventListener('click',showDetailOverview);
