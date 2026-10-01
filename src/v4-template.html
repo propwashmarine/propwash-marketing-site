@@ -364,25 +364,10 @@ html{color-scheme:dark}
 /* ===== Membership picker ===== */
 #pw-redesign-v3 .pw-membership{background:#0D2035}
 #pw-redesign-v3 .pw-picker{margin:0 0 20px}
-#pw-redesign-v3 .pw-pick-fields{display:grid;grid-template-columns:minmax(0,220px) minmax(0,420px);gap:24px;align-items:end}
-#pw-redesign-v3 .pw-pick-field{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#CED9E5}
-#pw-redesign-v3 .pw-pick-field input{width:100%;min-height:48px;padding:12px 13px;border:1px solid #566779;border-radius:0;background:#0A1A2F;color:#F4F8FC;font:400 14px/1.4 Inter,Arial,sans-serif}
-#pw-redesign-v3 .pw-pick-field input::placeholder{color:#96A6B9;font-size:12px}
-#pw-redesign-v3 .pw-seg{margin:0;padding:0;border:0;min-width:0}
-#pw-redesign-v3 .pw-seg legend{padding:0;margin-bottom:7px;font-size:11px;color:#CED9E5}
-#pw-redesign-v3 .pw-seg-opts{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #566779}
-#pw-redesign-v3 .pw-seg-opts label{position:relative;display:flex;min-width:0}
-#pw-redesign-v3 .pw-seg-opts input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
-#pw-redesign-v3 .pw-seg-opts span{flex:1;display:flex;align-items:center;justify-content:center;min-height:46px;border-right:1px solid #566779;color:#B8C4D2;font:600 12px/1.4 Inter,Arial,sans-serif;letter-spacing:.075em;text-transform:uppercase;transition:background-color var(--dur-hover) var(--ease-fade),color var(--dur-hover) var(--ease-fade)}
-#pw-redesign-v3 .pw-seg-opts label:last-child span{border-right:0}
-#pw-redesign-v3 .pw-seg-opts label:hover span{color:#F4F8FC}
-#pw-redesign-v3 .pw-seg-opts input:checked+span{background:#1A314B;color:#F4F8FC;box-shadow:inset 0 -3px #1E90FF}
-#pw-redesign-v3 .pw-seg-opts input:focus-visible+span{outline:3px solid #4FA9FF;outline-offset:2px}
-#pw-redesign-v3 .pw-pick-q{margin:40px 0 0;font:500 24px/1.25 Oswald,'Arial Narrow',Arial,sans-serif;text-transform:uppercase}
+#pw-redesign-v3 .pw-pick-q{margin:8px 0 0;font:500 24px/1.25 Oswald,'Arial Narrow',Arial,sans-serif;text-transform:uppercase}
 #pw-redesign-v3 .pw-v2plans{margin-top:16px}
 #pw-redesign-v3 .pw-answer{display:block;margin-bottom:16px;color:#F4F8FC;font:600 12px/1.4 Inter,Arial,sans-serif;letter-spacing:.075em;text-transform:uppercase}
 #pw-redesign-v3 .pw-metal .pw-metalover{color:#A4B1C0;margin-bottom:18px}
-#pw-redesign-v3 .pw-result-for{margin:0 0 14px;color:#70B8FF;font:500 22px/1.2 Oswald,'Arial Narrow',Arial,sans-serif;text-transform:uppercase;letter-spacing:.01em}
 #pw-redesign-v3 .pw-custom{margin:4px 0 22px;color:#C1CCD8;font-size:13px}
 #pw-redesign-v3 .pw-result-actions{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
 #pw-redesign-v3 .pw-result-actions .pw-compare{display:inline-flex;align-items:center;gap:18px;min-height:44px;margin:0;padding:7px 0;border:0;border-bottom:1px solid #627286;font-size:12px;font-weight:500}
@@ -390,9 +375,7 @@ html{color-scheme:dark}
 #pw-redesign-v3 .pw-plannote{max-width:760px}
 @media (prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-metal:hover{transform:none}}
 @container (max-width:700px){
-  #pw-redesign-v3 .pw-pick-fields{grid-template-columns:1fr;gap:16px}
-  #pw-redesign-v3 .pw-pick-q{margin-top:28px;font-size:21px}
-  #pw-redesign-v3 .pw-result-for{font-size:20px}
+  #pw-redesign-v3 .pw-pick-q{margin-top:4px;font-size:21px}
   #pw-redesign-v3 .pw-planlist+.pw-more{display:flex;width:fit-content;margin:0 0 22px}
   #pw-redesign-v3 .pw-planimage{height:170px;min-height:170px}
   #pw-redesign-v3 .pw-plan-highlight{padding:18px}
@@ -584,10 +567,6 @@ html{color-scheme:dark}
     <section id="pw-membership" class="pw-membership pw-section pw-wrap">
   <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">05 / A higher standard of care</div><h2>One boat.<br> Your level of care.</h2></div><p>Every membership includes recurring washes on the schedule you set and photos after every visit. Choose how much more you want us to handle.</p></div>
   <div class="pw-picker">
-    <div class="pw-pick-fields">
-      <label class="pw-pick-field" for="pw-pick-length"><span>Boat length (ft)</span><input id="pw-pick-length" type="number" inputmode="decimal" min="1" max="300" step=".1" placeholder="e.g. 32" autocomplete="off"></label>
-      <fieldset class="pw-seg"><legend>Where it's kept</legend><div class="pw-seg-opts"><label><input type="radio" name="pw-kept" value="slip"><span>Slip</span></label><label><input type="radio" name="pw-kept" value="lift"><span>Lift</span></label><label><input type="radio" name="pw-kept" value="trailer"><span>Trailer</span></label></div></fieldset>
-    </div>
     <p class="pw-pick-q" id="pw-pick-q">What do you want from us?</p>
   </div>
   <div class="pw-v2plans" role="group" aria-labelledby="pw-pick-q">
@@ -596,7 +575,7 @@ html{color-scheme:dark}
     <button class="pw-metal pw-platinum" type="button" data-plan="Platinum" aria-pressed="true"><span class="pw-answer">Manage it for me</span><span class="pw-metalover">03 / By invitation</span><strong>Platinum</strong><span class="pw-metaltag">We manage your boat.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">Arrive ready<br> to head out.</span><span class="pw-metalextras">Complete care, Trip Ready preparation and attention between visits.</span><span class="pw-metalaction">Viewing Platinum </span></button>
   </div>
   <div class="pw-planpanel" id="pw-planpanel" aria-live="polite">
-    <div class="pw-planbody"><p class="pw-result-for" id="pw-result-for" aria-live="polite">Your boat</p><div class="pw-eyebrow pw-muted" id="pw-plan-label">Platinum / By invitation</div><h3 id="pw-plan-head">Your next run.<br> Already handled.</h3><p id="pw-plan-description">For owners who want the details managed between trips. We learn your boat, keep it maintained, and get it ready before you arrive.</p><div class="pw-plan-included pw-eyebrow">What we handle</div><ul class="pw-planlist" id="pw-plan-features"></ul><p class="pw-custom">Every plan is custom quoted to your boat.</p><div class="pw-result-actions"><button class="pw-cta" type="button" id="pw-plan-quote" data-member="Platinum"><span id="pw-plan-action">Request an invite</span></button><a class="pw-compare" id="pw-compare" href="/membership/#pw-membertable">Compare all plans <span class="pw-arrow" aria-hidden="true"></span></a></div></div>
+    <div class="pw-planbody"><div class="pw-eyebrow pw-muted" id="pw-plan-label">Platinum / By invitation</div><h3 id="pw-plan-head">Your next run.<br> Already handled.</h3><p id="pw-plan-description">For owners who want the details managed between trips. We learn your boat, keep it maintained, and get it ready before you arrive.</p><div class="pw-plan-included pw-eyebrow">What we handle</div><ul class="pw-planlist" id="pw-plan-features"></ul><p class="pw-custom">Every plan is custom quoted to your boat.</p><div class="pw-result-actions"><button class="pw-cta" type="button" id="pw-plan-quote" data-member="Platinum"><span id="pw-plan-action">Request an invite</span></button><a class="pw-compare" id="pw-compare" href="/membership/#pw-membertable">Compare all plans <span class="pw-arrow" aria-hidden="true"></span></a></div></div>
     <aside class="pw-planstory"><div class="pw-planimage"><img data-pw-img="memberPlatinum" alt="Boat prepared for Platinum care" width="1800" height="1013"><div class="pw-imagecaption"><div class="pw-eyebrow" id="pw-plan-image-label">Platinum membership</div><h3 id="pw-plan-image-head">Show up.<br> Head out.</h3></div></div><div class="pw-plan-highlight"><span class="pw-eyebrow" id="pw-plan-perk-label">Trip Ready / Twice a month, included</span><p id="pw-plan-perk">We wipe down the boat, remove canvas, ice the coolers, stock water and drinks, turn on electronics and stow the lines.</p></div><div class="pw-plan-facts"><div><span>Wash cadence</span><strong id="pw-plan-cadence">Built around your boat</strong></div><div><span>Scheduling</span><strong id="pw-plan-priority">Our highest priority</strong></div></div></aside>
   </div>
   <p class="pw-plannote">Month-to-month and contract options. Every plan is custom quoted. Wash frequency is tailored separately from the level of care: Silver offers weekly, bi-weekly or monthly; Gold and Platinum offer a custom cadence. Every new plan starts with a separately quoted Full Detail. Machine wax is not included in any tier. Coated boats receive quarterly ceramic boosters.</p>
@@ -665,13 +644,10 @@ function selectPlan(name,withMotion=true){
 }
 root.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>{selectPlan(btn.dataset.plan);}));
 selectPlan('Gold',false);
-(()=>{const len=byId('pw-pick-length'),forEl=byId('pw-result-for'),compare=byId('pw-compare');if(!len||!forEl)return;
-const KEPT={slip:'in a Slip',lift:'on a lift',trailer:'on a trailer'},STORAGE={slip:'In a Slip',lift:'On a lift',trailer:'Trailer / driveway'};
-const kept=()=>{const r=root.querySelector('input[name="pw-kept"]:checked');return r?r.value:'';};
+(()=>{const compare=byId('pw-compare');
 const plan=()=>{const b=root.querySelector('[data-plan][aria-pressed="true"]');return b?b.dataset.plan:'Gold';};
-function update(){const v=parseFloat(len.value),k=kept();forEl.textContent='Your '+(v>0?(Math.round(v*10)/10)+' ft':'boat')+(k?' '+KEPT[k]:'');if(compare)compare.hidden=plan()==='Platinum';}
-len.addEventListener('input',update);root.querySelectorAll('input[name="pw-kept"]').forEach(r=>r.addEventListener('change',update));root.querySelectorAll('[data-plan]').forEach(b=>b.addEventListener('click',update));
-byId('pw-plan-quote').addEventListener('click',()=>{const l=byId('pw-member-length'),s=byId('pw-member-storage'),k=kept();if(l&&len.value)l.value=len.value;if(s&&k)s.value=STORAGE[k];});
+function update(){if(compare)compare.hidden=plan()==='Platinum';}
+root.querySelectorAll('[data-plan]').forEach(b=>b.addEventListener('click',update));
 update();
 const list=byId('pw-plan-features');if(list){const btn=pwCollapse(list,'Show everything included','Show less','clamp');list.after(btn);const sync=()=>{const n=list.children.length;btn.hidden=n<=4;if(btn.getAttribute('aria-expanded')!=='true')btn.textContent='Show all '+n+' included';};sync();new MutationObserver(sync).observe(list,{childList:true});}
 const story=root.querySelector('.pw-planstory'),body=root.querySelector('.pw-planbody');if(narrow()&&story&&body){body.append(pwCollapse(story,'Show plan details','Hide plan details'));}

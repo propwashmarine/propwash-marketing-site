@@ -234,14 +234,12 @@ clean / Keep it maintained / Manage it for me). Below 600px the cards become sta
 rows (3px radius) filled with the tier color when selected.
 
 ### Membership picker (homepage)
-Boat length plus a Slip / Lift / Trailer segmented control, then "What do you want from us?"
-answered by the tier cards. Tiers are chosen by scope only, never by length or storage:
-Keep it clean → Silver, Keep it maintained → Gold (default), Manage it for me → Platinum
-(invite flow). The result shows "Your 38 ft on a lift" as an Oswald line in `#70B8FF`, the
-tier's "What we handle" list from the membership copy, "Every plan is custom quoted to your
-boat." and, for Silver and Gold, "Compare all plans" (to `/membership/#pw-membertable`). The
-CTA opens the existing membership request with the tier preselected and copies length and
-storage into it. No prices.
+One question, "What do you want from us?", answered by the tier cards. Tiers are chosen by
+scope only: Keep it clean → Silver, Keep it maintained → Gold (default), Manage it for me →
+Platinum (invite flow). The result shows the tier's "What we handle" list from the membership
+copy, "Every plan is custom quoted to your boat." and, for Silver and Gold, "Compare all
+plans" (to `/membership/#pw-membertable`). The CTA opens the existing membership request with
+the tier preselected. No prices.
 
 ### Membership tier grid (subpage)
 Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries the amber
