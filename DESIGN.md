@@ -227,10 +227,21 @@ control.
 
 ### Membership cards (`.pw-metal`)
 Three cards with metal-gradient fills (`linear-gradient(140deg, …)`) and a 1px tinted
-border. A diagonal sheen sweeps across on hover and the card lifts `-5px`. The selected
+border. On hover the card lifts 2px on the soft curve; there is no sheen. The selected
 card gets a 4px bottom bar in the tier color and a soft shadow. The Oswald name is set at
-`clamp(32px,4.15cqw,47px)`. Below 600px the cards become a sticky row of tier-colored pills
-(3px radius).
+`clamp(32px,4.15cqw,47px)`. On the homepage each card starts with its answer label (Keep it
+clean / Keep it maintained / Manage it for me). Below 600px the cards become stacked answer
+rows (3px radius) filled with the tier color when selected.
+
+### Membership picker (homepage)
+Boat length plus a Slip / Lift / Trailer segmented control, then "What do you want from us?"
+answered by the tier cards. Tiers are chosen by scope only, never by length or storage:
+Keep it clean → Silver, Keep it maintained → Gold (default), Manage it for me → Platinum
+(invite flow). The result shows "Your 38 ft on a lift" as an Oswald line in `#70B8FF`, the
+tier's "What we handle" list from the membership copy, "Every plan is custom quoted to your
+boat." and, for Silver and Gold, "Compare all plans" (to `/membership/#pw-membertable`). The
+CTA opens the existing membership request with the tier preselected and copies length and
+storage into it. No prices.
 
 ### Membership tier grid (subpage)
 Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries the amber
@@ -382,7 +393,6 @@ replaced during the redesign:
 
 | Current | Rule it breaks |
 |---|---|
-| Metal card −5px lift with a diagonal sheen sweep | Lift above 2px; several effects at once |
 | Slip shell `rotateY(-5deg)` tilt that flattens on hover | Rotation |
 | Footer mark fill and single sheen sweep on hover | Large decorative motion |
 | `pw-in` starting at opacity .2, over .35s/.75s `ease-out` | Use the tokens above |

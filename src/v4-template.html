@@ -43,9 +43,8 @@
 #pw-redesign-v3 .pw-v2trust strong{display:block;font:500 20px/1.3 Oswald,Arial,sans-serif;text-transform:uppercase;letter-spacing:.025em}
 #pw-redesign-v3 .pw-v2trust span{display:block;font-size:10px;line-height:1.7;color:#A6B8CC;margin-top:8px}
 #pw-redesign-v3 .pw-v2plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
-#pw-redesign-v3 .pw-metal{position:relative;overflow:hidden;isolation:isolate;border:1px solid #77879B;background:linear-gradient(140deg,#69717C55,#213246 48%,#15273C);color:#F4F8FC;text-align:left;padding:25px 25px 20px;transition:transform .3s,box-shadow .3s,border-color .3s;display:flex;flex-direction:column;min-height:345px}
-#pw-redesign-v3 .pw-metal:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 20%,#F4F8FC10 44%,#F4F8FC22 47%,transparent 70%);z-index:-1;transform:translateX(-130%);transition:transform .8s}
-#pw-redesign-v3 .pw-metal:hover{transform:translateY(-5px)}#pw-redesign-v3 .pw-metal:hover:before{transform:translateX(130%)}
+#pw-redesign-v3 .pw-metal{position:relative;overflow:hidden;isolation:isolate;border:1px solid #77879B;background:linear-gradient(140deg,#69717C55,#213246 48%,#15273C);color:#F4F8FC;text-align:left;padding:25px 25px 20px;transition:transform var(--dur-hover) var(--ease-soft),box-shadow var(--dur-hover) var(--ease-fade),border-color var(--dur-hover) var(--ease-fade);display:flex;flex-direction:column;min-height:0}
+#pw-redesign-v3 .pw-metal:hover{transform:translateY(-2px)}
 #pw-redesign-v3 .pw-metal[aria-pressed=true]{box-shadow:0 13px 38px #0003;border-color:#CADBED}
 #pw-redesign-v3 .pw-metal[aria-pressed=true]:after{content:'';position:absolute;left:0;right:0;bottom:0;height:4px;background:#C4D4E6}
 #pw-redesign-v3 .pw-metal.pw-gold{background:linear-gradient(140deg,#74665066,#31363B 46%,#182A3F);border-color:#8A806B}
@@ -361,6 +360,53 @@ html{color-scheme:dark}
   #pw-redesign-v3 .pw-moments{grid-auto-columns:80%;gap:16px;margin-top:28px;padding-top:20px}
   #pw-redesign-v3 .pw-moments article{border-bottom:0;padding-bottom:0}
 }
+
+/* ===== Membership picker ===== */
+#pw-redesign-v3 .pw-membership{background:#0D2035}
+#pw-redesign-v3 .pw-picker{margin:0 0 20px}
+#pw-redesign-v3 .pw-pick-fields{display:grid;grid-template-columns:minmax(0,220px) minmax(0,420px);gap:24px;align-items:end}
+#pw-redesign-v3 .pw-pick-field{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#CED9E5}
+#pw-redesign-v3 .pw-pick-field input{width:100%;min-height:48px;padding:12px 13px;border:1px solid #566779;border-radius:0;background:#0A1A2F;color:#F4F8FC;font:400 14px/1.4 Inter,Arial,sans-serif}
+#pw-redesign-v3 .pw-pick-field input::placeholder{color:#96A6B9;font-size:12px}
+#pw-redesign-v3 .pw-seg{margin:0;padding:0;border:0;min-width:0}
+#pw-redesign-v3 .pw-seg legend{padding:0;margin-bottom:7px;font-size:11px;color:#CED9E5}
+#pw-redesign-v3 .pw-seg-opts{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #566779}
+#pw-redesign-v3 .pw-seg-opts label{position:relative;display:flex;min-width:0}
+#pw-redesign-v3 .pw-seg-opts input{position:absolute;inset:0;margin:0;opacity:0;cursor:pointer}
+#pw-redesign-v3 .pw-seg-opts span{flex:1;display:flex;align-items:center;justify-content:center;min-height:46px;border-right:1px solid #566779;color:#B8C4D2;font:600 12px/1.4 Inter,Arial,sans-serif;letter-spacing:.075em;text-transform:uppercase;transition:background-color var(--dur-hover) var(--ease-fade),color var(--dur-hover) var(--ease-fade)}
+#pw-redesign-v3 .pw-seg-opts label:last-child span{border-right:0}
+#pw-redesign-v3 .pw-seg-opts label:hover span{color:#F4F8FC}
+#pw-redesign-v3 .pw-seg-opts input:checked+span{background:#1A314B;color:#F4F8FC;box-shadow:inset 0 -3px #1E90FF}
+#pw-redesign-v3 .pw-seg-opts input:focus-visible+span{outline:3px solid #4FA9FF;outline-offset:2px}
+#pw-redesign-v3 .pw-pick-q{margin:40px 0 0;font:500 24px/1.25 Oswald,'Arial Narrow',Arial,sans-serif;text-transform:uppercase}
+#pw-redesign-v3 .pw-v2plans{margin-top:16px}
+#pw-redesign-v3 .pw-answer{display:block;margin-bottom:16px;color:#F4F8FC;font:600 12px/1.4 Inter,Arial,sans-serif;letter-spacing:.075em;text-transform:uppercase}
+#pw-redesign-v3 .pw-metal .pw-metalover{color:#A4B1C0;margin-bottom:18px}
+#pw-redesign-v3 .pw-result-for{margin:0 0 14px;color:#70B8FF;font:500 22px/1.2 Oswald,'Arial Narrow',Arial,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+#pw-redesign-v3 .pw-custom{margin:4px 0 22px;color:#C1CCD8;font-size:13px}
+#pw-redesign-v3 .pw-result-actions{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
+#pw-redesign-v3 .pw-result-actions .pw-compare{display:inline-flex;align-items:center;gap:18px;min-height:44px;margin:0;padding:7px 0;border:0;border-bottom:1px solid #627286;font-size:12px;font-weight:500}
+#pw-redesign-v3 .pw-result-actions .pw-compare:hover{border-color:#70B8FF;color:#70B8FF}
+#pw-redesign-v3 .pw-plannote{max-width:760px}
+@media (prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-metal:hover{transform:none}}
+@container (max-width:700px){
+  #pw-redesign-v3 .pw-pick-fields{grid-template-columns:1fr;gap:16px}
+  #pw-redesign-v3 .pw-pick-q{margin-top:28px;font-size:21px}
+  #pw-redesign-v3 .pw-result-for{font-size:20px}
+  #pw-redesign-v3 .pw-planlist+.pw-more{display:flex;width:fit-content;margin:0 0 22px}
+  #pw-redesign-v3 .pw-planimage{height:170px;min-height:170px}
+  #pw-redesign-v3 .pw-plan-highlight{padding:18px}
+  #pw-redesign-v3 .pw-planbody h3{font-size:32px}
+  #pw-redesign-v3 .pw-planpanel{gap:22px}
+}
+/* Below 600px the tier cards become answer rows (the old sticky pills hid the answers) */
+@container (max-width:600px){
+  #pw-redesign-v3 .pw-v2plans{position:static!important;display:grid!important;grid-template-columns:1fr;gap:8px;padding:0;background:none}
+  #pw-redesign-v3 .pw-v2plans .pw-metal{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:14px 16px;text-align:left;min-height:52px}
+  #pw-redesign-v3 .pw-v2plans .pw-answer{margin:0;font-size:12px}
+  #pw-redesign-v3 .pw-v2plans .pw-metal strong{font-size:16px}
+  #pw-redesign-v3 .pw-v2plans .pw-metal[aria-pressed=true] .pw-answer{color:#0A1A2F}
+}
 </style>
 <div id="pw-redesign-v3">
   <a class="pw-skip" href="#pw-main">Skip to content</a>
@@ -406,16 +452,22 @@ html{color-scheme:dark}
     </section>
     <section id="pw-membership" class="pw-membership pw-section pw-wrap">
   <div class="pw-sectionhead"><div><div class="pw-kicker pw-eyebrow pw-muted">03 / A higher standard of care</div><h2>One boat.<br> Your level of care.</h2></div><p>Every membership includes recurring washes on the schedule you set and photos after every visit. Choose how much more you want us to handle.</p></div>
-  <div class="pw-v2plans" role="group" aria-label="Explore membership tiers">
-    <button class="pw-metal pw-silver" type="button" data-plan="Silver" aria-pressed="false"><span class="pw-metalover">01 / Essential care</span><strong>Silver</strong><span class="pw-metaltag">Keeps it clean.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">A clean boat,<br> on your schedule.</span><span class="pw-metalextras">Consistent washing that keeps you ready for the next run.</span><span class="pw-metalaction">Explore Silver </span></button>
-    <button class="pw-metal pw-gold" type="button" data-plan="Gold" aria-pressed="false"><span class="pw-metalover">02 / Complete maintenance</span><strong>Gold</strong><span class="pw-metaltag">Keeps it maintained.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">Go beyond<br> the regular wash.</span><span class="pw-metalextras">Monthly deeper care keeps every detail in focus.</span><span class="pw-metalaction">Explore Gold </span></button>
-    <button class="pw-metal pw-platinum" type="button" data-plan="Platinum" aria-pressed="true"><span class="pw-metalover">03 / By invitation</span><strong>Platinum</strong><span class="pw-metaltag">We manage your boat.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">Arrive ready<br> to head out.</span><span class="pw-metalextras">Complete care, Trip Ready preparation and attention between visits.</span><span class="pw-metalaction">Viewing Platinum </span></button>
+  <div class="pw-picker">
+    <div class="pw-pick-fields">
+      <label class="pw-pick-field" for="pw-pick-length"><span>Boat length (ft)</span><input id="pw-pick-length" type="number" inputmode="decimal" min="1" max="300" step=".1" placeholder="e.g. 32" autocomplete="off"></label>
+      <fieldset class="pw-seg"><legend>Where it's kept</legend><div class="pw-seg-opts"><label><input type="radio" name="pw-kept" value="slip"><span>Slip</span></label><label><input type="radio" name="pw-kept" value="lift"><span>Lift</span></label><label><input type="radio" name="pw-kept" value="trailer"><span>Trailer</span></label></div></fieldset>
+    </div>
+    <p class="pw-pick-q" id="pw-pick-q">What do you want from us?</p>
+  </div>
+  <div class="pw-v2plans" role="group" aria-labelledby="pw-pick-q">
+    <button class="pw-metal pw-silver" type="button" data-plan="Silver" aria-pressed="false"><span class="pw-answer">Keep it clean</span><span class="pw-metalover">01 / Essential care</span><strong>Silver</strong><span class="pw-metaltag">Keeps it clean.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">A clean boat,<br> on your schedule.</span><span class="pw-metalextras">Consistent washing that keeps you ready for the next run.</span><span class="pw-metalaction">Explore Silver </span></button>
+    <button class="pw-metal pw-gold" type="button" data-plan="Gold" aria-pressed="false"><span class="pw-answer">Keep it maintained</span><span class="pw-metalover">02 / Complete maintenance</span><strong>Gold</strong><span class="pw-metaltag">Keeps it maintained.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">Go beyond<br> the regular wash.</span><span class="pw-metalextras">Monthly deeper care keeps every detail in focus.</span><span class="pw-metalaction">Explore Gold </span></button>
+    <button class="pw-metal pw-platinum" type="button" data-plan="Platinum" aria-pressed="true"><span class="pw-answer">Manage it for me</span><span class="pw-metalover">03 / By invitation</span><strong>Platinum</strong><span class="pw-metaltag">We manage your boat.</span><span class="pw-metalrule"></span><span class="pw-metaldesc">Arrive ready<br> to head out.</span><span class="pw-metalextras">Complete care, Trip Ready preparation and attention between visits.</span><span class="pw-metalaction">Viewing Platinum </span></button>
   </div>
   <div class="pw-planpanel" id="pw-planpanel" aria-live="polite">
-    <div class="pw-planbody"><div class="pw-eyebrow pw-muted" id="pw-plan-label">Platinum / By invitation</div><h3 id="pw-plan-head">Your next run.<br> Already handled.</h3><p id="pw-plan-description">For owners who want the details managed between trips. We learn your boat, keep it maintained, and get it ready before you arrive.</p><div class="pw-plan-included pw-eyebrow">What we handle</div><ul class="pw-planlist" id="pw-plan-features"></ul><button class="pw-cta" type="button" id="pw-plan-quote" data-member="Platinum"><span id="pw-plan-action">Request an invite</span></button></div>
+    <div class="pw-planbody"><p class="pw-result-for" id="pw-result-for" aria-live="polite">Your boat</p><div class="pw-eyebrow pw-muted" id="pw-plan-label">Platinum / By invitation</div><h3 id="pw-plan-head">Your next run.<br> Already handled.</h3><p id="pw-plan-description">For owners who want the details managed between trips. We learn your boat, keep it maintained, and get it ready before you arrive.</p><div class="pw-plan-included pw-eyebrow">What we handle</div><ul class="pw-planlist" id="pw-plan-features"></ul><p class="pw-custom">Every plan is custom quoted to your boat.</p><div class="pw-result-actions"><button class="pw-cta" type="button" id="pw-plan-quote" data-member="Platinum"><span id="pw-plan-action">Request an invite</span></button><a class="pw-compare" id="pw-compare" href="/membership/#pw-membertable">Compare all plans <span class="pw-arrow" aria-hidden="true"></span></a></div></div>
     <aside class="pw-planstory"><div class="pw-planimage"><img data-pw-img="memberPlatinum" alt="Boat prepared for Platinum care" width="1800" height="1013"><div class="pw-imagecaption"><div class="pw-eyebrow" id="pw-plan-image-label">Platinum membership</div><h3 id="pw-plan-image-head">Show up.<br> Head out.</h3></div></div><div class="pw-plan-highlight"><span class="pw-eyebrow" id="pw-plan-perk-label">Trip Ready / Twice a month, included</span><p id="pw-plan-perk">We wipe down the boat, remove canvas, ice the coolers, stock water and drinks, turn on electronics and stow the lines.</p></div><div class="pw-plan-facts"><div><span>Wash cadence</span><strong id="pw-plan-cadence">Built around your boat</strong></div><div><span>Scheduling</span><strong id="pw-plan-priority">Our highest priority</strong></div></div></aside>
   </div>
-  <a class="pw-compare" href="/membership/">Compare the three memberships <span class="pw-arrow" aria-hidden="true"></span></a>
   <p class="pw-plannote">Month-to-month and contract options. Every plan is custom quoted. Wash frequency is tailored separately from the level of care: Silver offers weekly, bi-weekly or monthly; Gold and Platinum offer a custom cadence. Every new plan starts with a separately quoted Full Detail. Machine wax is not included in any tier. Coated boats receive quarterly ceramic boosters.</p>
 </section>
     <section id="pw-how" class="pw-how pw-section pw-wrap" aria-labelledby="pw-how-h">
@@ -507,8 +559,19 @@ function selectPlan(name,withMotion=true){
  byId('pw-plan-action').textContent=plan.action;byId('pw-plan-quote').dataset.member=name;byId('pw-plan-image-label').textContent=name+' membership';multiline('pw-plan-image-head',plan.imageHead);byId('pw-plan-perk-label').textContent=plan.perkLabel;byId('pw-plan-perk').textContent=plan.perk;byId('pw-plan-cadence').textContent=plan.cadence;byId('pw-plan-priority').textContent=plan.priority;root.querySelector('.pw-planimage img').src=assets[{Silver:'memberSilver',Gold:'memberGold',Platinum:'memberPlatinum'}[name]];
  if(withMotion)animate(byId('pw-planpanel'));
 }
-root.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>{selectPlan(btn.dataset.plan);if(window.matchMedia('(max-width:600px)').matches){const sw=root.querySelector('.pw-v2plans');if(sw)sw.scrollIntoView({behavior:'smooth',block:'start'});}}));
-selectPlan('Platinum',false);
+root.querySelectorAll('[data-plan]').forEach(btn=>btn.addEventListener('click',()=>{selectPlan(btn.dataset.plan);}));
+selectPlan('Gold',false);
+(()=>{const len=byId('pw-pick-length'),forEl=byId('pw-result-for'),compare=byId('pw-compare');if(!len||!forEl)return;
+const KEPT={slip:'in a Slip',lift:'on a lift',trailer:'on a trailer'},STORAGE={slip:'In a Slip',lift:'On a lift',trailer:'Trailer / driveway'};
+const kept=()=>{const r=root.querySelector('input[name="pw-kept"]:checked');return r?r.value:'';};
+const plan=()=>{const b=root.querySelector('[data-plan][aria-pressed="true"]');return b?b.dataset.plan:'Gold';};
+function update(){const v=parseFloat(len.value),k=kept();forEl.textContent='Your '+(v>0?(Math.round(v*10)/10)+' ft':'boat')+(k?' '+KEPT[k]:'');if(compare)compare.hidden=plan()==='Platinum';}
+len.addEventListener('input',update);root.querySelectorAll('input[name="pw-kept"]').forEach(r=>r.addEventListener('change',update));root.querySelectorAll('[data-plan]').forEach(b=>b.addEventListener('click',update));
+byId('pw-plan-quote').addEventListener('click',()=>{const l=byId('pw-member-length'),s=byId('pw-member-storage'),k=kept();if(l&&len.value)l.value=len.value;if(s&&k)s.value=STORAGE[k];});
+update();
+const list=byId('pw-plan-features');if(list){const btn=pwCollapse(list,'Show everything included','Show less','clamp');list.after(btn);const sync=()=>{const n=list.children.length;btn.hidden=n<=4;if(btn.getAttribute('aria-expanded')!=='true')btn.textContent='Show all '+n+' included';};sync();new MutationObserver(sync).observe(list,{childList:true});}
+const story=root.querySelector('.pw-planstory'),body=root.querySelector('.pw-planbody');if(narrow()&&story&&body){body.append(pwCollapse(story,'Show plan details','Hide plan details'));}
+})();
 byId('pw-dashboard-expand').addEventListener('click',()=>{const expanded=byId('pw-portal').classList.toggle('pw-expanded');byId('pw-dashboard-expand').setAttribute('aria-expanded',String(expanded));byId('pw-dashboard-expand').firstChild.textContent=expanded?'Return to overview ':'Take a closer look ';});
 
 const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
@@ -534,7 +597,7 @@ byId('pw-restart').addEventListener('click',()=>{form.reset();showDone(false);})
 root.querySelectorAll('[data-quote]').forEach(btn=>btn.addEventListener('click',()=>{showDone(false);byId('pw-interest').value=btn.dataset.quote;goTo('pw-quote');}));
 if(!reduced&&'IntersectionObserver' in window){const REVEAL_GROUPS='.pw-steps,.pw-v2plans,.pw-journalgrid,.pw-gallerychoices,.pw-moments,.pw-portalfeatures';const revealer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(!entry.isIntersecting)return;const el=entry.target;revealer.unobserve(el);(el.matches(REVEAL_GROUPS)?[...el.children]:[el]).forEach((c,i)=>{const step=Math.min(i,3);c.style.transitionDelay=(step*60)+'ms';c.classList.add('pw-in-view');setTimeout(()=>{c.style.transitionDelay='';},700+step*60);});});},{rootMargin:'0px 0px -12% 0px'});const fold=window.innerHeight;root.querySelectorAll('#pw-main > section > *').forEach(el=>{if(el.getBoundingClientRect().top<fold)return;(el.matches(REVEAL_GROUPS)?[...el.children]:[el]).forEach(c=>c.classList.add('pw-reveal'));revealer.observe(el);});}
 function pwCollapse(target,label,openLabel,mode){const b=document.createElement('button');b.type='button';b.className='pw-more';if(!target.id)target.id='pw-more-'+Math.random().toString(36).slice(2,8);b.setAttribute('aria-controls',target.id);b.setAttribute('aria-expanded','false');b.textContent=label;const attr=mode==='clamp'?'data-pw-clamp':'data-pw-collapsed';target.setAttribute(attr,'');b.addEventListener('click',()=>{const open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));b.textContent=open?openLabel:label;open?target.removeAttribute(attr):target.setAttribute(attr,'');});return b;}
-const narrow=()=>root.getBoundingClientRect().width<=700;
+function narrow(){return root.getBoundingClientRect().width<=700;}
 
 function showDetailOverview(){root.querySelectorAll('[data-detail]').forEach(b=>b.setAttribute('aria-pressed','false'));byId('pw-detail-feature').src=assets.detailMain;byId('pw-detail-feature').alt='Propwash Full Detail in progress';byId('pw-detail-count').textContent='01 / 07';byId('pw-detail-title').textContent='The complete reset.';byId('pw-detail-caption').textContent='A Full Detail reaches beyond the obvious surfaces. Click this large image any time to return here.';animate(byId('pw-detail-feature'));}
 byId('pw-detail-reset').addEventListener('click',showDetailOverview);
