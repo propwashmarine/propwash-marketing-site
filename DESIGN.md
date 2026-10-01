@@ -278,7 +278,13 @@ captions over a bottom scrim.
 ### FAQ
 Native `<details>`. The homepage uses 13px summaries with a `+`/`−` in `#B8C9DC`. The FAQ page
 uses Oswald 22px uppercase summaries with a `#70B8FF` `+`/`–`, 14px answers in `#C3D0DE`,
-and a max width of 740px.
+and a max width of 740px. On the homepage every answer starts closed below 700px.
+
+### Journal link (homepage)
+The dock journal sits behind a single "From the journal" text link (a native `<details>`
+summary styled like `.pw-textlink`). It opens the three articles in place, so their copy stays
+on the page; links to `#pw-journal` open it. On mobile the articles become a swipe row and
+each long answer sits behind "Read the full answer".
 
 ### Forms
 Two-column field grid (one column below 400px on the homepage, below 700px for the member
