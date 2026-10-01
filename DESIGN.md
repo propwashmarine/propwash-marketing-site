@@ -301,10 +301,15 @@ and 14px copy on the left, contact block on the right (Oswald 31px phone, 12px l
 `#53687D` rule).
 
 ### Footer
-Deep navy, three-column top (`1.4fr 1fr 1fr`), 11px link lists with eyebrow headers,
-9–11px legal row. The oversized PROPWASH SVG mark starts as a `#33465C` stroke outline. On
-footer hover it fills left to right (P white, W `#1E90FF`) over `.9s cubic-bezier(.4,0,.2,1)`
-with a single sheen sweep.
+Every page's footer opens with the service area (`#pw-area`): "Our stretch of coast", "South
+Florida. At your Slip.", the Boca Raton line, "Tell us where your boat sits" (a quote button on
+the homepage, a `/#pw-quote` link elsewhere) and the 9 city links as bordered chips (Oswald 16px
+city, 11px county; Boca Raton in `#70B8FF`). `build_live.py` injects the chips into the
+homepage footer, the shared footer used by the legal pages, and the `{{FOOTER_AREA}}` token in
+the city, services, FAQ, gallery and membership templates. Below that: deep navy, three-column
+top (`1.4fr 1fr 1fr`), 11px link lists with eyebrow headers and the legal row. The oversized
+PROPWASH SVG mark starts as a `#33465C` stroke outline. On footer hover it fills left to right
+(P white, W `#1E90FF`) over `.9s cubic-bezier(.4,0,.2,1)` with a single sheen sweep.
 
 ### Chips
 Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–12px 15px`,
@@ -404,17 +409,15 @@ section reveals once, card groups (`.pw-steps`, `.pw-v2plans`, `.pw-journalgrid`
 `.pw-gallerychoices`, `.pw-moments`, `.pw-portalfeatures`) stagger their children, and anything
 already on screen at load never animates.
 
-### Current site vs this standard
-The live homepage predates this section. These pieces break the rules above and should be
-replaced during the redesign:
+### Status
+The 2026 homepage redesign removed the motion that broke these rules: the hero and gallery drift
+loops, the looping hero video, the hero load entrance, the metal-card sheen and 5px lift, the
+tilted portal frames, the gallery cursor spotlight and the coast-route line. State changes use
+the tokens above.
 
-| Current | Rule it breaks |
-|---|---|
-| Footer mark fill and single sheen sweep on hover | Large decorative motion |
-| `pw-in` starting at opacity .2, over .35s/.75s `ease-out` | Use the tokens above |
-
-The coast-route line in the service-area section (injected by `build_live.py`, 1.55s, plays
-once on scroll) already fits, but should move to `--ease-soft`.
+**Sanctioned exception:** the footer PROPWASH wordmark keeps its hover fill and single sheen sweep
+(owner decision). It plays only on footer hover, never loops, and is replaced by a static fill
+under `prefers-reduced-motion`.
 
 ### Future (not now)
 A large, cinematic moving hero video. When it comes, it must still follow this section: a
