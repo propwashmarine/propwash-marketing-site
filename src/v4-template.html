@@ -407,6 +407,16 @@ html{color-scheme:dark}
   #pw-redesign-v3 .pw-v2plans .pw-metal strong{font-size:16px}
   #pw-redesign-v3 .pw-v2plans .pw-metal[aria-pressed=true] .pw-answer{color:#0A1A2F}
 }
+
+/* ===== How it works ===== */
+#pw-redesign-v3 .pw-how{background:#0A1A2F;border-top:1px solid var(--pw-line)}
+#pw-redesign-v3 .pw-how .pw-steps{margin-top:0}
+@container (max-width:700px){
+  #pw-redesign-v3 .pw-steps{display:grid!important;grid-auto-flow:column;grid-template-columns:none!important;grid-auto-columns:76%;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+  #pw-redesign-v3 .pw-steps::-webkit-scrollbar{display:none}
+  #pw-redesign-v3 .pw-steps>div{scroll-snap-align:start;min-width:0;border-top:1px solid var(--pw-line);padding-top:16px}
+  #pw-redesign-v3 .pw-stepnumber{font-size:32px;margin-bottom:10px}
+}
 </style>
 <div id="pw-redesign-v3">
   <a class="pw-skip" href="#pw-main">Skip to content</a>
