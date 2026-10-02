@@ -504,6 +504,7 @@ def render_city_page(slug: str, data: dict, shared_styles: str) -> str:
             "CTA_TITLE": escape(data["cta_title"]),
             "CTA_BODY": escape(data["cta_body"]),
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
             "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
         },
@@ -577,6 +578,7 @@ def render_membership_page(shared_styles: str) -> str:
             "HERO_ABSOLUTE_URL": f"{BASE_URL}/{hero_image}",
             "CITY_LINKS_HTML": city_links_html,
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
             "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
             "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
@@ -764,19 +766,24 @@ markup = require_replace(
     '<button class="pw-motion" id="pw-motion" type="button" aria-pressed="true" hidden><span>◉</span> Motion on</button><button class="pw-motion" id="pw-preview-confirmation" type="button" hidden>Preview confirmation</button>',
 )
 markup = markup.replace("preload=\"auto\"", "preload=\"metadata\"")
-markup = markup.replace("Captured from the current My Slip portal for this design review.", "Your real service history, visit photos and payments in one place.")
 markup = markup.replace("Run hard. Look right. / V4 design concept for approval", "Run hard. Look right. / South Florida Dockside Detailing")
 
-markup = require_replace(
-    markup,
-    '<section id="pw-area" class="pw-area pw-section pw-wrap"><div><div class="pw-kicker pw-eyebrow pw-muted">07 / Our stretch of coast</div><h2>South Florida.<br> At your Slip.</h2><p>Based in Boca Raton. Mobile detailing from Stuart to Fort Lauderdale, at your Slip, lift or driveway. Just outside that stretch? Ask us.</p></div><div><div class="pw-locationlist">',
-    '<section id="pw-area" class="pw-area pw-section pw-wrap"><div><div class="pw-kicker pw-eyebrow pw-muted">07 / Our stretch of coast</div><h2>South Florida.<br> At your Slip.</h2><p>Based in Boca Raton. Mobile detailing from Stuart to Fort Lauderdale, at your Slip, lift or driveway. Just outside that stretch? Ask us.</p><div class="pw-coastroute" aria-hidden="true"><span class="pw-routetrack"><i></i></span><b style="--pw-stop:0%"></b><b style="--pw-stop:51%"></b><b style="--pw-stop:100%"></b></div></div><div><div class="pw-locationlist">',
-)
-city_location_links = "".join(
-    f'<div><a href="/boat-detailing-{slug}/"><strong class="{"pw-homebase" if slug == "boca-raton" else ""}">{escape(city)}</strong><small>{escape(CITY_DATA[slug]["county"])}</small></a></div>'
-    for slug, city in CITY_ORDER
-)
+def city_chip(slug: str, city: str) -> str:
+    homebase = ' class="pw-homebase"' if slug == "boca-raton" else ""
+    return f'<a href="/boat-detailing-{slug}/"><strong{homebase}>{escape(city)}</strong><small>{escape(CITY_DATA[slug]["county"])}</small></a>'
+
+
+city_location_links = "".join(city_chip(slug, city) for slug, city in CITY_ORDER)
 markup = require_replace(markup, "<!-- PW_CITY_LINKS -->", city_location_links)
+# The service area lives in the footer: legal pages get it through shared_footer, the other
+# subpages through {{FOOTER_AREA}}. Off the homepage the quote button becomes a plain link.
+shared_footer = require_replace(shared_footer, "<!-- PW_CITY_LINKS -->", city_location_links)
+shared_footer = require_replace(
+    shared_footer,
+    '<button class="pw-textlink" type="button" data-quote="Check my location">Tell us where your boat sits </button>',
+    '<a class="pw-textlink" href="/#pw-quote">Tell us where your boat sits </a>',
+)
+footer_area = re.search(r'<div class="pw-footerarea" id="pw-area">.*?</nav></div>', shared_footer, re.S).group(0)
 
 markup = require_replace(
     markup,
@@ -836,20 +843,7 @@ script = script.replace(
     "root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});",
 )
 
-script = require_replace(
-    script,
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery;byId('pw-gallery-feature').src=assets[key];byId('pw-gallery-feature').alt=gallery[key][0]+' from the Propwash work gallery';byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(byId('pw-gallery-feature'));}));""",
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-const galleryDrift={gallery1:['1.4%','-.5%'],gallery2:['-1.1%','.6%'],gallery3:['.8%','-.8%'],gallery4:['-1.3%','-.3%']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery,feature=byId('pw-gallery-feature');feature.src=assets[key];feature.alt=gallery[key][0]+' from the Propwash work gallery';feature.style.setProperty('--pw-drift-x',galleryDrift[key][0]);feature.style.setProperty('--pw-drift-y',galleryDrift[key][1]);feature.style.animation='none';requestAnimationFrame(()=>{feature.style.animation='';});byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(feature);}));""",
-)
 
-enhancements = """
-const areaSection=byId('pw-area');
-if('IntersectionObserver' in window){new IntersectionObserver(entries=>{if(entries[0]?.isIntersecting){areaSection.classList.add('pw-route-visible');}},{threshold:.3}).observe(areaSection);}else{areaSection.classList.add('pw-route-visible');}
-"""
-script = require_replace(script, "\n})();", "\n" + enhancements + "\n})();")
 
 old_quote = """function completePreview(){if(!form.reportValidity())return;const request=byId('pw-interest').value;byId('pw-request-summary').textContent=byId('pw-length').value+' ft boat · '+request+'. Your boat details and contact information would accompany this request.';showDone(true);}
 byId('pw-preview-request').addEventListener('click',completePreview);
@@ -869,37 +863,18 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 #pw-redesign-v3{width:100%;min-height:100vh}
 #pw-redesign-v3 .pw-hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
 #pw-redesign-v3 .pw-v2hero .pw-nav{position:relative;z-index:3}
-#pw-redesign-v3 .pw-locationlist>div>a{display:flex;gap:25px;justify-content:space-between;align-items:center;width:100%}
-#pw-redesign-v3 .pw-locationlist>div>a:hover strong{color:#70B8FF}
 #pw-redesign-v3 .pw-cta:disabled{opacity:.7;cursor:wait;transform:none}
 #pw-redesign-v3 .pw-formerror{color:#F5A623}
 #pw-redesign-v3 .pw-metal{overflow:hidden;isolation:isolate;transform-style:preserve-3d}
 #pw-redesign-v3 .pw-metal:before{pointer-events:none}
 #pw-redesign-v3 .pw-metal[aria-pressed=true]{box-shadow:0 17px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.2)}
-#pw-redesign-v3 .pw-coastroute{position:relative;height:46px;margin:34px 0 2px;max-width:440px}
-#pw-redesign-v3 .pw-routetrack{position:absolute;left:0;right:0;top:21px;height:2px;background:#425C76;overflow:hidden}
-#pw-redesign-v3 .pw-routetrack i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#70B8FF,#D9EBFA);transform:scaleX(0);transform-origin:left;transition:transform 1.55s cubic-bezier(.2,.75,.2,1)}
-#pw-redesign-v3 .pw-coastroute b{position:absolute;left:var(--pw-stop);top:15px;width:14px;height:14px;border:2px solid #91A8C0;background:#10243B;border-radius:50%;transform:translateX(-50%) scale(.7);transition:transform .35s .2s,background .35s}
-#pw-redesign-v3 .pw-coastroute b:first-of-type{transform:translateX(0) scale(.7)}
-#pw-redesign-v3 .pw-coastroute b:last-of-type{transform:translateX(-100%) scale(.7)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-routetrack i{transform:scaleX(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b{background:#70B8FF;transform:translateX(-50%) scale(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:first-of-type{transform:translateX(0) scale(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:last-of-type{transform:translateX(-100%) scale(1)}
-#pw-redesign-v3 .pw-gallerymain img{--pw-drift-x:1.2%;--pw-drift-y:-.5%;animation:pw-finish-drift 13s ease-in-out infinite alternate;transform-origin:center}
-#pw-redesign-v3 .pw-gallerymain:hover img{animation-duration:7s}
-@keyframes pw-finish-drift{from{transform:scale(1.035) translate(0,0)}to{transform:scale(1.075) translate(var(--pw-drift-x),var(--pw-drift-y))}}
 #pw-redesign-v3 .pw-mobileactions{display:none}
-#pw-redesign-v3.pw-still .pw-routetrack i{transition:none;transform:scaleX(1)}
-#pw-redesign-v3.pw-still .pw-coastroute b{transition:none;background:#70B8FF}
-#pw-redesign-v3.pw-still .pw-gallerymain img{animation:none;transform:scale(1.035)}
 @container(max-width:700px){
  #pw-redesign-v3 #pw-home-view{padding-bottom:62px}
  #pw-redesign-v3 .pw-mobileactions{position:fixed;z-index:50;display:grid;grid-template-columns:.72fr 1fr 1.2fr;left:0;right:0;bottom:0;min-height:58px;background:#081728F5;border-top:1px solid #4A6077;box-shadow:0 -12px 30px rgba(1,9,18,.3);backdrop-filter:blur(13px)}
  #pw-redesign-v3 .pw-mobileactions a{display:grid;place-items:center;min-height:58px;padding:8px 6px;border-right:1px solid #344A61;color:#E9F2FA;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center}
  #pw-redesign-v3 .pw-mobileactions a:last-child{border-right:0;background:#2F91E8;color:#07192D}
 }
-@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}#pw-redesign-v3 .pw-gallerymain img{animation:none!important}}
 """
 
 faq_schema = {
@@ -1013,6 +988,7 @@ def render_services_page(shared_styles: str) -> str:
         (ROOT / "src" / "services-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "SERVICES_HTML": services_html,
             "STEPS_HTML": steps_html,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
@@ -1062,6 +1038,7 @@ def render_gallery_page(shared_styles: str) -> str:
         (ROOT / "src" / "gallery-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "GALLERY_HTML": gallery_html,
             "HERO_SRC": hero_src,
             "HERO_ABSOLUTE_URL": f"{BASE_URL}/{asset_urls['detailTower']}",
@@ -1121,6 +1098,7 @@ def render_faq_page(shared_styles: str) -> str:
         (ROOT / "src" / "faq-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "FAQ_HTML": faq_html,
             "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
