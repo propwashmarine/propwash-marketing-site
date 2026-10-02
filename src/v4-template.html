@@ -413,12 +413,7 @@ html{color-scheme:dark}
 #pw-redesign-v3 .pw-portal-extra{margin-top:26px;padding-top:22px;border-top:1px solid var(--pw-line)}
 #pw-redesign-v3 .pw-portal-extra h3{margin:8px 0;font-size:20px}
 #pw-redesign-v3 .pw-portal-extra p{color:#B9C8D8;font-size:13px;line-height:1.75}
-#pw-redesign-v3 .pw-carousel{margin-top:48px}
-#pw-redesign-v3 .pw-car-controls{display:none}
-#pw-redesign-v3 .pw-car-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:1px solid #536073;background:transparent;color:#F4F8FC;cursor:pointer;transition:background-color var(--dur-hover) var(--ease-fade),border-color var(--dur-hover) var(--ease-fade)}
-#pw-redesign-v3 .pw-car-btn:hover:not(:disabled){background:#1C2A3A;border-color:#70B8FF}
-#pw-redesign-v3 .pw-car-btn:disabled{opacity:.35;cursor:default}
-#pw-redesign-v3 .pw-phones{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,232px);gap:24px;padding:6px 6px 32px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:6px;scrollbar-color:#425268 transparent;scrollbar-width:thin}
+#pw-redesign-v3 .pw-phones{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(210px,232px);gap:24px;padding:6px 6px 32px;margin:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:6px;scrollbar-color:#425268 transparent;scrollbar-width:thin}
 #pw-redesign-v3 .pw-phone{margin:0;min-width:0;scroll-snap-align:start;container-type:inline-size;transition:transform var(--dur-hover) var(--ease-soft)}
 #pw-redesign-v3 .pw-phone:hover{transform:translateY(-2px)}
 /* Device mockup: metallic edge, 6px black bezel, screen corners scaled to width, Dynamic Island, side buttons */
@@ -433,16 +428,16 @@ html{color-scheme:dark}
 #pw-redesign-v3 .pw-phone h3{margin:8px 0;font-size:20px}
 #pw-redesign-v3 .pw-phone p{color:#B9C8D8;font-size:13px;line-height:1.75}
 @media (prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-phone:hover{transform:none}}
-/* Three phones at a time from 701px (290px wide at desktop), arrows + scroll-snap */
+/* Desktop: no carousel. 3x2 grid of phones; two columns (copy left, phones right) from 1100px */
 @container (min-width:701px){
-  #pw-redesign-v3 .pw-carousel{--gap:24px;max-width:978px}
-  #pw-redesign-v3 .pw-car-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:18px}
-  #pw-redesign-v3 .pw-phones{grid-auto-columns:calc((100% - 2 * var(--gap)) / 3);gap:var(--gap)}
+  #pw-redesign-v3 .pw-phones{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-columns:auto;gap:40px 24px;margin-top:40px;padding:0;overflow:visible;scroll-snap-type:none}
 }
-@container (min-width:1060px){#pw-redesign-v3 .pw-carousel{--gap:48px}}
+@container (min-width:1100px){
+  #pw-redesign-v3 .pw-portal{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr);gap:64px;align-items:start}
+  #pw-redesign-v3 .pw-phones{margin-top:0}
+}
 @container (max-width:700px){
-  #pw-redesign-v3 .pw-carousel{margin-top:28px}
-  #pw-redesign-v3 .pw-phones{grid-auto-columns:62%;gap:16px}
+  #pw-redesign-v3 .pw-phones{grid-auto-columns:62%;gap:16px;margin-top:28px}
 }
 
 /* ===== FAQ and the journal link ===== */
@@ -552,16 +547,13 @@ html{color-scheme:dark}
     </section>
     <section id="pw-portal" class="pw-portal pw-section pw-wrap">
   <div class="pw-portalcopy"><div class="pw-kicker pw-eyebrow pw-muted">04 / Your actual Owner Portal</div><h2>Your boat.<br> Your Slip.<br> All right here.</h2><p>Your boat's condition, photos, service history and payments in one place.</p><p class="pw-portalstory">Use My Slip before and after a service. Add access notes, choose how the covers are left, request interior care, approve work and keep every visit tied to the boat.</p><button id="pw-dashboard-expand" type="button" class="pw-textlink" aria-expanded="false" hidden>Take a closer look </button><div class="pw-portal-extra"><span class="pw-eyebrow">Add interior care</span><h3>Bring the inside into the request.</h3><p>Request interior cleaning when the boat needs attention below deck.</p></div></div>
-  <div class="pw-carousel" role="region" aria-roledescription="carousel" aria-label="Owner Portal screens">
-    <div class="pw-car-controls"><button type="button" class="pw-car-btn" data-dir="-1" aria-controls="pw-phones" aria-label="Previous screen"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg></button><button type="button" class="pw-car-btn" data-dir="1" aria-controls="pw-phones" aria-label="Next screen"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg></button></div>
-    <div class="pw-phones" id="pw-phones" role="list" tabindex="0" aria-label="Owner Portal screens, scroll sideways">
+  <div class="pw-phones" id="pw-phones" role="list" aria-label="Owner Portal screens">
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-1-slip.webp" width="600" height="1182" alt="Owner Portal My Slip screen: a welcome-back greeting, the boat card for a 43-foot Mag Bay named Salty Dog, a notifications row and a protection status ring counting down to the next visit." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">MY SLIP / OWNER PORTAL · Current dashboard</span><h3>My Slip</h3><p>Your real service history, visit photos and payments in one place.</p></figcaption></figure>
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-2-next-visit.webp" width="600" height="1182" alt="My Slip screen scrolled down: a scheduled Signature Wash on Tuesday, Oct 6 at 12:00 PM with a Move link, a Report a Spot button, a row of latest visit photos and the service log." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">Next visit</span><h3>See the work after every visit.</h3></figcaption></figure>
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-3-on-the-water.webp" width="600" height="1182" alt="On Water screen: current conditions of 82°F and overcast with wind, seas, water temperature and chance of rain, followed by boating day scores for the coming days." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">On the water</span><h3>Know the conditions before you leave the dock.</h3></figcaption></figure>
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-4-book-wash.webp" width="600" height="1182" alt="Booking screen for a wash: location set to Boca Raton, a choice to leave the covers back on or off, a Request a Signature Wash button and an upcoming confirmed visit." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">Service preference</span><h3>Covers on or off. You choose.</h3><p>Tell us how you want the covers left when the service is complete. Request the care your boat needs. Tell us exactly how you want the boat left.</p></figcaption></figure>
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-5-membership.webp" width="600" height="1182" alt="Membership screen headed Choose your level, we&#x27;ll handle the rest, showing an active Platinum membership for a 43-foot boat, a Change Plan button and the start of the what&#x27;s-included list." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">Membership</span><h3>Your plan and everything it covers.</h3></figcaption></figure>
       <figure class="pw-phone" role="listitem"><div class="pw-device"><div class="pw-display"><img src="assets/portal/portal-6-invoice.webp" width="600" height="1182" alt="Invoice screen: invoice PWM-1006 marked paid, with a Back to payments link, the Propwash Marine Detailing header with Boca Raton contact details, and the bill-to and vessel details." loading="lazy" decoding="async"></div></div><figcaption><span class="pw-eyebrow">Invoices</span><h3>Keep service records and invoices together.</h3></figcaption></figure>
-    </div>
   </div>
 </section>
     <section id="pw-membership" class="pw-membership pw-section pw-wrap">
@@ -672,11 +664,6 @@ if(narrow()){root.querySelectorAll('#pw-faq details[open]').forEach(d=>{d.open=f
 root.querySelectorAll('.pw-journalcopy').forEach(c=>c.after(pwCollapse(c,'Read the full answer','Show less')));
 (()=>{const j=root.querySelector('.pw-journal-link');if(!j)return;const open=()=>{j.open=true;};if(location.hash==='#pw-journal')open();root.querySelectorAll('a[href$="#pw-journal"]').forEach(a=>a.addEventListener('click',open));})();
 root.querySelectorAll('.pw-portalstory').forEach(p=>p.after(pwCollapse(p,'More about My Slip','Show less')));
-(()=>{const sc=byId('pw-phones'),btns=[...root.querySelectorAll('.pw-car-btn')];if(!sc||!btns.length)return;
-const step=()=>{const f=sc.querySelector('.pw-phone');return f?f.getBoundingClientRect().width+(parseFloat(getComputedStyle(sc).columnGap)||0):sc.clientWidth;};
-const sync=()=>{const max=sc.scrollWidth-sc.clientWidth-2;btns.forEach(b=>{b.disabled=+b.dataset.dir<0?sc.scrollLeft<=2:sc.scrollLeft>=max;});};
-btns.forEach(b=>b.addEventListener('click',()=>{sc.scrollBy({left:+b.dataset.dir*step(),behavior:reduced||root.classList.contains('pw-still')?'auto':'smooth'});}));
-let raf=0;sc.addEventListener('scroll',()=>{cancelAnimationFrame(raf);raf=requestAnimationFrame(sync);},{passive:true});window.addEventListener('resize',sync);sync();})();
 if(narrow()){root.querySelectorAll('.pw-servicetrigger[aria-expanded="true"]').forEach(trigger=>trigger.click());}
 
 function showDetailOverview(){root.querySelectorAll('[data-detail]').forEach(b=>b.setAttribute('aria-pressed','false'));byId('pw-detail-feature').src=assets.detailMain;byId('pw-detail-feature').alt='Propwash Full Detail in progress';byId('pw-detail-count').textContent='01 / 07';byId('pw-detail-title').textContent='The complete reset.';byId('pw-detail-caption').textContent='A Full Detail reaches beyond the obvious surfaces. Click this large image any time to return here.';animate(byId('pw-detail-feature'));}

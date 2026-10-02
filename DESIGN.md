@@ -250,12 +250,12 @@ Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries t
 `#AFBFD1`–`#C4D1DE`. Green `#33C48B` 600 marks only affirmative cells. Tables sit in a
 horizontal-scroll wrapper with `min-width:510–540px`.
 
-### Owner Portal phone carousel
+### Owner Portal phones
 Six real portal screenshots (`assets/portal/portal-1…6-*.webp`, 600×1182, white status band
-cropped) in a carousel: three phones at a time from 701px (290px wide at desktop, row capped at
-978px), 44px outline prev/next buttons that disable at the ends, scroll-snap, and keyboard
-scrolling on the focusable row. Below 700px it is a swipe row with the next phone peeking in.
-Captions use the portal copy; the interior-care copy sits in the text column.
+cropped). From 1100px the section is two columns: copy left, all six phones right in a 3×2
+grid that fills the column. From 701px to 1099px the same 3×2 grid sits under the copy. There
+is no carousel on desktop. Below 700px the phones are a swipe row with the next one peeking in.
+Each phone has one heading and one sentence.
 
 ### Phone frame (device mockup)
 Drawn in CSS only, no image files: a 1.5px metallic edge (gradient border-box from `#A4B1C0`
