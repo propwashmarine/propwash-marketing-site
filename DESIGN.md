@@ -255,7 +255,7 @@ Six real portal screenshots (`assets/portal/portal-1…6-*.webp`, 600×1182, whi
 cropped). From 1100px the section is two columns: copy left, all six phones right in a 3×2
 grid that fills the column. From 701px to 1099px the same 3×2 grid sits under the copy. There
 is no carousel on desktop. Below 700px the phones are a swipe row with the next one peeking in.
-Each phone has one heading and one sentence.
+Each phone has one heading and one sentence (My Slip, Next visit, On the water, Book a wash, Your plan, Invoices & payments). portal-4 is IMG_1536 (a Safari capture: the browser chrome, rows 0–245, is cropped like the others' white band).
 
 ### Phone frame (device mockup)
 Drawn in CSS only, no image files: a 1.5px metallic edge (gradient border-box from `#A4B1C0`
