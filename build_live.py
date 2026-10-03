@@ -803,6 +803,7 @@ def city_chip(slug: str, city: str) -> str:
 
 city_location_links = "".join(city_chip(slug, city) for slug, city in CITY_ORDER)
 markup = require_replace(markup, "<!-- PW_CITY_LINKS -->", city_location_links)
+markup = require_replace(markup, "<!-- PW_PORTAL_DEMO -->", portal_demo_markup())
 # The service area lives in the footer: legal pages get it through shared_footer, the other
 # subpages through {{FOOTER_AREA}}. Off the homepage the quote button becomes a plain link.
 shared_footer = require_replace(shared_footer, "<!-- PW_CITY_LINKS -->", city_location_links)
@@ -946,6 +947,7 @@ document = f'''<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {head_links}
 <style>{styles}{live_css}</style>
+{portal_demo_head()}
 <script type="application/ld+json">{json.dumps(business_schema, separators=(",", ":"))}</script>
 <script type="application/ld+json">{json.dumps(faq_schema, separators=(",", ":"))}</script>
 </head>
@@ -1202,6 +1204,8 @@ if DIST.exists():
 (DIST / "assets" / "logo").mkdir(parents=True)
 (DIST / "assets" / "video").mkdir(parents=True)
 shutil.copytree(OUT, DIST / "assets" / "v4")
+shutil.copytree(PORTAL_IMAGES, DIST / "assets" / "portal")
+shutil.copytree(PORTAL_DEMO_ASSETS, DIST / "assets" / "portal-demo")
 for filename in ("brandmark.png", "wordmark.png", "favicon.png", "favicon-32x32.png", "favicon-16x16.png", "apple-touch-icon.png", "favicon.ico"):
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):
