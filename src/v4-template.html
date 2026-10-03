@@ -409,6 +409,8 @@ html{color-scheme:dark}
 
 /* ===== Owner Portal: interactive demo (component styles in /assets/portal-demo/demo.css) ===== */
 #pw-redesign-v3 .pw-portal{display:block;background:#12263C;border-top:1px solid var(--pw-line);border-bottom:1px solid var(--pw-line)}
+#pw-redesign-v3 .pd-tryit{margin-left:10px;padding:0;border:0;border-bottom:1px solid var(--pw-blue);background:none;color:#70B8FF;font:500 12px/1.4 Inter,Arial,sans-serif;cursor:pointer;min-height:24px}
+#pw-redesign-v3 .pd-tryit:hover{color:var(--pw-white)}
 
 /* ===== FAQ and the journal link ===== */
 #pw-redesign-v3 .pw-faqgrid{background:#0A1A2F}
@@ -644,6 +646,9 @@ function memberStep(n){byId('pw-member-step1').hidden=n!==1;byId('pw-member-step
 byId('pw-member-next').addEventListener('click',()=>{if([...byId('pw-member-step1').querySelectorAll('input,select,textarea')].every(el=>el.reportValidity()))memberStep(2);});byId('pw-member-prev').addEventListener('click',()=>memberStep(1));byId('pw-member-preview').addEventListener('click',()=>{if([...byId('pw-member-step2').querySelectorAll('input,select,textarea')].every(el=>el.reportValidity()))memberStep(3);});byId('pw-member-restart').addEventListener('click',()=>memberStep(1));byId('pw-member-form').addEventListener('submit',e=>e.preventDefault());
 window.addEventListener('popstate',event=>{const view=event.state&&event.state[PW_HISTORY_KEY]||'main';if(!memberPage.hidden&&view!=='membership'){closeMemberPage();return;}if(view==='membership'&&memberPage.hidden){renderMemberPage();return;}});
 const designState={header:'balanced',detailLayout:'filmstrip'};function renderOptions(){root.classList.toggle('pw-header-compact',designState.header==='compact');root.classList.toggle('pw-detail-grid',designState.detailLayout==='grid');}renderOptions();if(globalThis.Tweak){const heroTweak=new Tweak({container:root.querySelector('.pw-v2hero'),onChange:renderOptions});heroTweak.addSelect(designState,'header',{label:'Header spacing',options:[{label:'Balanced',value:'balanced'},{label:'Compact',value:'compact'}]});const detailTweak=new Tweak({container:byId('pw-results'),onChange:renderOptions});detailTweak.addSelect(designState,'detailLayout',{label:'Full Detail layout',options:[{label:'Filmstrip',value:'filmstrip'},{label:'Grid',value:'grid'}]});}
+
+// Platinum result: "Try it" opens the Owner Portal demo on Report a Spot (window.pdDemo, assets/portal-demo/demo.js)
+{const list=byId('pw-plan-features');if(list){const add=()=>{[...list.children].forEach(li=>{if(li.querySelector('.pd-tryit')||!/See a Spot\? Send it to us/.test(li.textContent))return;const b=document.createElement('button');b.type='button';b.className='pd-tryit';b.textContent='Try it';b.addEventListener('click',e=>{e.stopPropagation();const d=window.pdDemo;if(!d)return;if(d.isNarrow()){d.openFull();d.openSpot();return;}const still=matchMedia('(prefers-reduced-motion: reduce)').matches;byId('pw-portal').scrollIntoView({behavior:still?'auto':'smooth',block:'center'});setTimeout(()=>d.openSpot(),still?0:600);});li.appendChild(b);});};add();new MutationObserver(add).observe(list,{childList:true});}}
 
 })();
 </script>
