@@ -1,5 +1,6 @@
 from pathlib import Path
 from html import escape
+import hashlib
 import json
 import re
 import shutil
@@ -19,6 +20,9 @@ MEDIA_AVAILABLE = MEDIA.exists()
 DERIVED = ROOT / "src" / "media-derived"
 OUT = ROOT / "assets" / "v4"
 DIST = ROOT / "dist"
+PORTAL_DEMO_PARTIAL = ROOT / "src" / "components" / "portal-demo.html"
+PORTAL_DEMO_ASSETS = ROOT / "assets" / "portal-demo"
+PORTAL_IMAGES = ROOT / "assets" / "portal"
 BASE_URL = "https://propwashmarine.com"
 
 LEGAL_PAGES = {
@@ -401,6 +405,30 @@ def require_replace(text: str, old: str, new: str) -> str:
         raise RuntimeError(f"Expected source fragment was not found: {old[:120]}")
     return text.replace(old, new)
 
+
+
+# The Owner Portal demo is one shared component: markup in src/components/portal-demo.html,
+# styles and behavior in assets/portal-demo/. Any page can drop it in with these two helpers.
+# /assets/* is cached as immutable, so every URL carries a hash of the component and its screens.
+def portal_demo_version() -> str:
+    digest = hashlib.sha1()
+    for path in sorted([*PORTAL_DEMO_ASSETS.glob("demo.*"), *PORTAL_IMAGES.glob("portal-*.webp")]):
+        digest.update(path.name.encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()[:10]
+
+
+def portal_demo_head(preload_first_screen: bool = False) -> str:
+    version = portal_demo_version()
+    tags = [f'<link rel="stylesheet" href="/assets/portal-demo/demo.css?v={version}">']
+    if preload_first_screen:
+        tags.append(f'<link rel="preload" as="image" href="/assets/portal/portal-my-slip.webp?v={version}">')
+    tags.append(f'<script src="/assets/portal-demo/demo.js?v={version}" defer></script>')
+    return "\n".join(tags)
+
+
+def portal_demo_markup() -> str:
+    return PORTAL_DEMO_PARTIAL.read_text().strip()
 
 def save_image(source: Path, destination: Path, longest_side: int = 2000, quality: int = 84) -> None:
     subprocess.run(
