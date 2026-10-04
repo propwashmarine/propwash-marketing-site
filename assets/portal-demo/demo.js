@@ -13,7 +13,7 @@ const SCREENS={
  'my-slip':{tab:'my-slip',h:'My Slip',p:"Your boat's status, next visit and protection at a glance.",hgt:2536,
    alt:"My Slip screen: a welcome-back greeting, the Salty Dog boat card (43 ft Mag Bay, Boca Raton, service scheduled), notifications, a protection status ring counting down to the next visit, the next scheduled Signature Wash, a Report a Spot card, latest photos, the service log and a paid-up balance.",
    hot:[{x:36,y:2721,w:1134,h:235,label:'Report a Spot',act:()=>openSpot()}]},
- 'on-water':{tab:'on-water',h:'On Water',p:'Know the conditions before you leave the dock.',hgt:4300,
+ 'on-water':{tab:'on-water',h:'On the Water',p:'Know the conditions before you leave the dock.',hgt:4300,
    alt:"On the Water screen for Boca Raton: a weather alert, current conditions with wind, seas, water temperature and chance of rain, boating day scores for the week (scroll sideways), a day forecast, hour-by-hour forecast, tide table, sunrise, sunset and moon, peak bite windows, and a Book a wash prompt.",
    scores:{x:39,y:2040,w:1127,h:366,full:1841,snaps:[246,246,222,1127]}},
  'photos':{tab:'photos',h:'Every visit, documented.',p:'See the photos from each visit, kept with the boat.',hgt:1494,
@@ -26,7 +26,7 @@ const SCREENS={
    hot:[{x:51,y:321,w:546,h:131,label:'Signature Wash tab',act:()=>show('book-a-service')}]},
  'membership':{tab:'svc',h:'Your plan',p:'Your membership and everything it covers.',hgt:4479,
    alt:"Membership screen headed Choose your level, we'll handle the rest: the active Platinum membership with a Change Plan option, the Gold and Silver plans with what each includes and custom pricing billed monthly, and the full list of what Platinum includes with the contract dates."},
- 'services':{tab:'svc',h:'The full service menu.',p:'Browse every service and request a quote in a tap.',hgt:10827,
+ 'services':{tab:'svc',h:'The Full Service Menu',p:'Browse every service and request a quote in a tap.',hgt:10827,
    alt:"Services screen: the full service menu grouped into one-time services, detailing and correction, ceramic coating and teak, with a description of each service."},
  'payments':{tab:'act',h:'Invoices & payments',p:'View and pay invoices right in the portal, with every receipt kept on file.',hgt:2249,
    alt:"Invoice screen for invoice PWM-1234, marked paid: the Propwash Marine Detailing header, bill to Jack at jack@propwashmarine.com, vessel Salty Dog, a Signature Wash line item with the rate, subtotal and grand total shown as Custom, paid Oct 2, 2026, and a Download PDF button."},
@@ -38,7 +38,7 @@ const SCREENS={
    hot:[{x:603,y:490,w:555,h:142,label:'Messages tab',act:()=>show('messages')}]},
 };
 const EXTRA={assistant:{h:'Answers on hand.',p:'Ask about your boat, your plan or your schedule, any time.'},
-  spot:{h:'See a spot? Send it to us.',p:"Drop a pin on the boat and we'll take care of it. Included with Platinum."}};
+  spot:{h:'See a spot? Send it to us.',p:"Tell us where it is, add a photo and we'll take care of it. Included with Platinum."}};
 
 // ---------- build screens ----------
 const views=$('#pd-views'); let current='my-slip';
