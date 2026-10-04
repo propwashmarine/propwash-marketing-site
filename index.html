@@ -216,6 +216,10 @@
 #pw-redesign-v3 .pw-navright{gap:15px}
 #pw-redesign-v3 .pw-navright .pw-login{display:inline-flex;align-items:center;min-height:44px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid #8BA0B5}
 #pw-redesign-v3 .pw-portalcopy .pw-portalstory{margin-top:15px;color:#D6E1EC;font-size:12px;line-height:1.8}
+/* "Try it" hint: small label pointing at the interactive phone. Right on desktop; on one column it moves to the end of the copy, directly above the phone, and points down. Static, no animation. */
+#pw-redesign-v3 .pw-portalcopy>.pw-portaltry{display:flex;align-items:center;gap:12px;margin-top:22px;color:#CED9E5;font-size:11px}
+#pw-redesign-v3 .pw-portaltry svg{flex:0 0 22px;width:22px;height:12px;color:var(--pw-blue)}
+@container pdhost (max-width:700px){#pw-redesign-v3 .pw-portalcopy{display:flex;flex-direction:column}#pw-redesign-v3 .pw-portalcopy>.pw-portaltry{order:1;flex-direction:column;gap:10px;text-align:center;margin-top:28px}#pw-redesign-v3 .pw-portaltry svg{transform:rotate(90deg)}}
 #pw-redesign-v3 .pw-portalpoints p:before{content:'+'}
 #pw-redesign-v3 #pw-svc-5 .pw-servicepanel>img{object-position:center 72%}
 #pw-redesign-v3 .pw-journalgrid article:nth-child(2)>img{object-position:center 72%}
@@ -556,7 +560,7 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
     </section>
     <section id="pw-portal" class="pw-portal pw-section pw-wrap pd-host">
   <div class="pd-grid">
-    <div class="pw-portalcopy"><div class="pw-kicker pw-eyebrow pw-muted">04 / Your actual Owner Portal</div><h2>Your boat.<br> Your Slip.<br> All right here.</h2><p>Your boat's condition, photos, service history and payments in one place.</p><p class="pw-portalstory">Use My Slip before and after a service. Add access notes, choose how the covers are left, request interior care, approve work and keep every visit tied to the boat.</p><button id="pw-dashboard-expand" type="button" class="pw-textlink" aria-expanded="false" hidden>Take a closer look </button><div class="pd-now" aria-live="polite"><div><h3 id="pd-now-h">My Slip</h3><p id="pd-now-p">Your boat's status, next visit and protection at a glance.</p></div></div></div>
+    <div class="pw-portalcopy"><div class="pw-kicker pw-eyebrow pw-muted">04 / Your actual Owner Portal</div><h2>Your boat.<br> Your Slip.<br> All right here.</h2><p>Your boat's condition, photos, service history and payments in one place.</p><p class="pw-portaltry pw-eyebrow"><span>Try it yourself.<br> The tabs work like the real portal.</span><svg viewBox="0 0 22 12" aria-hidden="true" focusable="false"><path d="M1 6h19M15 1.5 19.5 6 15 10.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></p><p class="pw-portalstory">Use My Slip before and after a service. Add access notes, choose how the covers are left, request interior care, approve work and keep every visit tied to the boat.</p><button id="pw-dashboard-expand" type="button" class="pw-textlink" aria-expanded="false" hidden>Take a closer look </button><div class="pd-now" aria-live="polite"><div><h3 id="pd-now-h">My Slip</h3><p id="pd-now-p">Your boat's status, next visit and protection at a glance.</p></div></div></div>
     <div class="pd-stage" id="pw-phones"><!-- Owner Portal demo component. Injected by build_live.py (portal_demo_markup); styles and behavior in
      /assets/portal-demo/demo.css and demo.js. Optional host hooks: #pd-now-h / #pd-now-p caption. -->
 <div class="pd-phone" id="pd-phone">
