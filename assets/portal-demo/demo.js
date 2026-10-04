@@ -101,14 +101,34 @@ $$('[role="menu"]').forEach(m=>m.addEventListener('keydown',e=>{const it=[...m.q
 // ---------- assistant ----------
 const fab=$('.pd-fab'), sheet=$('#pd-sheet'), scrim=$('.pd-scrim'), note=$('.pd-note'), bubble=$('.pd-bubble');
 let assistOpen=false;
-function openAssist(){ closePop(false); closeSpot(false); hideBubble(); fab.classList.remove('unread'); const i=sheet.querySelector('img'); if(!i.src)i.src=i.dataset.src;
+function openAssist(){ closePop(false); closeSpot(false); hideBubble(); fab.classList.remove('unread'); const i=sheet.querySelector('img'); if(!i.src){i.src=i.dataset.src;sheet.classList.add('loaded');}
   assistOpen=true; phone.classList.add('assist-open'); sheet.classList.add('open'); scrim.classList.add('open'); fab.setAttribute('aria-expanded','true'); setCopy(EXTRA.assistant); sheet.querySelector('.x').focus({preventScroll:true}); }
-function closeAssist(focus){ if(!assistOpen) return; assistOpen=false; phone.classList.remove('assist-open'); sheet.classList.remove('open'); scrim.classList.remove('open'); note.classList.remove('show');
+function closeAssist(focus){ if(!assistOpen) return; assistOpen=false; resetChat(); phone.classList.remove('assist-open'); sheet.classList.remove('open'); scrim.classList.remove('open'); note.classList.remove('show');
   fab.setAttribute('aria-expanded','false'); setCopy(activeCopy()); if(focus) fab.focus({preventScroll:true}); }
 fab.addEventListener('click',e=>{e.stopPropagation(); assistOpen?closeAssist(true):openAssist();});
 sheet.querySelector('.x').addEventListener('click',e=>{e.stopPropagation();closeAssist(true);});
 let noteT=0; sheet.querySelector('.ask').addEventListener('click',e=>{e.stopPropagation();note.classList.add('show');clearTimeout(noteT);noteT=setTimeout(()=>note.classList.remove('show'),1800);});
 sheet.addEventListener('click',e=>e.stopPropagation());
+
+// Suggested questions: question bubble, ~1s typing indicator (skipped with reduced motion), then the answer.
+// Every open starts fresh, like the portal. The text input stays inert.
+const chat=sheet.querySelector('.pd-chat'), qs=[...chat.querySelectorAll('.pd-q')];
+let replyT=0, replying=false;
+function chatMsg(who,text){ const m=document.createElement('div'); m.className='pd-msg pd-turn'+(who==='user'?' user':'');
+  if(who!=='user'){ const a=document.createElement('span'); a.className='pd-av'; a.setAttribute('aria-hidden','true'); m.append(a); }
+  const b=document.createElement('p'); b.className='pd-b';
+  if(text==null){ b.innerHTML='<span class="pd-typing" role="status" aria-label="Assistant is replying"><i></i><i></i><i></i></span>'; } else b.textContent=text;
+  m.append(b); chat.append(m); return m; }
+function setReplying(on){ replying=on; qs.forEach(q=>q.setAttribute('aria-disabled',String(on))); }
+// Keep the newest message in view; if a question and its answer don't both fit, keep the question's top visible.
+function keepInView(first){ const max=chat.scrollHeight-chat.clientHeight, pad=parseFloat(getComputedStyle(chat).paddingTop)||0;
+  chat.scrollTo({top:Math.max(0,Math.min(max,first.offsetTop-pad)),behavior:reduced?'auto':'smooth'}); }
+function resetChat(){ clearTimeout(replyT); setReplying(false); chat.querySelectorAll('.pd-turn').forEach(n=>n.remove()); chat.scrollTop=0; }
+qs.forEach(q=>q.addEventListener('click',e=>{ e.stopPropagation(); if(replying) return;
+  const asked=chatMsg('user',q.textContent), answer=q.dataset.a;
+  if(reduced){ chatMsg('bot',answer); keepInView(asked); return; }
+  setReplying(true); const typing=chatMsg('bot',null); keepInView(asked);
+  replyT=setTimeout(()=>{ typing.remove(); chatMsg('bot',answer); setReplying(false); keepInView(asked); },1000); }));
 scrim.addEventListener('click',e=>{e.stopPropagation(); if(assistOpen) closeAssist(true); else closeSpot(true);});
 
 // greeting bubble: once per visit, ~1s after the demo is ~50% in view

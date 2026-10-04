@@ -39,7 +39,20 @@
     </div>
     <div class="pd-scrim" aria-hidden="true"></div>
     <div class="pd-sheet" id="pd-sheet" role="dialog" aria-label="Propwash assistant">
-      <img data-src="/assets/portal/portal-ai-assistant.webp" width="600" height="889" alt="Propwash Assistant panel: a greeting inviting questions about your boat, plan or schedule, five suggested questions (When's my next wash, What's included in my plan, How do I report a spot, Can I book an extra wash, How do I pay my invoice), an urgent-issues phone line, and an Ask a question field.">
+      <img data-src="/assets/portal/portal-ai-assistant.webp" width="600" height="889" alt="Propwash Assistant panel header and Ask a question field.">
+      <!-- Conversation as real HTML over the screenshot's message area (header and input stay the image).
+           The suggested questions are live; data-a holds each answer. -->
+      <div class="pd-chat" role="log" aria-live="polite" aria-label="Assistant conversation">
+        <div class="pd-msg"><span class="pd-av" aria-hidden="true"></span><p class="pd-b pd-welcome">Hey, I'm the Propwash assistant. Ask me anything about your boat, your plan, or your schedule. Not sure where to start? Tap one of these:</p></div>
+        <div class="pd-qs" role="group" aria-label="Suggested questions">
+          <button class="pd-q" type="button" data-a="Your next wash is Tuesday, Oct 6 at 12:00 PM. Need to change it? Tap Move on your Next Visit card.">When's my next wash?</button>
+          <button class="pd-q" type="button" data-a="You're on Platinum: washes on a cadence built around your boat, a monthly Full Detail, two Trip Ready preps a month, a dedicated detailer and See a Spot. Full list under Service → Membership.">What's included in my plan?</button>
+          <button class="pd-q" type="button" data-a="Tap Report a Spot on My Slip, pick the area of the boat, add a note and a photo if you have one. It goes straight to the crew.">How do I report a spot I noticed on my boat?</button>
+          <button class="pd-q" type="button" data-a="Yep. Go to Service → Book a service, pick a day and request a time. We'll confirm it.">Can I book an extra wash?</button>
+          <button class="pd-q" type="button" data-a="Go to Account → Payments, open the invoice and tap Pay. Your receipt stays in the portal.">How do I pay my invoice?</button>
+        </div>
+        <p class="pd-urgent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>For urgent or on-water issues, call us at <a href="tel:+15612918554">(561) 291-8554</a>.</span></p>
+      </div>
       <button class="x" type="button" aria-label="Close the assistant"></button>
       <button class="ask" type="button" aria-label="Ask a question (available in your portal)"></button>
       <div class="pd-note" role="status" aria-live="polite">Available in your portal</div>
