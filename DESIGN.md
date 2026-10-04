@@ -30,8 +30,8 @@ tidy.
   Structure comes from 1px lines, not shadows or fills.
 - **Imagery:** full-bleed photography of real boats and real work, covered by
   navy gradient scrims so the white text stays readable. The homepage hero is a
-  full-screen still photograph. The looping hero video is retired until a cinematic
-  hero meets the rules in section 6 (Future).
+  full-screen still photograph that gives way to a muted, looping video on screens
+  wider than 700px, under the rules in section 6 (Hero video).
 - **Signature details:** numbered kickers (`01 / The right work`), a 26×2px
   electric-blue rule before eyebrows, the skewed hero tagline, the metal-finish
   membership cards, and the oversized PROPWASH footer mark that fills on hover.
@@ -201,8 +201,10 @@ that opens a two-column `.pw-mobilemenu` on the panel color.
 ### Hero
 - **Homepage:** full-screen (`100svh`) still photograph (`pw-v2hero`, `.pw-hero-still`) under an
   even navy scrim, with the copy anchored to the bottom: a small blue H1, the skewed Oswald
-  tagline, a 15px intro (max 520px) and two CTAs. Nothing in the hero animates on load. The
-  `#pw-hero-video` and `#pw-video-toggle` elements stay in the markup, hidden, for the script.
+  tagline, a 15px intro (max 520px) and two CTAs. Nothing in the hero animates on load. On
+  screens wider than 700px the script gives `#pw-hero-video` its source after first paint and
+  shows the `#pw-video-toggle` pause control (section 6, Hero video). Narrow screens and reduced
+  motion keep the still, with both elements hidden.
 - **Subpages:** `.pw-cityhero` photo hero, 520–660px tall, content aligned to the bottom,
   breadcrumbs → kicker → H1 → intro → actions.
 
@@ -348,8 +350,8 @@ enters, images that fade rather than fly, and no hover theatrics.
 `opacity:0; translateY(18px)` to its resting state over `0.5s cubic-bezier(0.19, 1, 0.22, 1)`,
 triggered once as the element scrolls into view, with a ~15ms stagger between neighbors.
 Images fade in without moving. Text links and buttons change color over `0.6s` on the same
-curve. There is no parallax, no hover lift or zoom, no looping animation and no hero video,
-and the header simply scrolls away.
+curve. There is no parallax, no hover lift or zoom and no looping animation, and the header
+simply scrolls away.
 
 ### Tokens
 
@@ -378,6 +380,12 @@ settling, so 700ms still feels calm rather than sluggish.
   card may zoom to at most `scale(1.03)` over 600ms. Color and border changes use `--dur-hover`
   with `--ease-fade`.
 - **State changes** (accordions, tabs, form steps): the section reveal, shortened to 350ms.
+- **Hero video:** on screens wider than 700px with no reduced-motion preference, the homepage
+  hero plays its video muted, looping and inline. It is the one exception to the no-loops rule
+  below. The still image (the poster) paints first; the video source is set only after the
+  page's load event, and the still fades out once the video is playing. A visible pause control
+  sits in the hero. Screens 700px or narrower and reduced motion keep the still image and never
+  load the video. No text waits for the video before it can be read.
 
 ### Never
 - Bouncing, overshoot or elastic easing (no curve with values outside 0–1).
@@ -397,7 +405,7 @@ Always respect `prefers-reduced-motion: reduce`, and keep the `.pw-still` switch
 same way:
 - No transforms at all: no rise, zoom, parallax or hover lift.
 - Content appears at full opacity immediately; a fade of 150ms or less is acceptable.
-- The hero video shows its poster image and does not play.
+- The hero shows its still image; the video is never loaded.
 - Color and focus changes still happen, without transitions.
 
 Reveal styles must be applied by script. If the script fails or never runs, all content is
@@ -407,18 +415,13 @@ children, and anything already on screen at load never animates.
 
 ### Status
 The 2026 homepage redesign removed the motion that broke these rules: the hero and gallery drift
-loops, the looping hero video, the hero load entrance, the metal-card sheen and 5px lift, the
+loops, the hero load entrance, the metal-card sheen and 5px lift, the
 tilted portal frames, the gallery cursor spotlight and the coast-route line. State changes use
 the tokens above.
 
 **Sanctioned exception:** the footer PROPWASH wordmark keeps its hover fill and single sheen sweep
 (owner decision). It plays only on footer hover, never loops, and is replaced by a static fill
 under `prefers-reduced-motion`.
-
-### Future (not now)
-A large, cinematic moving hero video. When it comes, it must still follow this section: a
-poster image first, a visible pause control, the poster only under reduced motion, no autoplay
-below 700px, and no text that waits for the video before it can be read.
 
 ---
 
