@@ -29,8 +29,10 @@
 #pw-redesign-v3 .pw-formnote,#pw-redesign-v3 .pw-slipnote,#pw-redesign-v3 .pw-footerbottom,#pw-redesign-v3 .pw-slipcontent .pw-caption,#pw-redesign-v3 .pw-sliptop small,#pw-redesign-v3 .pw-slipname small,#pw-redesign-v3 .pw-sliprow small,#pw-redesign-v3 .pw-sliprow .pw-completed,#pw-redesign-v3 .pw-locationlist small,#pw-redesign-v3 .pw-planselector small{font-size:11px}
 #pw-redesign-v3 .pw-v2hero{position:relative;isolation:isolate;overflow:hidden;background:#0A1A2F}
 #pw-redesign-v3 .pw-v2hero>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2}
-#pw-redesign-v3 .pw-hero-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;display:none}
-@container(max-width:700px){#pw-redesign-v3 .pw-v2hero>video{display:none!important}#pw-redesign-v3 .pw-hero-still{display:block}#pw-redesign-v3 #pw-video-toggle{display:none}}
+#pw-redesign-v3 .pw-hero-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;display:none;transition:opacity 900ms cubic-bezier(0.4,0,0.2,1)}
+/* The still stays over the video until the video is actually playing, then fades out (desktop only). */
+#pw-redesign-v3 .pw-v2hero.pw-video-on>.pw-hero-still{opacity:0}
+@container(max-width:700px){#pw-redesign-v3 .pw-v2hero>video{display:none!important}#pw-redesign-v3 .pw-v2hero.pw-video-on>.pw-hero-still{opacity:1}#pw-redesign-v3 .pw-hero-still{display:block}#pw-redesign-v3 #pw-video-toggle{display:none}}
 #pw-redesign-v3 .pw-v2scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,17,32,.84) 0%,rgba(5,17,32,.53) 50%,rgba(5,17,32,.08) 100%),linear-gradient(180deg,rgba(5,17,32,.48),transparent 30%,rgba(5,17,32,.2) 70%,#0A1A2F)}
 #pw-redesign-v3 .pw-nav{min-height:106px;border-bottom:1px solid #F4F8FC25;gap:20px}
 #pw-redesign-v3 .pw-logo{gap:10px;min-width:268px;flex-shrink:0}
@@ -676,10 +678,16 @@ if(!root)return;
 const assets={"brandmark":"assets/logo/brandmark.png","wordmark":"assets/logo/wordmark.png","video":"assets/video/hero-v4.mp4","hero":"assets/v4/hero-poster.webp","signature":"assets/v4/signature.webp","detailMain":"assets/v4/detailMain.webp","detailBright":"assets/v4/detailBright.webp","detailHatch":"assets/v4/detailHatch.webp","detailInterior":"assets/v4/detailInterior.webp","detailSeats":"assets/v4/detailSeats.webp","detailTop":"assets/v4/detailTop.webp","detailTower":"assets/v4/detailTower.webp","wax":"assets/v4/wax.jpg","compound":"assets/v4/compound.webp","ceramic":"assets/v4/ceramic.webp","plans":"assets/v4/plans.jpg","memberSilver":"assets/v4/memberSilver.webp","memberGold":"assets/v4/memberGold.webp","memberPlatinum":"assets/v4/memberPlatinum.webp","dashboard":"assets/v4/dashboard.webp","covers":"assets/v4/covers.webp","gallery1":"assets/v4/gallery1.webp","gallery2":"assets/v4/gallery2.webp","gallery3":"assets/v4/gallery3.webp","gallery4":"assets/v4/gallery4.jpg","blog1":"assets/v4/blog1.webp","blog2":"assets/v4/blog2.webp","blog3":"assets/v4/blog3.webp"};
 root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});
 const byId=id=>root.querySelector('#'+id);
-const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;if(window.matchMedia('(max-width:700px)').matches){video.removeAttribute('autoplay');video.preload='none';}
+const video=byId('pw-hero-video');video.muted=true;video.defaultMuted=true;video.poster=assets.hero;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Hero video: wide screens (over 700px) with no reduced-motion preference only, and only after first paint.
+// Narrow screens and reduced motion keep the still and never get a video source, so the file is never requested.
+const wideHero=window.matchMedia('(min-width:701px)');
 let moving=!reduced;
-function syncVideo(){const toggle=byId('pw-video-toggle');toggle.setAttribute('aria-pressed',String(moving));toggle.textContent=moving?'Ⅱ Pause video':'▶ Play video';if(moving){const play=video.play();if(play)play.catch(()=>{toggle.textContent='▶ Play video';toggle.setAttribute('aria-pressed','false');});}else video.pause();}
+function startHeroVideo(){video.addEventListener('playing',()=>video.parentElement.classList.add('pw-video-on'),{once:true});video.preload='auto';video.src=assets.video;video.hidden=false;byId('pw-video-toggle').hidden=false;syncVideo();}
+if(wideHero.matches&&!reduced){const afterPaint=()=>requestAnimationFrame(()=>setTimeout(startHeroVideo,0));if(document.readyState==='complete')afterPaint();else window.addEventListener('load',afterPaint,{once:true});}
+wideHero.addEventListener('change',()=>syncVideo());
+function syncVideo(){const toggle=byId('pw-video-toggle');toggle.setAttribute('aria-pressed',String(moving));toggle.textContent=moving?'Ⅱ Pause video':'▶ Play video';if(!video.getAttribute('src'))return;if(moving&&wideHero.matches){const play=video.play();if(play)play.catch(()=>{toggle.textContent='▶ Play video';toggle.setAttribute('aria-pressed','false');});}else video.pause();}
 function setMotion(){root.classList.toggle('pw-still',!moving);byId('pw-motion').setAttribute('aria-pressed',String(moving));byId('pw-motion').innerHTML='<span>◉</span> Motion '+(moving?'on':'off');syncVideo();}
 setMotion();
 byId('pw-video-toggle').addEventListener('click',()=>{moving=video.paused;setMotion();});
