@@ -223,7 +223,9 @@
 #pw-redesign-v3 .pw-portaltry svg{flex:0 0 22px;width:22px;height:12px;color:var(--pw-blue)}
 @container pdhost (max-width:700px){#pw-redesign-v3 .pw-portalcopy{display:flex;flex-direction:column}#pw-redesign-v3 .pw-portalcopy>.pw-portaltry{order:1;flex-direction:column;gap:10px;text-align:center;margin-top:28px}#pw-redesign-v3 .pw-portaltry svg{transform:rotate(90deg)}}
 #pw-redesign-v3 .pw-portalpoints p:before{content:'+'}
-#pw-redesign-v3 #pw-svc-5 .pw-servicepanel>img{object-position:center 72%}
+/* Membership Plans photo: a 4:3 frame at the photo's full width (overrides the panel heights at every width),
+   centered on the tops of the teak helm seat backs, about 47% down the portrait photo. */
+#pw-redesign-v3 #pw-svc-5 .pw-servicepanel>img{height:auto;aspect-ratio:4/3;object-position:center 42%}
 #pw-redesign-v3 .pw-journalgrid article:nth-child(2)>img{object-position:center 72%}
 #pw-redesign-v3 .pw-reviewactions{display:flex;gap:18px;align-items:center}
 #pw-redesign-v3 .pw-confirmpage{background:#EAF3FA;color:#0A1A2F;padding:42px;min-height:420px;display:flex;flex-direction:column;justify-content:center}
