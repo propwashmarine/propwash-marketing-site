@@ -499,7 +499,7 @@ and honest about limits.
 - "We never coat over oxidation or wax."
 - "We watch the forecast and move the visit rather than rush the job."
 
-Service and plan names are proper nouns: Signature Wash, Full Detail, Wax Protection,
+Service and plan names are proper nouns: Captain's Wash, Full Detail, Wax Protection,
 Compound + Polish, Ceramic Coating, Maintenance Plans, Trip Ready, Freshwater Rinse,
 Silver, Gold, Platinum, Owner Portal, My Slip.
 

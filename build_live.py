@@ -66,7 +66,7 @@ CITY_DATA = {
         "hero_image": "assets/v4/hero-poster.webp",
         "neighbors": ["delray-beach", "deerfield-beach"],
         "title": "Mobile Boat Detailing in Boca Raton, FL | Propwash Marine",
-        "meta_description": "Mobile boat detailing in Boca Raton for boats on Lake Boca, the Intracoastal and local canals, from signature washes to ceramic protection.",
+        "meta_description": "Mobile boat detailing in Boca Raton for boats on Lake Boca, the Intracoastal and local canals, from Captain's Washes to ceramic protection.",
         "intro": [
             "We provide mobile boat detailing for Boca Raton boats along the Intracoastal Waterway, Lake Boca Raton and the Boca Raton Inlet.",
             "We work around marina access, public ramps, private docks, lifts and driveways across the city.",
@@ -77,7 +77,7 @@ CITY_DATA = {
         "process_lead": "A Boca Raton visit starts with clear boat details and ends with documented work, without requiring the owner to wait dockside.",
         "process_heading": "From photos to finish.",
         "services": [
-            ("Signature Wash", "A focused exterior service clears salt and surface buildup when a Boca Raton boat needs more than a quick rinse."),
+            ("Captain's Wash", "A focused exterior service clears salt and surface buildup when a Boca Raton boat needs more than a quick rinse."),
             ("Full Detail", "Brightwork, hatch lips, compartments, seating and interior surfaces receive a thorough condition-based reset."),
             ("Wax Protection", "After cleaning and preparation, machine-applied wax restores depth while adding a practical protective layer."),
             ("Compound + Polish", "Oxidation is corrected in stages, with polishing throughout and wet sanding reserved for finishes that require it."),
@@ -115,7 +115,7 @@ CITY_DATA = {
         "process_lead": "From the first Delray Beach photo to the final visit record, the scope stays tied to the boat's real condition and access.",
         "process_heading": "How a visit comes together.",
         "services": [
-            ("Signature Wash", "This one-time exterior wash removes salt and everyday grime when the boat needs focused attention outside a membership."),
+            ("Captain's Wash", "This one-time exterior wash removes salt and everyday grime when the boat needs focused attention outside a membership."),
             ("Full Detail", "A full reset reaches brightwork, hatch lips, storage areas, upholstery, interior surfaces, rust marks and staining."),
             ("Wax Protection", "Machine application follows proper surface preparation to leave the gelcoat glossier and better protected."),
             ("Compound + Polish", "We tailor correction to the level of oxidation, polish the finish and wet sand only where the condition calls for it."),
@@ -153,7 +153,7 @@ CITY_DATA = {
         "process_lead": "For a Deerfield appointment, useful photos and access details let us define the work before the crew reaches the boat.",
         "process_heading": "A clearer service path.",
         "services": [
-            ("Signature Wash", "A thorough mobile wash handles the salt and deck buildup left behind when the Deerfield boat comes back in."),
+            ("Captain's Wash", "A thorough mobile wash handles the salt and deck buildup left behind when the Deerfield boat comes back in."),
             ("Full Detail", "The reset covers exterior details, hatch edges, hardware, seating, compartments and requested interior cleaning."),
             ("Wax Protection", "Prepared surfaces receive machine-applied wax to improve gloss and give the finish an added defense."),
             ("Compound + Polish", "Correction reduces oxidation and restores clarity through a measured compound-and-polish sequence."),
@@ -191,7 +191,7 @@ CITY_DATA = {
         "process_lead": "A few accurate details help us plan a Pompano visit around the boat, its access point and the result the owner wants.",
         "process_heading": "Plan it. Clean it. Prove it.",
         "services": [
-            ("Signature Wash", "The Signature Wash gives a Pompano Beach boat a deliberate top-to-bottom exterior cleanup after regular use."),
+            ("Captain's Wash", "The Captain's Wash gives a Pompano Beach boat a deliberate top-to-bottom exterior cleanup after regular use."),
             ("Full Detail", "Detailed attention extends through metalwork, hatches, seating, compartments, staining and selected cabin surfaces."),
             ("Wax Protection", "Wax is machine-applied after preparation to sharpen the reflection and leave a useful sacrificial barrier."),
             ("Compound + Polish", "A staged correction plan addresses dull or oxidized gelcoat before refining it to an even finish."),
@@ -229,7 +229,7 @@ CITY_DATA = {
         "process_lead": "Planning the Lighthouse Point job in advance helps the crew account for dock access, upper structures and the exact finish work involved.",
         "process_heading": "Access through aftercare.",
         "services": [
-            ("Signature Wash", "A dedicated exterior wash removes accumulated salt and traffic from a Lighthouse Point boat between larger services."),
+            ("Captain's Wash", "A dedicated exterior wash removes accumulated salt and traffic from a Lighthouse Point boat between larger services."),
             ("Full Detail", "From hatch lips to hardtops, the crew works through the high-touch and easily missed surfaces that define a complete detail."),
             ("Wax Protection", "Properly prepared gelcoat is finished with machine-applied wax for renewed shine and straightforward protection."),
             ("Compound + Polish", "We scale the correction process to the vessel's oxidation, surface area and reachable sections."),
@@ -267,7 +267,7 @@ CITY_DATA = {
         "process_lead": "Detailed access information keeps a Fort Lauderdale appointment organized across busy marinas, riverfront Slips and residential docks.",
         "process_heading": "Organized across the waterfront.",
         "services": [
-            ("Signature Wash", "A comprehensive exterior wash resets a frequently used Fort Lauderdale boat without turning the visit into a full detail."),
+            ("Captain's Wash", "A comprehensive exterior wash resets a frequently used Fort Lauderdale boat without turning the visit into a full detail."),
             ("Full Detail", "The service works systematically across deck surfaces, hardware, hatch channels, seating, storage and requested interior areas."),
             ("Wax Protection", "Machine-applied wax follows cleaning and preparation to bring stronger gloss back to the visible finish."),
             ("Compound + Polish", "Correction intensity is selected after inspection, then refined through polishing for a more uniform appearance."),
@@ -305,7 +305,7 @@ CITY_DATA = {
         "process_lead": "For a privately docked Palm Beach boat, clear instructions and advance condition photos keep the service precise from arrival through documentation.",
         "process_heading": "A measured dockside process.",
         "services": [
-            ("Signature Wash", "A deliberate exterior cleaning handles salt, dust and surface residue for Palm Beach boats needing immediate presentation care."),
+            ("Captain's Wash", "A deliberate exterior cleaning handles salt, dust and surface residue for Palm Beach boats needing immediate presentation care."),
             ("Full Detail", "The detail reaches refined exterior elements, hatch channels, upholstery, storage spaces and agreed interior sections."),
             ("Wax Protection", "Surface preparation and machine-applied wax produce a polished result with an additional layer between the gelcoat and exposure."),
             ("Compound + Polish", "Dullness and oxidation are evaluated section by section before correction brings clarity back to the finish."),
@@ -343,7 +343,7 @@ CITY_DATA = {
         "process_lead": "The Jupiter service process turns a short set of boat details into a planned visit with an accountable finish record.",
         "process_heading": "Four steps to a ready boat.",
         "services": [
-            ("Signature Wash", "A substantial one-time wash clears the residue left by Jupiter outings and restores a cleaner deck-to-hull presentation."),
+            ("Captain's Wash", "A substantial one-time wash clears the residue left by Jupiter outings and restores a cleaner deck-to-hull presentation."),
             ("Full Detail", "Hardware, hatches, upholstery, compartments, staining and chosen interior spaces are addressed as one coordinated service."),
             ("Wax Protection", "Once prepared, the finish is machine-waxed to recover shine and support easier ongoing care."),
             ("Compound + Polish", "We choose the correction sequence from the visible oxidation rather than forcing every Jupiter boat through the same steps."),
@@ -381,7 +381,7 @@ CITY_DATA = {
         "process_lead": "A Stuart appointment is organized from the first condition photos through the final portal record, with access settled before service day.",
         "process_heading": "Scope, service and record.",
         "services": [
-            ("Signature Wash", "A complete exterior wash removes the salt and working grime that collect through regular Stuart boating."),
+            ("Captain's Wash", "A complete exterior wash removes the salt and working grime that collect through regular Stuart boating."),
             ("Full Detail", "The crew resets visible and hidden areas, including brightwork, hatch lips, upholstery, compartments and requested interiors."),
             ("Wax Protection", "Prepared gelcoat is machine-waxed for a deeper finish and a renewable layer of everyday defense."),
             ("Compound + Polish", "Oxidized sections receive the level of compounding, wet sanding and polishing supported by their condition."),
@@ -936,7 +936,7 @@ document = f'''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>South Florida Mobile Boat Detailing | Propwash Marine</title>
-<meta name="description" content="Dockside boat detailing from Stuart to Fort Lauderdale. Signature washes, Full Details, correction, wax, ceramic coating and recurring maintenance plans.">
+<meta name="description" content="Dockside boat detailing from Stuart to Fort Lauderdale. Captain's Washes, Full Details, correction, wax, ceramic coating and recurring maintenance plans.">
 <link rel="canonical" href="https://propwashmarine.com/">
 <meta name="theme-color" content="#0A1A2F">
 <meta property="og:type" content="website">
@@ -963,7 +963,7 @@ document = f'''<!doctype html>
 def render_services_page(shared_styles: str) -> str:
     canonical_url = f"{BASE_URL}/services/"
     services = [
-        ("Signature Wash", "A thorough exterior wash and salt rinse — hull sides, deck, glass, non-skid and rails, dried down by hand. The baseline that keeps salt and grime from setting in between bigger jobs."),
+        ("Captain's Wash", "A thorough exterior wash and salt rinse — hull sides, deck, glass, non-skid and rails, dried down by hand. The baseline that keeps salt and grime from setting in between bigger jobs."),
         ("Full Detail", "The complete reset: wash, then brightwork, rust and mild stain removal, hatch lips, compartments, seats and interior. Where most boats start before going onto a plan."),
         ("Wax Protection", "A Full Detail followed by machine-applied wax for added gloss and a real layer of protection. Best for a finish that is already in good shape and needs to stay that way."),
         ("Compound + Polish", "Machine compounding and polishing to cut oxidation, chalking and light scratches out of the gelcoat, bringing back depth and shine before protection goes on."),
