@@ -82,7 +82,7 @@ CITY_DATA = {
             ("Wax Protection", "After cleaning and preparation, machine-applied wax restores depth while adding a practical protective layer."),
             ("Compound + Polish", "Oxidation is corrected in stages, with polishing throughout and wet sanding reserved for finishes that require it."),
             ("Ceramic Coating", "The coating package is selected only after the gelcoat has been evaluated and prepared for long-term protection."),
-            ("Maintenance Plans", "Scheduled washes and deeper monthly care keep Boca Raton owners informed through visit photos and service records."),
+            ("Membership Plans", "Scheduled washes and deeper monthly care keep Boca Raton owners informed through visit photos and service records."),
         ],
         "steps": [
             ("Show us the Boca Raton boat.", "Send its length, make, storage setup and photographs of the finish or problem areas."),
@@ -120,7 +120,7 @@ CITY_DATA = {
             ("Wax Protection", "Machine application follows proper surface preparation to leave the gelcoat glossier and better protected."),
             ("Compound + Polish", "We tailor correction to the level of oxidation, polish the finish and wet sand only where the condition calls for it."),
             ("Ceramic Coating", "Preparation is defined first, then the ceramic package is matched to the boat and its expected maintenance."),
-            ("Maintenance Plans", "Recurring Delray Beach care combines a chosen wash cadence with visit photos, records and scheduled deeper work."),
+            ("Membership Plans", "Recurring Delray Beach care combines a chosen wash cadence with visit photos, records and scheduled deeper work."),
         ],
         "steps": [
             ("Begin with your Delray boat.", "Provide the length, make, storage location and useful close-ups of anything that needs attention."),
@@ -158,7 +158,7 @@ CITY_DATA = {
             ("Wax Protection", "Prepared surfaces receive machine-applied wax to improve gloss and give the finish an added defense."),
             ("Compound + Polish", "Correction reduces oxidation and restores clarity through a measured compound-and-polish sequence."),
             ("Ceramic Coating", "Ceramic protection begins with the necessary cleaning and correction so the coating is never placed over a neglected surface."),
-            ("Maintenance Plans", "Planned visits help a Deerfield Beach boat stay cleaner between outings while giving the owner a photo record each time."),
+            ("Membership Plans", "Planned visits help a Deerfield Beach boat stay cleaner between outings while giving the owner a photo record each time."),
         ],
         "steps": [
             ("Document the Deerfield boat.", "Send basic specifications, its usual location and photographs that show the overall condition."),
@@ -196,7 +196,7 @@ CITY_DATA = {
             ("Wax Protection", "Wax is machine-applied after preparation to sharpen the reflection and leave a useful sacrificial barrier."),
             ("Compound + Polish", "A staged correction plan addresses dull or oxidized gelcoat before refining it to an even finish."),
             ("Ceramic Coating", "Coating work includes the surface preparation needed for consistent bonding, gloss and maintainability."),
-            ("Maintenance Plans", "A repeat Pompano schedule keeps salt and light staining from becoming the next large detailing project."),
+            ("Membership Plans", "A repeat Pompano schedule keeps salt and light staining from becoming the next large detailing project."),
         ],
         "steps": [
             ("Introduce the Pompano vessel.", "Tell us the dimensions, model, storage arrangement and the visible issues you want solved."),
@@ -234,7 +234,7 @@ CITY_DATA = {
             ("Wax Protection", "Properly prepared gelcoat is finished with machine-applied wax for renewed shine and straightforward protection."),
             ("Compound + Polish", "We scale the correction process to the vessel's oxidation, surface area and reachable sections."),
             ("Ceramic Coating", "A boat-specific preparation plan supports ceramic coverage across the selected exterior surfaces."),
-            ("Maintenance Plans", "Recurring dockside care gives Lighthouse Point owners a consistent wash rhythm and proof after each completed visit."),
+            ("Membership Plans", "Recurring dockside care gives Lighthouse Point owners a consistent wash rhythm and proof after each completed visit."),
         ],
         "steps": [
             ("Outline the Lighthouse Point boat.", "Length, make, berth details and representative photos establish the starting condition."),
@@ -272,7 +272,7 @@ CITY_DATA = {
             ("Wax Protection", "Machine-applied wax follows cleaning and preparation to bring stronger gloss back to the visible finish."),
             ("Compound + Polish", "Correction intensity is selected after inspection, then refined through polishing for a more uniform appearance."),
             ("Ceramic Coating", "We prepare and coat the agreed surfaces according to the boat's condition, scale and maintenance goals."),
-            ("Maintenance Plans", "Fort Lauderdale memberships organize recurring washes, deeper care, scheduling and visit documentation in one plan."),
+            ("Membership Plans", "Fort Lauderdale memberships organize recurring washes, deeper care, scheduling and visit documentation in one plan."),
         ],
         "steps": [
             ("Profile the Fort Lauderdale yacht.", "Share the vessel length, layout, marina or neighborhood and photographs of its present finish."),
@@ -310,7 +310,7 @@ CITY_DATA = {
             ("Wax Protection", "Surface preparation and machine-applied wax produce a polished result with an additional layer between the gelcoat and exposure."),
             ("Compound + Polish", "Dullness and oxidation are evaluated section by section before correction brings clarity back to the finish."),
             ("Ceramic Coating", "Selected surfaces receive coating only after the underlying condition has been cleaned, corrected and made ready."),
-            ("Maintenance Plans", "A custom Palm Beach cadence combines recurring attention with recorded visits and planned deeper detailing."),
+            ("Membership Plans", "A custom Palm Beach cadence combines recurring attention with recorded visits and planned deeper detailing."),
         ],
         "steps": [
             ("Describe the Palm Beach vessel.", "Provide its dimensions, model, private dock arrangement and current-condition imagery."),
@@ -348,7 +348,7 @@ CITY_DATA = {
             ("Wax Protection", "Once prepared, the finish is machine-waxed to recover shine and support easier ongoing care."),
             ("Compound + Polish", "We choose the correction sequence from the visible oxidation rather than forcing every Jupiter boat through the same steps."),
             ("Ceramic Coating", "The ceramic scope pairs suitable surface preparation with the protection level selected for the vessel."),
-            ("Maintenance Plans", "Recurring Jupiter visits help control salt and staining while keeping service evidence available after every appointment."),
+            ("Membership Plans", "Recurring Jupiter visits help control salt and staining while keeping service evidence available after every appointment."),
         ],
         "steps": [
             ("Send the Jupiter boat details.", "Length, make, normal location and photos give us the context needed to begin."),
@@ -386,7 +386,7 @@ CITY_DATA = {
             ("Wax Protection", "Prepared gelcoat is machine-waxed for a deeper finish and a renewable layer of everyday defense."),
             ("Compound + Polish", "Oxidized sections receive the level of compounding, wet sanding and polishing supported by their condition."),
             ("Ceramic Coating", "Coating recommendations account for preparation, boat use and the follow-up maintenance the surface will receive."),
-            ("Maintenance Plans", "Ongoing Stuart service keeps the boat on a chosen rhythm and documents the condition after each crew visit."),
+            ("Membership Plans", "Ongoing Stuart service keeps the boat on a chosen rhythm and documents the condition after each crew visit."),
         ],
         "steps": [
             ("Give us the Stuart starting point.", "Share the boat size, manufacturer, storage location and images of priority surfaces."),
