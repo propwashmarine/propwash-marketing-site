@@ -1,5 +1,6 @@
 from pathlib import Path
 from html import escape
+import hashlib
 import json
 import re
 import shutil
@@ -19,7 +20,29 @@ MEDIA_AVAILABLE = MEDIA.exists()
 DERIVED = ROOT / "src" / "media-derived"
 OUT = ROOT / "assets" / "v4"
 DIST = ROOT / "dist"
+PORTAL_DEMO_PARTIAL = ROOT / "src" / "components" / "portal-demo.html"
+PORTAL_DEMO_ASSETS = ROOT / "assets" / "portal-demo"
+PORTAL_IMAGES = ROOT / "assets" / "portal"
 BASE_URL = "https://propwashmarine.com"
+
+# --- Google Analytics (GA4) — injected into every built page ---
+GA_MEASUREMENT_ID = "G-FVLD2T92XC"
+GA_TAG = f"""<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){{dataLayer.push(arguments);}}
+gtag('js', new Date());
+gtag('config', '{GA_MEASUREMENT_ID}');
+</script>"""
+
+def inject_ga(path):
+    if not path.exists():
+        return
+    text = path.read_text()
+    if GA_MEASUREMENT_ID in text:
+        return
+    path.write_text(text.replace("<head>", "<head>\n" + GA_TAG, 1))
 
 LEGAL_PAGES = {
     "privacy": {
@@ -62,7 +85,7 @@ CITY_DATA = {
         "hero_image": "assets/v4/hero-poster.webp",
         "neighbors": ["delray-beach", "deerfield-beach"],
         "title": "Mobile Boat Detailing in Boca Raton, FL | Propwash Marine",
-        "meta_description": "Mobile boat detailing in Boca Raton for boats on Lake Boca, the Intracoastal and local canals, from signature washes to ceramic protection.",
+        "meta_description": "Mobile boat detailing in Boca Raton for boats on Lake Boca, the Intracoastal and local canals, from Captain's Washes to ceramic protection.",
         "intro": [
             "We provide mobile boat detailing for Boca Raton boats along the Intracoastal Waterway, Lake Boca Raton and the Boca Raton Inlet.",
             "We work around marina access, public ramps, private docks, lifts and driveways across the city.",
@@ -73,12 +96,12 @@ CITY_DATA = {
         "process_lead": "A Boca Raton visit starts with clear boat details and ends with documented work, without requiring the owner to wait dockside.",
         "process_heading": "From photos to finish.",
         "services": [
-            ("Signature Wash", "A focused exterior service clears salt and surface buildup when a Boca Raton boat needs more than a quick rinse."),
+            ("Captain's Wash", "A focused exterior service clears salt and surface buildup when a Boca Raton boat needs more than a quick rinse."),
             ("Full Detail", "Brightwork, hatch lips, compartments, seating and interior surfaces receive a thorough condition-based reset."),
             ("Wax Protection", "After cleaning and preparation, machine-applied wax restores depth while adding a practical protective layer."),
             ("Compound + Polish", "Oxidation is corrected in stages, with polishing throughout and wet sanding reserved for finishes that require it."),
             ("Ceramic Coating", "The coating package is selected only after the gelcoat has been evaluated and prepared for long-term protection."),
-            ("Maintenance Plans", "Scheduled washes and deeper monthly care keep Boca Raton owners informed through visit photos and service records."),
+            ("Membership Plans", "Scheduled washes and deeper monthly care keep Boca Raton owners informed through visit photos and service records."),
         ],
         "steps": [
             ("Show us the Boca Raton boat.", "Send its length, make, storage setup and photographs of the finish or problem areas."),
@@ -111,12 +134,12 @@ CITY_DATA = {
         "process_lead": "From the first Delray Beach photo to the final visit record, the scope stays tied to the boat's real condition and access.",
         "process_heading": "How a visit comes together.",
         "services": [
-            ("Signature Wash", "This one-time exterior wash removes salt and everyday grime when the boat needs focused attention outside a membership."),
+            ("Captain's Wash", "This one-time exterior wash removes salt and everyday grime when the boat needs focused attention outside a membership."),
             ("Full Detail", "A full reset reaches brightwork, hatch lips, storage areas, upholstery, interior surfaces, rust marks and staining."),
             ("Wax Protection", "Machine application follows proper surface preparation to leave the gelcoat glossier and better protected."),
             ("Compound + Polish", "We tailor correction to the level of oxidation, polish the finish and wet sand only where the condition calls for it."),
             ("Ceramic Coating", "Preparation is defined first, then the ceramic package is matched to the boat and its expected maintenance."),
-            ("Maintenance Plans", "Recurring Delray Beach care combines a chosen wash cadence with visit photos, records and scheduled deeper work."),
+            ("Membership Plans", "Recurring Delray Beach care combines a chosen wash cadence with visit photos, records and scheduled deeper work."),
         ],
         "steps": [
             ("Begin with your Delray boat.", "Provide the length, make, storage location and useful close-ups of anything that needs attention."),
@@ -149,12 +172,12 @@ CITY_DATA = {
         "process_lead": "For a Deerfield appointment, useful photos and access details let us define the work before the crew reaches the boat.",
         "process_heading": "A clearer service path.",
         "services": [
-            ("Signature Wash", "A thorough mobile wash handles the salt and deck buildup left behind when the Deerfield boat comes back in."),
+            ("Captain's Wash", "A thorough mobile wash handles the salt and deck buildup left behind when the Deerfield boat comes back in."),
             ("Full Detail", "The reset covers exterior details, hatch edges, hardware, seating, compartments and requested interior cleaning."),
             ("Wax Protection", "Prepared surfaces receive machine-applied wax to improve gloss and give the finish an added defense."),
             ("Compound + Polish", "Correction reduces oxidation and restores clarity through a measured compound-and-polish sequence."),
             ("Ceramic Coating", "Ceramic protection begins with the necessary cleaning and correction so the coating is never placed over a neglected surface."),
-            ("Maintenance Plans", "Planned visits help a Deerfield Beach boat stay cleaner between outings while giving the owner a photo record each time."),
+            ("Membership Plans", "Planned visits help a Deerfield Beach boat stay cleaner between outings while giving the owner a photo record each time."),
         ],
         "steps": [
             ("Document the Deerfield boat.", "Send basic specifications, its usual location and photographs that show the overall condition."),
@@ -187,12 +210,12 @@ CITY_DATA = {
         "process_lead": "A few accurate details help us plan a Pompano visit around the boat, its access point and the result the owner wants.",
         "process_heading": "Plan it. Clean it. Prove it.",
         "services": [
-            ("Signature Wash", "The Signature Wash gives a Pompano Beach boat a deliberate top-to-bottom exterior cleanup after regular use."),
+            ("Captain's Wash", "The Captain's Wash gives a Pompano Beach boat a deliberate top-to-bottom exterior cleanup after regular use."),
             ("Full Detail", "Detailed attention extends through metalwork, hatches, seating, compartments, staining and selected cabin surfaces."),
             ("Wax Protection", "Wax is machine-applied after preparation to sharpen the reflection and leave a useful sacrificial barrier."),
             ("Compound + Polish", "A staged correction plan addresses dull or oxidized gelcoat before refining it to an even finish."),
             ("Ceramic Coating", "Coating work includes the surface preparation needed for consistent bonding, gloss and maintainability."),
-            ("Maintenance Plans", "A repeat Pompano schedule keeps salt and light staining from becoming the next large detailing project."),
+            ("Membership Plans", "A repeat Pompano schedule keeps salt and light staining from becoming the next large detailing project."),
         ],
         "steps": [
             ("Introduce the Pompano vessel.", "Tell us the dimensions, model, storage arrangement and the visible issues you want solved."),
@@ -225,12 +248,12 @@ CITY_DATA = {
         "process_lead": "Planning the Lighthouse Point job in advance helps the crew account for dock access, upper structures and the exact finish work involved.",
         "process_heading": "Access through aftercare.",
         "services": [
-            ("Signature Wash", "A dedicated exterior wash removes accumulated salt and traffic from a Lighthouse Point boat between larger services."),
+            ("Captain's Wash", "A dedicated exterior wash removes accumulated salt and traffic from a Lighthouse Point boat between larger services."),
             ("Full Detail", "From hatch lips to hardtops, the crew works through the high-touch and easily missed surfaces that define a complete detail."),
             ("Wax Protection", "Properly prepared gelcoat is finished with machine-applied wax for renewed shine and straightforward protection."),
             ("Compound + Polish", "We scale the correction process to the vessel's oxidation, surface area and reachable sections."),
             ("Ceramic Coating", "A boat-specific preparation plan supports ceramic coverage across the selected exterior surfaces."),
-            ("Maintenance Plans", "Recurring dockside care gives Lighthouse Point owners a consistent wash rhythm and proof after each completed visit."),
+            ("Membership Plans", "Recurring dockside care gives Lighthouse Point owners a consistent wash rhythm and proof after each completed visit."),
         ],
         "steps": [
             ("Outline the Lighthouse Point boat.", "Length, make, berth details and representative photos establish the starting condition."),
@@ -263,12 +286,12 @@ CITY_DATA = {
         "process_lead": "Detailed access information keeps a Fort Lauderdale appointment organized across busy marinas, riverfront Slips and residential docks.",
         "process_heading": "Organized across the waterfront.",
         "services": [
-            ("Signature Wash", "A comprehensive exterior wash resets a frequently used Fort Lauderdale boat without turning the visit into a full detail."),
+            ("Captain's Wash", "A comprehensive exterior wash resets a frequently used Fort Lauderdale boat without turning the visit into a full detail."),
             ("Full Detail", "The service works systematically across deck surfaces, hardware, hatch channels, seating, storage and requested interior areas."),
             ("Wax Protection", "Machine-applied wax follows cleaning and preparation to bring stronger gloss back to the visible finish."),
             ("Compound + Polish", "Correction intensity is selected after inspection, then refined through polishing for a more uniform appearance."),
             ("Ceramic Coating", "We prepare and coat the agreed surfaces according to the boat's condition, scale and maintenance goals."),
-            ("Maintenance Plans", "Fort Lauderdale memberships organize recurring washes, deeper care, scheduling and visit documentation in one plan."),
+            ("Membership Plans", "Fort Lauderdale memberships organize recurring washes, deeper care, scheduling and visit documentation in one plan."),
         ],
         "steps": [
             ("Profile the Fort Lauderdale yacht.", "Share the vessel length, layout, marina or neighborhood and photographs of its present finish."),
@@ -301,12 +324,12 @@ CITY_DATA = {
         "process_lead": "For a privately docked Palm Beach boat, clear instructions and advance condition photos keep the service precise from arrival through documentation.",
         "process_heading": "A measured dockside process.",
         "services": [
-            ("Signature Wash", "A deliberate exterior cleaning handles salt, dust and surface residue for Palm Beach boats needing immediate presentation care."),
+            ("Captain's Wash", "A deliberate exterior cleaning handles salt, dust and surface residue for Palm Beach boats needing immediate presentation care."),
             ("Full Detail", "The detail reaches refined exterior elements, hatch channels, upholstery, storage spaces and agreed interior sections."),
             ("Wax Protection", "Surface preparation and machine-applied wax produce a polished result with an additional layer between the gelcoat and exposure."),
             ("Compound + Polish", "Dullness and oxidation are evaluated section by section before correction brings clarity back to the finish."),
             ("Ceramic Coating", "Selected surfaces receive coating only after the underlying condition has been cleaned, corrected and made ready."),
-            ("Maintenance Plans", "A custom Palm Beach cadence combines recurring attention with recorded visits and planned deeper detailing."),
+            ("Membership Plans", "A custom Palm Beach cadence combines recurring attention with recorded visits and planned deeper detailing."),
         ],
         "steps": [
             ("Describe the Palm Beach vessel.", "Provide its dimensions, model, private dock arrangement and current-condition imagery."),
@@ -339,12 +362,12 @@ CITY_DATA = {
         "process_lead": "The Jupiter service process turns a short set of boat details into a planned visit with an accountable finish record.",
         "process_heading": "Four steps to a ready boat.",
         "services": [
-            ("Signature Wash", "A substantial one-time wash clears the residue left by Jupiter outings and restores a cleaner deck-to-hull presentation."),
+            ("Captain's Wash", "A substantial one-time wash clears the residue left by Jupiter outings and restores a cleaner deck-to-hull presentation."),
             ("Full Detail", "Hardware, hatches, upholstery, compartments, staining and chosen interior spaces are addressed as one coordinated service."),
             ("Wax Protection", "Once prepared, the finish is machine-waxed to recover shine and support easier ongoing care."),
             ("Compound + Polish", "We choose the correction sequence from the visible oxidation rather than forcing every Jupiter boat through the same steps."),
             ("Ceramic Coating", "The ceramic scope pairs suitable surface preparation with the protection level selected for the vessel."),
-            ("Maintenance Plans", "Recurring Jupiter visits help control salt and staining while keeping service evidence available after every appointment."),
+            ("Membership Plans", "Recurring Jupiter visits help control salt and staining while keeping service evidence available after every appointment."),
         ],
         "steps": [
             ("Send the Jupiter boat details.", "Length, make, normal location and photos give us the context needed to begin."),
@@ -377,12 +400,12 @@ CITY_DATA = {
         "process_lead": "A Stuart appointment is organized from the first condition photos through the final portal record, with access settled before service day.",
         "process_heading": "Scope, service and record.",
         "services": [
-            ("Signature Wash", "A complete exterior wash removes the salt and working grime that collect through regular Stuart boating."),
+            ("Captain's Wash", "A complete exterior wash removes the salt and working grime that collect through regular Stuart boating."),
             ("Full Detail", "The crew resets visible and hidden areas, including brightwork, hatch lips, upholstery, compartments and requested interiors."),
             ("Wax Protection", "Prepared gelcoat is machine-waxed for a deeper finish and a renewable layer of everyday defense."),
             ("Compound + Polish", "Oxidized sections receive the level of compounding, wet sanding and polishing supported by their condition."),
             ("Ceramic Coating", "Coating recommendations account for preparation, boat use and the follow-up maintenance the surface will receive."),
-            ("Maintenance Plans", "Ongoing Stuart service keeps the boat on a chosen rhythm and documents the condition after each crew visit."),
+            ("Membership Plans", "Ongoing Stuart service keeps the boat on a chosen rhythm and documents the condition after each crew visit."),
         ],
         "steps": [
             ("Give us the Stuart starting point.", "Share the boat size, manufacturer, storage location and images of priority surfaces."),
@@ -401,6 +424,30 @@ def require_replace(text: str, old: str, new: str) -> str:
         raise RuntimeError(f"Expected source fragment was not found: {old[:120]}")
     return text.replace(old, new)
 
+
+
+# The Owner Portal demo is one shared component: markup in src/components/portal-demo.html,
+# styles and behavior in assets/portal-demo/. Any page can drop it in with these two helpers.
+# /assets/* is cached as immutable, so every URL carries a hash of the component and its screens.
+def portal_demo_version() -> str:
+    digest = hashlib.sha1()
+    for path in sorted([*PORTAL_DEMO_ASSETS.glob("demo.*"), *PORTAL_IMAGES.glob("portal-*.webp")]):
+        digest.update(path.name.encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()[:10]
+
+
+def portal_demo_head(preload_first_screen: bool = False) -> str:
+    version = portal_demo_version()
+    tags = [f'<link rel="stylesheet" href="/assets/portal-demo/demo.css?v={version}">']
+    if preload_first_screen:
+        tags.append(f'<link rel="preload" as="image" href="/assets/portal/portal-my-slip.webp?v={version}">')
+    tags.append(f'<script src="/assets/portal-demo/demo.js?v={version}" defer></script>')
+    return "\n".join(tags)
+
+
+def portal_demo_markup() -> str:
+    return PORTAL_DEMO_PARTIAL.read_text().strip()
 
 def save_image(source: Path, destination: Path, longest_side: int = 2000, quality: int = 84) -> None:
     subprocess.run(
@@ -504,6 +551,7 @@ def render_city_page(slug: str, data: dict, shared_styles: str) -> str:
             "CTA_TITLE": escape(data["cta_title"]),
             "CTA_BODY": escape(data["cta_body"]),
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
             "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
         },
@@ -577,6 +625,7 @@ def render_membership_page(shared_styles: str) -> str:
             "HERO_ABSOLUTE_URL": f"{BASE_URL}/{hero_image}",
             "CITY_LINKS_HTML": city_links_html,
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
             "BREADCRUMB_SCHEMA": json.dumps(breadcrumb_schema, separators=(",", ":")),
             "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
@@ -764,19 +813,25 @@ markup = require_replace(
     '<button class="pw-motion" id="pw-motion" type="button" aria-pressed="true" hidden><span>◉</span> Motion on</button><button class="pw-motion" id="pw-preview-confirmation" type="button" hidden>Preview confirmation</button>',
 )
 markup = markup.replace("preload=\"auto\"", "preload=\"metadata\"")
-markup = markup.replace("Captured from the current My Slip portal for this design review.", "Your real service history, visit photos and payments in one place.")
 markup = markup.replace("Run hard. Look right. / V4 design concept for approval", "Run hard. Look right. / South Florida Dockside Detailing")
 
-markup = require_replace(
-    markup,
-    '<section id="pw-area" class="pw-area pw-section pw-wrap"><div><div class="pw-kicker pw-eyebrow pw-muted">07 / Our stretch of coast</div><h2>South Florida.<br> At your Slip.</h2><p>Based in Boca Raton. Mobile detailing from Stuart to Fort Lauderdale, at your Slip, lift or driveway. Just outside that stretch? Ask us.</p></div><div><div class="pw-locationlist">',
-    '<section id="pw-area" class="pw-area pw-section pw-wrap"><div><div class="pw-kicker pw-eyebrow pw-muted">07 / Our stretch of coast</div><h2>South Florida.<br> At your Slip.</h2><p>Based in Boca Raton. Mobile detailing from Stuart to Fort Lauderdale, at your Slip, lift or driveway. Just outside that stretch? Ask us.</p><div class="pw-coastroute" aria-hidden="true"><span class="pw-routetrack"><i></i></span><b style="--pw-stop:0%"></b><b style="--pw-stop:51%"></b><b style="--pw-stop:100%"></b></div></div><div><div class="pw-locationlist">',
-)
-city_location_links = "".join(
-    f'<div><a href="/boat-detailing-{slug}/"><strong class="{"pw-homebase" if slug == "boca-raton" else ""}">{escape(city)}</strong><small>{escape(CITY_DATA[slug]["county"])}</small></a></div>'
-    for slug, city in CITY_ORDER
-)
+def city_chip(slug: str, city: str) -> str:
+    homebase = ' class="pw-homebase"' if slug == "boca-raton" else ""
+    return f'<a href="/boat-detailing-{slug}/"><strong{homebase}>{escape(city)}</strong><small>{escape(CITY_DATA[slug]["county"])}</small></a>'
+
+
+city_location_links = "".join(city_chip(slug, city) for slug, city in CITY_ORDER)
 markup = require_replace(markup, "<!-- PW_CITY_LINKS -->", city_location_links)
+markup = require_replace(markup, "<!-- PW_PORTAL_DEMO -->", portal_demo_markup())
+# The service area lives in the footer: legal pages get it through shared_footer, the other
+# subpages through {{FOOTER_AREA}}. Off the homepage the quote button becomes a plain link.
+shared_footer = require_replace(shared_footer, "<!-- PW_CITY_LINKS -->", city_location_links)
+shared_footer = require_replace(
+    shared_footer,
+    '<button class="pw-textlink" type="button" data-quote="Check my location">Tell us where your boat sits </button>',
+    '<a class="pw-textlink" href="/#pw-quote">Tell us where your boat sits </a>',
+)
+footer_area = re.search(r'<div class="pw-footerarea" id="pw-area">.*?</nav></div>', shared_footer, re.S).group(0)
 
 markup = require_replace(
     markup,
@@ -836,20 +891,7 @@ script = script.replace(
     "root.querySelectorAll('[data-pw-img]').forEach(img=>{img.src=assets[img.dataset.pwImg];img.decoding='async';if(!img.closest('.pw-v2hero')&&!img.closest('.pw-logo'))img.loading='lazy';});",
 )
 
-script = require_replace(
-    script,
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery;byId('pw-gallery-feature').src=assets[key];byId('pw-gallery-feature').alt=gallery[key][0]+' from the Propwash work gallery';byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(byId('pw-gallery-feature'));}));""",
-    """const gallery={gallery1:['Dockside ready','Deep reflection along the waterfront'],gallery2:['Wherever you are','At the trailer, lift or Slip—we bring professional care to wherever the boat sits.'],gallery3:['Brightwork in focus','Brightwork, transom and engines brought back into focus'],gallery4:['Console clarity','A clean helm, polished stainless and a finish that catches the light.']};
-const galleryDrift={gallery1:['1.4%','-.5%'],gallery2:['-1.1%','.6%'],gallery3:['.8%','-.8%'],gallery4:['-1.3%','-.3%']};
-root.querySelectorAll('[data-gallery]').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));const key=btn.dataset.gallery,feature=byId('pw-gallery-feature');feature.src=assets[key];feature.alt=gallery[key][0]+' from the Propwash work gallery';feature.style.setProperty('--pw-drift-x',galleryDrift[key][0]);feature.style.setProperty('--pw-drift-y',galleryDrift[key][1]);feature.style.animation='none';requestAnimationFrame(()=>{feature.style.animation='';});byId('pw-gallery-name').textContent=gallery[key][0];byId('pw-gallery-detail').textContent=gallery[key][1];animate(feature);}));""",
-)
 
-enhancements = """
-const areaSection=byId('pw-area');
-if('IntersectionObserver' in window){new IntersectionObserver(entries=>{if(entries[0]?.isIntersecting){areaSection.classList.add('pw-route-visible');}},{threshold:.3}).observe(areaSection);}else{areaSection.classList.add('pw-route-visible');}
-"""
-script = require_replace(script, "\n})();", "\n" + enhancements + "\n})();")
 
 old_quote = """function completePreview(){if(!form.reportValidity())return;const request=byId('pw-interest').value;byId('pw-request-summary').textContent=byId('pw-length').value+' ft boat · '+request+'. Your boat details and contact information would accompany this request.';showDone(true);}
 byId('pw-preview-request').addEventListener('click',completePreview);
@@ -869,37 +911,18 @@ body{margin:0;background:#0A1A2F;overflow-x:hidden}
 #pw-redesign-v3{width:100%;min-height:100vh}
 #pw-redesign-v3 .pw-hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
 #pw-redesign-v3 .pw-v2hero .pw-nav{position:relative;z-index:3}
-#pw-redesign-v3 .pw-locationlist>div>a{display:flex;gap:25px;justify-content:space-between;align-items:center;width:100%}
-#pw-redesign-v3 .pw-locationlist>div>a:hover strong{color:#70B8FF}
 #pw-redesign-v3 .pw-cta:disabled{opacity:.7;cursor:wait;transform:none}
 #pw-redesign-v3 .pw-formerror{color:#F5A623}
 #pw-redesign-v3 .pw-metal{overflow:hidden;isolation:isolate;transform-style:preserve-3d}
 #pw-redesign-v3 .pw-metal:before{pointer-events:none}
 #pw-redesign-v3 .pw-metal[aria-pressed=true]{box-shadow:0 17px 46px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.2)}
-#pw-redesign-v3 .pw-coastroute{position:relative;height:46px;margin:34px 0 2px;max-width:440px}
-#pw-redesign-v3 .pw-routetrack{position:absolute;left:0;right:0;top:21px;height:2px;background:#425C76;overflow:hidden}
-#pw-redesign-v3 .pw-routetrack i{display:block;width:100%;height:100%;background:linear-gradient(90deg,#70B8FF,#D9EBFA);transform:scaleX(0);transform-origin:left;transition:transform 1.55s cubic-bezier(.2,.75,.2,1)}
-#pw-redesign-v3 .pw-coastroute b{position:absolute;left:var(--pw-stop);top:15px;width:14px;height:14px;border:2px solid #91A8C0;background:#10243B;border-radius:50%;transform:translateX(-50%) scale(.7);transition:transform .35s .2s,background .35s}
-#pw-redesign-v3 .pw-coastroute b:first-of-type{transform:translateX(0) scale(.7)}
-#pw-redesign-v3 .pw-coastroute b:last-of-type{transform:translateX(-100%) scale(.7)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-routetrack i{transform:scaleX(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b{background:#70B8FF;transform:translateX(-50%) scale(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:first-of-type{transform:translateX(0) scale(1)}
-#pw-redesign-v3 .pw-area.pw-route-visible .pw-coastroute b:last-of-type{transform:translateX(-100%) scale(1)}
-#pw-redesign-v3 .pw-gallerymain img{--pw-drift-x:1.2%;--pw-drift-y:-.5%;animation:pw-finish-drift 13s ease-in-out infinite alternate;transform-origin:center}
-#pw-redesign-v3 .pw-gallerymain:hover img{animation-duration:7s}
-@keyframes pw-finish-drift{from{transform:scale(1.035) translate(0,0)}to{transform:scale(1.075) translate(var(--pw-drift-x),var(--pw-drift-y))}}
 #pw-redesign-v3 .pw-mobileactions{display:none}
-#pw-redesign-v3.pw-still .pw-routetrack i{transition:none;transform:scaleX(1)}
-#pw-redesign-v3.pw-still .pw-coastroute b{transition:none;background:#70B8FF}
-#pw-redesign-v3.pw-still .pw-gallerymain img{animation:none;transform:scale(1.035)}
 @container(max-width:700px){
  #pw-redesign-v3 #pw-home-view{padding-bottom:62px}
  #pw-redesign-v3 .pw-mobileactions{position:fixed;z-index:50;display:grid;grid-template-columns:.72fr 1fr 1.2fr;left:0;right:0;bottom:0;min-height:58px;background:#081728F5;border-top:1px solid #4A6077;box-shadow:0 -12px 30px rgba(1,9,18,.3);backdrop-filter:blur(13px)}
  #pw-redesign-v3 .pw-mobileactions a{display:grid;place-items:center;min-height:58px;padding:8px 6px;border-right:1px solid #344A61;color:#E9F2FA;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-align:center}
  #pw-redesign-v3 .pw-mobileactions a:last-child{border-right:0;background:#2F91E8;color:#07192D}
 }
-@media(prefers-reduced-motion:reduce){#pw-redesign-v3 .pw-routetrack i,#pw-redesign-v3 .pw-coastroute b{transition:none}#pw-redesign-v3 .pw-gallerymain img{animation:none!important}}
 """
 
 faq_schema = {
@@ -932,7 +955,7 @@ document = f'''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>South Florida Mobile Boat Detailing | Propwash Marine</title>
-<meta name="description" content="Dockside boat detailing from Stuart to Fort Lauderdale. Signature washes, Full Details, correction, wax, ceramic coating and recurring maintenance plans.">
+<meta name="description" content="Dockside boat detailing from Stuart to Fort Lauderdale. Captain's Washes, Full Details, correction, wax, ceramic coating and recurring maintenance plans.">
 <link rel="canonical" href="https://propwashmarine.com/">
 <meta name="theme-color" content="#0A1A2F">
 <meta property="og:type" content="website">
@@ -943,6 +966,7 @@ document = f'''<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 {head_links}
 <style>{styles}{live_css}</style>
+{portal_demo_head()}
 <script type="application/ld+json">{json.dumps(business_schema, separators=(",", ":"))}</script>
 <script type="application/ld+json">{json.dumps(faq_schema, separators=(",", ":"))}</script>
 </head>
@@ -958,7 +982,7 @@ document = f'''<!doctype html>
 def render_services_page(shared_styles: str) -> str:
     canonical_url = f"{BASE_URL}/services/"
     services = [
-        ("Signature Wash", "A thorough exterior wash and salt rinse — hull sides, deck, glass, non-skid and rails, dried down by hand. The baseline that keeps salt and grime from setting in between bigger jobs."),
+        ("Captain's Wash", "A thorough exterior wash and salt rinse — hull sides, deck, glass, non-skid and rails, dried down by hand. The baseline that keeps salt and grime from setting in between bigger jobs."),
         ("Full Detail", "The complete reset: wash, then brightwork, rust and mild stain removal, hatch lips, compartments, seats and interior. Where most boats start before going onto a plan."),
         ("Wax Protection", "A Full Detail followed by machine-applied wax for added gloss and a real layer of protection. Best for a finish that is already in good shape and needs to stay that way."),
         ("Compound + Polish", "Machine compounding and polishing to cut oxidation, chalking and light scratches out of the gelcoat, bringing back depth and shine before protection goes on."),
@@ -1013,6 +1037,7 @@ def render_services_page(shared_styles: str) -> str:
         (ROOT / "src" / "services-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "SERVICES_HTML": services_html,
             "STEPS_HTML": steps_html,
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
@@ -1062,6 +1087,7 @@ def render_gallery_page(shared_styles: str) -> str:
         (ROOT / "src" / "gallery-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "GALLERY_HTML": gallery_html,
             "HERO_SRC": hero_src,
             "HERO_ABSOLUTE_URL": f"{BASE_URL}/{asset_urls['detailTower']}",
@@ -1121,6 +1147,7 @@ def render_faq_page(shared_styles: str) -> str:
         (ROOT / "src" / "faq-template.html").read_text(),
         {
             "SHARED_STYLES": shared_styles,
+            "FOOTER_AREA": footer_area,
             "FAQ_HTML": faq_html,
             "FAQ_SCHEMA": json.dumps(faq_schema, separators=(",", ":")),
             "BUSINESS_SCHEMA": json.dumps(business_schema, separators=(",", ":")),
@@ -1191,11 +1218,29 @@ sitemap = (
 )
 (ROOT / "sitemap.xml").write_text(sitemap)
 
+# Add the Google Analytics tag to every published page.
+_ga_pages = [
+    ROOT / "index.html",
+    ROOT / "thank-you.html",
+    ROOT / "privacy.html",
+    ROOT / "terms.html",
+    ROOT / "refund.html",
+    membership_directory / "index.html",
+    services_directory / "index.html",
+    gallery_directory / "index.html",
+    faq_directory / "index.html",
+]
+_ga_pages += [d / "index.html" for d in city_outputs]
+for _p in _ga_pages:
+    inject_ga(_p)
+
 if DIST.exists():
     shutil.rmtree(DIST)
 (DIST / "assets" / "logo").mkdir(parents=True)
 (DIST / "assets" / "video").mkdir(parents=True)
 shutil.copytree(OUT, DIST / "assets" / "v4")
+shutil.copytree(PORTAL_IMAGES, DIST / "assets" / "portal")
+shutil.copytree(PORTAL_DEMO_ASSETS, DIST / "assets" / "portal-demo")
 for filename in ("brandmark.png", "wordmark.png", "favicon.png", "favicon-32x32.png", "favicon-16x16.png", "apple-touch-icon.png", "favicon.ico"):
     shutil.copy2(ROOT / "assets" / "logo" / filename, DIST / "assets" / "logo" / filename)
 for filename in ("hero-v4.mp4",):

@@ -1,0 +1,63 @@
+<!-- Owner Portal demo component. Injected by build_live.py (portal_demo_markup); styles and behavior in
+     /assets/portal-demo/demo.css and demo.js. Optional host hooks: #pd-now-h / #pd-now-p caption. -->
+<div class="pd-phone" id="pd-phone">
+  <div class="pd-device"><div class="pd-screen" role="region" aria-label="Interactive Owner Portal demo">
+    <div class="pd-island" aria-hidden="true"></div>
+    <div class="pd-app">
+      <div class="pd-safe" aria-hidden="true"></div>
+      <header class="pd-hdr">
+        <button class="pd-fsclose" type="button" aria-label="Close the portal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        <div class="pd-brand" aria-label="Propwash Owner Portal"><img class="mark" src="/assets/logo/brandmark.png" width="760" height="459" alt=""><span class="words"><img class="word" src="/assets/logo/wordmark.png" width="1019" height="150" alt="Propwash"><small>OWNER PORTAL</small></span></div>
+        <span class="pd-sp"></span>
+        <button class="pd-ibtn pd-bell" type="button" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" aria-controls="pd-pop-bell" data-pop="pd-pop-bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button>
+        <button class="pd-ibtn pd-avatar" type="button" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="pd-pop-acct" data-pop="pd-pop-acct">JF</button>
+      </header>
+      <div class="pd-body" id="pd-views"></div>
+      <nav class="pd-tabs" aria-label="Portal sections">
+        <button class="pd-tab" type="button" data-screen="my-slip" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><path d="M12 7.2V21"/><path d="M5 13a7 7 0 0 0 14 0"/><path d="M3 13h4M17 13h4"/></svg>My Slip</button>
+        <button class="pd-tab" type="button" data-screen="on-water"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 7c2 0 2-1.5 4-1.5S8 7 10 7s2-1.5 4-1.5S16 7 18 7s2-1.5 4-1.5"/><path d="M2 12c2 0 2-1.5 4-1.5S8 12 10 12s2-1.5 4-1.5S16 12 18 12s2-1.5 4-1.5"/><path d="M2 17c2 0 2-1.5 4-1.5S8 17 10 17s2-1.5 4-1.5S16 17 18 17s2-1.5 4-1.5"/></svg>On Water</button>
+        <button class="pd-tab" type="button" data-screen="photos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7.5 6.5H4a2 2 0 0 0-2 2V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.5a2 2 0 0 0-2-2h-3.5Z"/><circle cx="12" cy="13" r="3.2"/></svg>Photos</button>
+        <button class="pd-tab" type="button" data-pop="pd-pop-svc" aria-haspopup="menu" aria-expanded="false" aria-controls="pd-pop-svc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"/><path d="M16 2v4M8 2v4M3 10h18M19 16v6M16 19h6"/></svg>Service</button>
+        <button class="pd-tab" type="button" data-pop="pd-pop-act" aria-haspopup="menu" aria-expanded="false" aria-controls="pd-pop-act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4.2"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account</button>
+      </nav>
+    </div>
+    <div class="pd-bubble" role="status" aria-live="polite"><button class="msg" type="button">Hey, I'm the Propwash assistant. Ask me anything about your boat, your plan, or your schedule.</button><button class="x" type="button" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <button class="pd-fab" type="button" aria-label="Open the Propwash assistant" aria-expanded="false" aria-controls="pd-sheet"><img src="/assets/logo/brandmark.png" width="760" height="459" alt=""><span class="dot" aria-hidden="true"></span></button>
+    <div class="pd-pop pd-pop-bell down" id="pd-pop-bell" role="status">You're all caught up.</div>
+    <div class="pd-pop pd-pop-acct down" id="pd-pop-acct" role="menu" aria-label="Account">
+      <button type="button" role="menuitem" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/></svg>Profile</button>
+      <button type="button" role="menuitem" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button>
+    </div>
+    <div class="pd-pop pd-pop-svc" id="pd-pop-svc" role="menu" aria-label="Service">
+      <button type="button" role="menuitem" data-screen="book-a-service"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Book a service</button>
+      <button type="button" role="menuitem" data-screen="membership"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9Z"/></svg>Membership</button>
+      <button type="button" role="menuitem" data-screen="services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Services</button>
+    </div>
+    <div class="pd-pop pd-pop-act" id="pd-pop-act" role="menu" aria-label="Account">
+      <button type="button" role="menuitem" data-screen="payments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Payments</button>
+      <button type="button" role="menuitem" data-screen="messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Messages</button>
+    </div>
+    <div class="pd-scrim" aria-hidden="true"></div>
+    <div class="pd-sheet" id="pd-sheet" role="dialog" aria-label="Propwash assistant">
+      <img data-src="/assets/portal/portal-ai-assistant.webp" width="600" height="889" alt="Propwash Assistant panel header and Ask a question field.">
+      <!-- Conversation as real HTML over the screenshot's message area (header and input stay the image).
+           The suggested questions are live; data-a holds each answer. -->
+      <div class="pd-chat" role="log" aria-live="polite" aria-label="Assistant conversation">
+        <div class="pd-msg"><span class="pd-av" aria-hidden="true"></span><p class="pd-b pd-welcome">Hey, I'm the Propwash assistant. Ask me anything about your boat, your plan, or your schedule. Not sure where to start? Tap one of these:</p></div>
+        <div class="pd-qs" role="group" aria-label="Suggested questions">
+          <button class="pd-q" type="button" data-a="Your next wash is Tuesday, Oct 6 at 12:00 PM. Need to change it? Tap Move on your Next Visit card.">When's my next wash?</button>
+          <button class="pd-q" type="button" data-a="You're on Platinum: washes on a cadence built around your boat, a monthly Full Detail, two Trip Ready preps a month, a dedicated detailer and See a Spot. Full list under Service → Membership.">What's included in my plan?</button>
+          <button class="pd-q" type="button" data-a="Tap Report a Spot on My Slip, pick the area of the boat, add a note and a photo if you have one. It goes straight to the crew.">How do I report a spot I noticed on my boat?</button>
+          <button class="pd-q" type="button" data-a="Yep. Go to Service → Book a service, pick a day and request a time. We'll confirm it.">Can I book an extra wash?</button>
+          <button class="pd-q" type="button" data-a="Go to Account → Payments, open the invoice and tap Pay. Your receipt stays in the portal.">How do I pay my invoice?</button>
+        </div>
+        <p class="pd-urgent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>For urgent or on-water issues, call us at <a href="tel:+15612918554">(561) 291-8554</a>.</span></p>
+      </div>
+      <button class="x" type="button" aria-label="Close the assistant"></button>
+      <button class="ask" type="button" aria-label="Ask a question (available in your portal)"></button>
+      <div class="pd-note" role="status" aria-live="polite">Available in your portal</div>
+    </div>
+    <div class="pd-spot" id="pd-spot" role="dialog" aria-label="Report a Spot"></div>
+  </div></div>
+</div>
+<button class="pw-cta pd-explore" id="pd-explore" type="button">Explore the portal</button>

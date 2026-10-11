@@ -30,7 +30,8 @@ tidy.
   Structure comes from 1px lines, not shadows or fills.
 - **Imagery:** full-bleed photography of real boats and real work, covered by
   navy gradient scrims so the white text stays readable. The homepage hero is a
-  looping video. On narrow screens a still image replaces it.
+  full-screen still photograph that gives way to a muted, looping video on screens
+  wider than 700px, under the rules in section 6 (Hero video).
 - **Signature details:** numbered kickers (`01 / The right work`), a 26×2px
   electric-blue rule before eyebrows, the skewed hero tagline, the metal-finish
   membership cards, and the oversized PROPWASH footer mark that fills on hover.
@@ -198,9 +199,12 @@ with a `#F4F8FC25` bottom rule. Below 800px the links collapse into a bordered `
 that opens a two-column `.pw-mobilemenu` on the panel color.
 
 ### Hero
-- **Homepage:** full-bleed looping video (`pw-v2hero`) with the scrim, a small blue H1, the
-  skewed Oswald tagline, a 15px intro (max 520px), two CTAs, and a bottom row with a
-  pause-video control (`#0A1A2F8F` fill, translucent border).
+- **Homepage:** full-screen (`100svh`) still photograph (`pw-v2hero`, `.pw-hero-still`) under an
+  even navy scrim, with the copy anchored to the bottom: a small blue H1, the skewed Oswald
+  tagline, a 15px intro (max 520px) and two CTAs. Nothing in the hero animates on load. On
+  screens wider than 700px the script gives `#pw-hero-video` its source after first paint and
+  shows the `#pw-video-toggle` pause control (section 6, Hero video). Narrow screens and reduced
+  motion keep the still, with both elements hidden.
 - **Subpages:** `.pw-cityhero` photo hero, 520–660px tall, content aligned to the bottom,
   breadcrumbs → kicker → H1 → intro → actions.
 
@@ -225,10 +229,19 @@ control.
 
 ### Membership cards (`.pw-metal`)
 Three cards with metal-gradient fills (`linear-gradient(140deg, …)`) and a 1px tinted
-border. A diagonal sheen sweeps across on hover and the card lifts `-5px`. The selected
+border. On hover the card lifts 2px on the soft curve; there is no sheen. The selected
 card gets a 4px bottom bar in the tier color and a soft shadow. The Oswald name is set at
-`clamp(32px,4.15cqw,47px)`. Below 600px the cards become a sticky row of tier-colored pills
-(3px radius).
+`clamp(32px,4.15cqw,47px)`. On the homepage each card starts with its answer label (Keep it
+clean / Keep it maintained / Manage it for me). Below 600px the cards become stacked answer
+rows (3px radius) filled with the tier color when selected.
+
+### Membership picker (homepage)
+One question, "What do you want from us?", answered by the tier cards. Tiers are chosen by
+scope only: Keep it clean → Silver, Keep it maintained → Gold (default), Manage it for me →
+Platinum (invite flow). The result shows the tier's "What we handle" list from the membership
+copy, "Every plan is custom quoted to your boat." and, for Silver and Gold, "Compare all
+plans" (to `/membership/#pw-membertable`). The CTA opens the existing membership request with
+the tier preselected. No prices.
 
 ### Membership tier grid (subpage)
 Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries the amber
@@ -239,22 +252,38 @@ Three graphite `#1C2A3A` cells on a 1px `--pw-line` gap grid. Platinum carries t
 `#AFBFD1`–`#C4D1DE`. Green `#33C48B` 600 marks only affirmative cells. Tables sit in a
 horizontal-scroll wrapper with `min-width:510–540px`.
 
-### Owner Portal / My Slip frames
-`.pw-slipshell` and `.pw-realportal` are deep-navy frames with a `#425268`/`#45586D` border and
-the site's only large shadows (`0 25px 70px #020A1466`, `0 22px 65px #0004`). The slip shell
-tilts `perspective(1300px) rotateY(-5deg)` and flattens on hover. Tabs are 11px with a 2px
-blue underline when active.
+### Owner Portal phones
+Six real portal screenshots (`assets/portal/portal-1…6-*.webp`, 600×1182, white status band
+cropped). From 1100px the section is two columns: copy left, all six phones right in a 3×2
+grid that fills the column. From 701px to 1099px the same 3×2 grid sits under the copy. There
+is no carousel on desktop. Below 700px the phones are a swipe row with the next one peeking in.
+Each phone has one heading and one sentence (My Slip, Next visit, On the water, Book a wash, Your plan, Invoices & payments). portal-4 is IMG_1536 (a Safari capture: the browser chrome, rows 0–245, is cropped like the others' white band).
+
+### Phone frame (device mockup)
+Drawn in CSS only, no image files: a 1.5px metallic edge (gradient border-box from `#A4B1C0`
+through `#1C2A3A` to `#8BA0B5`), a 6px `#05080C` bezel, screen corners at `13cqw` of the phone
+width with the frame radius = screen radius + bezel, a Dynamic Island (31% wide, 3.4:1, black),
+left action/volume buttons and a right power button in `#566779`, and a two-layer shadow. The
+strip above each screenshot is the portal header navy `#0A1B2D`. Phones lift 2px on hover.
+The older `.pw-slipshell` / `.pw-realportal` frames are no longer used on the homepage and no
+longer tilt.
 
 ### Gallery
-Homepage: a large main image (min 450px, zooms 1.04 on hover) beside a two-by-two thumbnail
-grid with a cursor-following blue radial spotlight (`rgba(30,144,255,.16)`). Gallery page:
+The homepage no longer has a gallery section: "Every surface, every detail" ends with a
+"See the gallery" link to `/gallery/`, and every former `#pw-gallery` link points there. Gallery page:
 a three-column grid, 290px images, **4px radius** with a `#21374F` border, and Oswald 16px
 captions over a bottom scrim.
 
 ### FAQ
 Native `<details>`. The homepage uses 13px summaries with a `+`/`−` in `#B8C9DC`. The FAQ page
 uses Oswald 22px uppercase summaries with a `#70B8FF` `+`/`–`, 14px answers in `#C3D0DE`,
-and a max width of 740px.
+and a max width of 740px. On the homepage every answer starts closed below 700px.
+
+### Journal link (homepage)
+The dock journal sits behind a single "From the journal" text link (a native `<details>`
+summary styled like `.pw-textlink`). It opens the three articles in place, so their copy stays
+on the page; links to `#pw-journal` open it. On mobile the articles become a swipe row and
+each long answer sits behind "Read the full answer".
 
 ### Forms
 Two-column field grid (one column below 400px on the homepage, below 700px for the member
@@ -271,10 +300,15 @@ and 14px copy on the left, contact block on the right (Oswald 31px phone, 12px l
 `#53687D` rule).
 
 ### Footer
-Deep navy, three-column top (`1.4fr 1fr 1fr`), 11px link lists with eyebrow headers,
-9–11px legal row. The oversized PROPWASH SVG mark starts as a `#33465C` stroke outline. On
-footer hover it fills left to right (P white, W `#1E90FF`) over `.9s cubic-bezier(.4,0,.2,1)`
-with a single sheen sweep.
+Every page's footer opens with the service area (`#pw-area`): "Our stretch of coast", "South
+Florida. At your Slip.", the Boca Raton line, "Tell us where your boat sits" (a quote button on
+the homepage, a `/#pw-quote` link elsewhere) and the 9 city links as bordered chips (Oswald 16px
+city, 11px county; Boca Raton in `#70B8FF`). `build_live.py` injects the chips into the
+homepage footer, the shared footer used by the legal pages, and the `{{FOOTER_AREA}}` token in
+the city, services, FAQ, gallery and membership templates. Below that: deep navy, three-column
+top (`1.4fr 1fr 1fr`), 11px link lists with eyebrow headers and the legal row. The oversized
+PROPWASH SVG mark starts as a `#33465C` stroke outline. On footer hover it fills left to right
+(P white, W `#1E90FF`) over `.9s cubic-bezier(.4,0,.2,1)` with a single sheen sweep.
 
 ### Chips
 Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–12px 15px`,
@@ -285,7 +319,7 @@ Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–
 ## 5. Layout
 
 - **Gutters:** `.pw-wrap` uses `padding-left/right: 4.5%`. The full-bleed trust strip and proof line use percentages as well.
-- **Section rhythm:** `.pw-section` padding is 80px top and bottom, 62px at ≤900px and 52px at ≤700px. Closing CTA bands use 62–72px.
+- **Section rhythm:** `.pw-section` padding is 112px top and bottom above 700px and 40px at ≤700px. Section heads sit 56px above their content (24px on mobile).
 - **Section heads:** `.pw-sectionhead` is a flex row with the H2 on the left and a short muted
   paragraph (max 265–310px) on the right, aligned to the bottom. It stacks at ≤700px.
 - **Grids are asymmetric:** `1.45fr 1fr` (hero head), `.93fr 1.07fr` (services), `1.35fr 1fr`
@@ -296,19 +330,102 @@ Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–
 - **Measure:** intro copy max 520–650px. FAQ answers max 740px. Forms max 680–860px.
 - **Depth:** flat by default. Shadows are only for floating product frames (portal, slip
   shell) and the selected membership card.
-- **Radius:** 0. The only exceptions are gallery-page tiles (4px), mobile tier pills (3px), the
+- **Radius:** 0. The only exceptions are device mockups (phone frames: screen `13cqw`, frame = screen
+  radius + bezel), gallery-page tiles (4px), mobile tier pills (3px), the
   comparison handle and portal bullet dots (circles).
-- **Motion:**
-  - Entry: `@keyframes pw-in` (opacity .2→1, `translateY(12px)`→0), `.35s ease-out` for state
-    changes and `.75s` for `.pw-rise` (with a `.15s` delay variant).
-  - Ambient: hero image `pw-ocean-drift` 18s alternate (scale 1.02→1.09).
-  - Hover: CTA −2px, metal card −5px, gallery zoom 1.025–1.045, thumbnail `brightness(1.16)`.
-  - `prefers-reduced-motion: reduce` and the `.pw-still` class both turn off all animation and transitions,
-    flatten the slip shell, and remove the gallery spotlight and footer sheen.
+- **Motion:** see section 6.
 
 ---
 
-## 6. Do's and Don'ts
+## 6. Motion
+
+### Feel
+Subtle and premium. Motion should be noticed only if you look for it. It confirms that the
+page is alive and well made; it never performs. The reference is Freeman Boatworks
+(freemanboatworks.com, inspected September 2026): one quiet fade-and-rise as content
+enters, images that fade rather than fly, and no hover theatrics.
+
+**What Freeman does (measured, not copied):** a Squarespace site with no animation library
+(no GSAP, Lenis or AOS). Its site-wide "fade / flex / ease" setting moves each element from
+`opacity:0; translateY(18px)` to its resting state over `0.5s cubic-bezier(0.19, 1, 0.22, 1)`,
+triggered once as the element scrolls into view, with a ~15ms stagger between neighbors.
+Images fade in without moving. Text links and buttons change color over `0.6s` on the same
+curve. There is no parallax, no hover lift or zoom and no looping animation, and the header
+simply scrolls away.
+
+### Tokens
+
+| Token | Value | Use |
+|---|---|---|
+| `--ease-soft` | `cubic-bezier(0.19, 1, 0.22, 1)` | Default for everything that moves: fast start, very long soft landing |
+| `--ease-fade` | `cubic-bezier(0.4, 0, 0.2, 1)` | Opacity-only fades and color changes |
+| `--dur-reveal` | `700ms` | Section fade-and-rise |
+| `--dur-image` | `900ms` | Image fade-in and settle zoom |
+| `--dur-hover` | `300ms` | Hover lifts, color and border changes |
+| `--rise` | `16px` | Reveal travel distance. Never more than 24px |
+
+Durations are slower than Freeman's 0.5s on purpose. The curve spends most of its time
+settling, so 700ms still feels calm rather than sluggish.
+
+### Allowed
+- **Section reveal:** opacity 0→1 and `translateY(var(--rise))`→0 over `--dur-reveal` with
+  `--ease-soft`. It triggers once, when about 15% of the element is visible, and never replays.
+  A group of siblings (cards, steps, thumbnails) may stagger by 60ms, up to 4 items. Items after
+  that appear with the last step.
+- **Image entrance:** fade in over `--dur-image`. Hero or feature images may also settle from
+  `scale(1.04)` to `scale(1)` over the same duration.
+- **Parallax:** background photography only, `transform` only, at most 32px of travel across
+  the image's time on screen. Off below 700px and on touch devices.
+- **Hover lift:** cards and buttons rise `translateY(-2px)` over `--dur-hover`. Images inside a
+  card may zoom to at most `scale(1.03)` over 600ms. Color and border changes use `--dur-hover`
+  with `--ease-fade`.
+- **State changes** (accordions, tabs, form steps): the section reveal, shortened to 350ms.
+- **Hero video:** on screens wider than 700px with no reduced-motion preference, the homepage
+  hero plays its video muted, looping and inline. It is the one exception to the no-loops rule
+  below. The still image (the poster) paints first; the video source is set only after the
+  page's load event, and the still fades out once the video is playing. A visible pause control
+  sits in the hero. Screens 700px or narrower and reduced motion keep the still image and never
+  load the video. No text waits for the video before it can be read.
+
+### Never
+- Bouncing, overshoot or elastic easing (no curve with values outside 0–1).
+- Spinning, rotating, pulsing or blinking.
+- Anything that keeps moving on its own: infinite loops, ambient drift, marquees, auto-advancing
+  carousels.
+- Several things animating at once. One reveal group at a time; nothing else moves while a
+  section reveals.
+- Motion that delays reading or tapping: no hidden-until-animated hero text, no entrance on
+  content already on screen at load, no delay on `:active` or tap feedback, no scroll-jacking
+  or smooth-scroll libraries.
+- Animating layout properties (`width`, `height`, `top`, `margin`). Use `transform` and
+  `opacity` only, and never `transition: all`.
+
+### Reduced motion
+Always respect `prefers-reduced-motion: reduce`, and keep the `.pw-still` switch working the
+same way:
+- No transforms at all: no rise, zoom, parallax or hover lift.
+- Content appears at full opacity immediately; a fade of 150ms or less is acceptable.
+- The hero shows its still image; the video is never loaded.
+- Color and focus changes still happen, without transitions.
+
+Reveal styles must be applied by script. If the script fails or never runs, all content is
+visible. In the template this is `.pw-reveal` / `.pw-in-view`: each direct child of a `#pw-main`
+section reveals once, card groups (`.pw-steps`, `.pw-v2plans`, `.pw-journalgrid`) stagger their
+children, and anything already on screen at load never animates.
+
+### Status
+The 2026 homepage redesign removed the motion that broke these rules: the hero and gallery drift
+loops, the hero load entrance, the metal-card sheen and 5px lift, the
+tilted portal frames, the gallery cursor spotlight and the coast-route line. State changes use
+the tokens above.
+
+**Sanctioned exception:** the footer PROPWASH wordmark keeps its hover fill and single sheen sweep
+(owner decision). It plays only on footer hover, never loops, and is replaced by a static fill
+under `prefers-reduced-motion`.
+
+---
+
+## 7. Do's and Don'ts
 
 ### Do
 - Use navy `#0A1A2F` as the base and switch between the documented section shades to separate bands.
@@ -334,7 +451,7 @@ Neighbor-city and member-city links are bordered `#52667B` boxes, `padding:11–
 
 ---
 
-## 7. Responsive Behavior
+## 8. Responsive Behavior
 
 Layout responds to the width of `#pw-redesign-v3` through **container queries**. The only
 `@media` queries are for reduced motion.
@@ -356,7 +473,7 @@ keep tables readable, and nothing should cause a horizontal page scroll.
 
 ---
 
-## 8. Voice and Copy Rules
+## 9. Voice and Copy Rules
 
 These rules apply to every string on the site, including alt text, meta descriptions,
 button labels and form notes.
@@ -382,7 +499,7 @@ and honest about limits.
 - "We never coat over oxidation or wax."
 - "We watch the forecast and move the visit rather than rush the job."
 
-Service and plan names are proper nouns: Signature Wash, Full Detail, Wax Protection,
+Service and plan names are proper nouns: Captain's Wash, Full Detail, Wax Protection,
 Compound + Polish, Ceramic Coating, Maintenance Plans, Trip Ready, Freshwater Rinse,
 Silver, Gold, Platinum, Owner Portal, My Slip.
 
@@ -391,7 +508,7 @@ Lauderdale, at your Slip, lift or driveway."
 
 ---
 
-## 9. Agent Prompt Guide
+## 10. Agent Prompt Guide
 
 Paste this when asking an agent to build or change a Propwash page:
 
@@ -405,7 +522,9 @@ Paste this when asking an agent to build or change a Propwash page:
 > sized with `clamp(…cqw…)`. Body in Inter 15px/1.65. Eyebrows 11px uppercase .16em
 > behind a 26×2px blue rule with a `NN / Label` number. Square corners, 1px rules, no
 > card shadows. Photos under navy gradient scrims. Section padding 80/62/52px, gutters 4.5%.
-> Responsive with `@container` at 900/800/700/600/520px. Respect reduced motion.
+> Responsive with `@container` at 900/800/700/600/520px. Motion is subtle: one fade-and-rise
+> per section (700ms, `cubic-bezier(0.19, 1, 0.22, 1)`, 16px), 2px hover lifts, nothing that
+> loops, bounces or spins. Respect reduced motion.
 > Copy: the company speaks as we/us/our and addresses the owner as you/your. Capitalize "Full Detail" and "Slip". Quote CTA is always
 > "Get a free quote". No dollar figures, rates or discounts, and never call a service or
 > feature "free". No superlatives or stock marketing phrases, no BBB claims. Short, plain, specific sentences.
@@ -416,4 +535,5 @@ Quick checks before shipping:
 - [ ] Amber and green appear only in their single roles.
 - [ ] No `border-radius` beyond the listed exceptions.
 - [ ] Tap targets are at least 44px, the focus outline is intact, and reduced motion is honored.
-- [ ] Copy passes all five voice rules in section 8.
+- [ ] Motion follows section 6: nothing loops, bounces or spins, and nothing moves at once with a reveal.
+- [ ] Copy passes all five voice rules in section 9.
