@@ -25,6 +25,25 @@ PORTAL_DEMO_ASSETS = ROOT / "assets" / "portal-demo"
 PORTAL_IMAGES = ROOT / "assets" / "portal"
 BASE_URL = "https://propwashmarine.com"
 
+# --- Google Analytics (GA4) — injected into every built page ---
+GA_MEASUREMENT_ID = "G-FVLD2T92XC"
+GA_TAG = f"""<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){{dataLayer.push(arguments);}}
+gtag('js', new Date());
+gtag('config', '{GA_MEASUREMENT_ID}');
+</script>"""
+
+def inject_ga(path):
+    if not path.exists():
+        return
+    text = path.read_text()
+    if GA_MEASUREMENT_ID in text:
+        return
+    path.write_text(text.replace("<head>", "<head>\n" + GA_TAG, 1))
+
 LEGAL_PAGES = {
     "privacy": {
         "title": "Privacy Policy — Propwash Marine Detailing",
@@ -1198,6 +1217,22 @@ sitemap = (
     + "\n</urlset>\n"
 )
 (ROOT / "sitemap.xml").write_text(sitemap)
+
+# Add the Google Analytics tag to every published page.
+_ga_pages = [
+    ROOT / "index.html",
+    ROOT / "thank-you.html",
+    ROOT / "privacy.html",
+    ROOT / "terms.html",
+    ROOT / "refund.html",
+    membership_directory / "index.html",
+    services_directory / "index.html",
+    gallery_directory / "index.html",
+    faq_directory / "index.html",
+]
+_ga_pages += [d / "index.html" for d in city_outputs]
+for _p in _ga_pages:
+    inject_ga(_p)
 
 if DIST.exists():
     shutil.rmtree(DIST)
