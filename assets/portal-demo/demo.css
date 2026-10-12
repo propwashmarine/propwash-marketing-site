@@ -168,3 +168,12 @@ html.pd-locked,html.pd-locked body{overflow:hidden}
   #pw-redesign-v3 .pd-explore,.pd-explore{display:inline-flex}
 }
 @media (prefers-reduced-motion:reduce){.pd-now>div{transition:none}}
+/* Service section picker and Choose care: the portal's own dropdowns, rebuilt in HTML over the
+   screenshot (sizes in 1206px source space, as measured from the portal's open menus). */
+#pd-phone .pd-list{position:absolute;z-index:5;display:none;padding:1.16cqw 1cqw;background:#152332;border:.25cqw solid #2A3A4C;border-radius:.5cqw;box-shadow:0 2cqw 5cqw rgba(2,10,20,.45)}
+#pd-phone .pd-list.open{display:block}
+#pd-phone .pd-list [role="option"]{display:flex;align-items:center;justify-content:space-between;width:100%;height:7.96cqw;padding:0 3.6cqw 0 2cqw;border:0;background:none;color:#EEF2F6;font:400 3.15cqw/1 Inter,Arial,sans-serif;text-align:left}
+#pd-phone .pd-list [role="option"] svg{width:3.3cqw;height:3.3cqw;flex:none}
+#pd-phone .pd-list-view [aria-selected="true"]{background:#1F8FFF;color:#0B1C2F}
+#pd-phone .pd-list-care [aria-selected="true"]{color:#8C98A6}
+#pd-phone .pd-list [role="option"]:focus-visible{outline:.4cqw solid #8EC5FF;outline-offset:-.4cqw}

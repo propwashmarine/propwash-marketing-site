@@ -9,6 +9,11 @@ const u=px=>(px/W*100).toFixed(3)+'cqw';
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ss={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
 
+// Service section views and Schedule Care choices (the portal's own dropdowns, rebuilt in HTML).
+const VIEWS=[['Upcoming Visits','upcoming-visits'],['Service History','service-history'],['Services','services'],['Schedule Care','schedule-care']];
+const CARE=[['Additional wash','schedule-care'],['Trip Ready','schedule-care-trip'],['After-trip washdown','schedule-care-washdown']];
+const VIEW_OF={'schedule-care-trip':'schedule-care','schedule-care-washdown':'schedule-care','schedule-care-quote':'schedule-care'};
+
 const SCREENS={
  'my-slip':{tab:'my-slip',h:'My Slip',p:"Your boat's status, next visit and protection at a glance.",hgt:2536,
    alt:"My Slip screen: a welcome-back greeting, the Salty Dog boat card (43 ft Mag Bay, Boca Raton, service scheduled), notifications, a protection status ring counting down to the next visit, the next scheduled Captain's Wash, a Report a Spot card, latest photos, the service log and a paid-up balance.",
@@ -18,16 +23,34 @@ const SCREENS={
    scores:{x:39,y:2040,w:1127,h:366,full:1841,snaps:[246,246,222,1127]}},
  'photos':{tab:'photos',h:'Every visit, documented.',p:'See the photos from each visit, kept with the boat.',hgt:1494,
    alt:"Vessel Photos screen: a two-column grid of photos of the boat from service visits, including the helm, seating, outboard engines and the Mag Bay transom."},
- 'book-a-service':{tab:'svc',h:'Book a service',p:'Pick a day and request the time that works for you.',hgt:3094,
-   alt:"Book a Service screen on the Captain's Wash tab: a description of the Captain's Wash, an October calendar with available days, the selected date with location and cover preference, a Request a Captain's Wash button and a list of upcoming confirmed visits.",
-   hot:[{x:597,y:317,w:558,h:131,label:'Request a quote tab',act:()=>show('book-a-service-quote')}]},
- 'book-a-service-quote':{tab:'svc',h:'Need more than a wash?',p:'Choose the services you want and we will put a quote together.',hgt:2398,
-   alt:"Book a Service screen on the Request a Quote tab: one-time services, detailing and correction, ceramic coating and teak options to choose from, a notes field and a Submit request button.",
-   hot:[{x:51,y:321,w:546,h:131,label:"Captain's Wash tab",act:()=>show('book-a-service')}]},
  'membership':{tab:'svc',h:'Your plan',p:'Your membership and everything it covers.',hgt:4699,
    alt:"Membership screen headed Choose your level, we'll handle the rest: the active Platinum membership on Salty Dog (43 ft) with Change Plan open, the Gold plan (complete maintenance, keeps it maintained) and the Silver plan (essential care, keeps it clean), each priced for your boat as Custom, billed monthly, with what each handles, including recurring Member Washes, and Request Gold and Request Silver buttons; then My Membership with a Contract PDF link and what's included: 3 Member Washes a month every 7 days, 1 Full Detail a month, 4 booster events a year, a full exterior wash and salt rinse every visit, two Trip Ready preps a month, a dedicated detailer, on-call washdowns, See a Spot, top priority, first access to new services, invite-only for 15 boats; typical and booster months shown as Custom; active since Sep 29, 2026, renewing Sep 29, 2027; and Cancel membership."},
- 'services':{tab:'svc',h:'The Full Service Menu',p:'Browse every service and request a quote in a tap.',hgt:10827,
-   alt:"Services screen: the full service menu grouped into one-time services, detailing and correction, ceramic coating and teak, with a description of each service."},
+ 'upcoming-visits':{tab:'svc',h:'Upcoming visits',p:'Confirm a date, request a change or cancel a visit without affecting your membership.',hgt:1558,
+   alt:"Services and Visits screen on Upcoming Visits: four scheduled visits for Salty Dog in Boca Raton, each with a Manage visit button: a Full Detail on Tuesday, November 3, 2026 at 08:00, then Member Washes on November 10, 17 and 24, 2026 at 08:00 with covers put back on, and a Need to cancel? link.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}]},
+ 'service-history':{tab:'svc',h:'Every visit, on the record.',p:'Open a completed visit to see what was done, the photos and the invoice.',hgt:1767,
+   alt:"Services and Visits screen on Service History: four completed visits. The Member Wash on October 27, 2026 is open, showing its service description, detailer Jack, notes, a photo and its related invoice, PWM-1234. Below it, completed Member Washes on October 20 and 13, 2026 and a Full Detail on October 6, 2026.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}]},
+ 'services':{tab:'svc',h:'The Full Service Menu',p:'Browse every service and request a quote in a tap.',hgt:12285,
+   alt:"Services and Visits screen on Services: a Request a Quote link and every Propwash service with a description of each, in five open sections: Included with membership (Member Wash, Full Detail, Ceramic Booster, Member Wax, Post-Trip Washdown, Trip Ready), One time services (Captain's Wash, Full Detail, Trip Ready, Freshwater Rinse and three Interior Deep Clean options), Detailing and correction (Full Detail and Wax, polish, compound and wet-sand packages), Ceramic coating packages, and Teak (Clean and Brighten, Restoration, Seal).",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}],
+   hot:[{x:40,y:980,w:420,h:80,label:'Request a Quote',act:()=>show('schedule-care-quote')}]},
+ 'schedule-care':{tab:'svc',h:'Book a service',p:'Pick a day and request the time that works for you.',hgt:2142,
+   alt:"Services and Visits screen on Schedule Care, Schedule Care tab, with Additional wash chosen (not currently configured): Schedule member care for Platinum, an October 2026 calendar, the selected date panel, location Boca Raton, covers back on or off after the visit, and a Request a Member Wash button.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS},{box:{x:42,y:1077,w:1122,h:132},top:1222,kind:'care',label:'Choose care',options:CARE}],
+   hot:[{x:606,y:786,w:543,h:117,label:'Request a Quote tab',act:()=>show('schedule-care-quote')}]},
+ 'schedule-care-trip':{tab:'svc',h:'Book a service',p:'Pick a day and request the time that works for you.',hgt:2342,
+   alt:"Services and Visits screen on Schedule Care with Trip Ready chosen: Platinum includes up to two Trip Ready preps each month. Schedule member care with an October 2026 calendar, the selected date, what time the boat should be ready (10:00 AM), location Boca Raton, covers back on or off, and a Request Trip Ready button.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS},{box:{x:42,y:1077,w:1122,h:132},top:1222,kind:'care',label:'Choose care',options:CARE}],
+   hot:[{x:606,y:786,w:543,h:117,label:'Request a Quote tab',act:()=>show('schedule-care-quote')}]},
+ 'schedule-care-washdown':{tab:'svc',h:'Book a service',p:'Pick a day and request the time that works for you.',hgt:2458,
+   alt:"Services and Visits screen on Schedule Care with After-trip washdown chosen: an on-call freshwater washdown is included with Platinum. Schedule member care with an October 2026 calendar, the selected date, what time you will be off the water (10:00 AM, confirmed by the crew), location Boca Raton, covers back on or off, and a Request washdown button.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS},{box:{x:42,y:1077,w:1122,h:132},top:1222,kind:'care',label:'Choose care',options:CARE}],
+   hot:[{x:606,y:786,w:543,h:117,label:'Request a Quote tab',act:()=>show('schedule-care-quote')}]},
+ 'schedule-care-quote':{tab:'svc',h:'Need more than a wash?',p:'Choose the services you want and we will put a quote together.',hgt:2560,
+   alt:"Services and Visits screen on Schedule Care, Request a Quote tab: choose one service, with teak as an optional add-on, from Full Detail, the detailing and correction packages, the ceramic coating packages and the teak services (Teak Seal is an add-on to Teak Clean and Brighten or Teak Restoration), then notes and a Submit request button.",
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}],
+   hot:[{x:57,y:786,w:543,h:117,label:'Schedule Care tab',act:()=>show('schedule-care')}]},
  'payments':{tab:'act',h:'Invoices & payments',p:'View and pay invoices right in the portal, with every receipt kept on file.',hgt:2249,
    alt:"Invoice screen for invoice PWM-1234, marked paid: the Propwash Marine Detailing header, bill to Jack at jack@propwashmarine.com, vessel Salty Dog, a Captain's Wash line item with the rate, subtotal and grand total shown as Custom, paid Oct 2, 2026, and a Download PDF button."},
  'messages':{tab:'act',h:'Talk to your detailer.',p:'Message us directly and catch our latest news.',hgt:1133,scrollTo:690,
@@ -39,6 +62,28 @@ const SCREENS={
 };
 const EXTRA={assistant:{h:'Answers on hand.',p:'Ask about your boat, your plan or your schedule, any time.'},
   spot:{h:'See a spot? Send it to us.',p:"Tell us where it is, add a photo and we'll take care of it. Included with Platinum."}};
+
+// ---------- dropdowns (Service section picker, Choose care) ----------
+let openSel=null;
+function closeSel(focus){ if(!openSel) return; openSel.list.classList.remove('open'); openSel.btn.setAttribute('aria-expanded','false'); if(focus) openSel.btn.focus({preventScroll:true}); openSel=null; }
+function buildSelect(screenId,c){
+  const wrap=document.createElement('div'); wrap.className='pd-sel';
+  const btn=document.createElement('button'); btn.type='button'; btn.className='pd-hot';
+  const cur=c.kind==='view'?(VIEW_OF[screenId]||screenId):screenId;
+  const curLabel=(c.options.find(o=>o[1]===cur)||c.options[0])[0];
+  btn.setAttribute('aria-label',`${c.label}: ${curLabel}`); btn.setAttribute('aria-haspopup','listbox'); btn.setAttribute('aria-expanded','false');
+  Object.assign(btn.style,{left:u(c.box.x),top:u(c.box.y),width:u(c.box.w),height:u(c.box.h)});
+  const list=document.createElement('div'); list.className='pd-list pd-list-'+c.kind; list.setAttribute('role','listbox'); list.setAttribute('aria-label',c.label);
+  Object.assign(list.style,{left:u(42),top:u(c.top),width:u(1126)});
+  c.options.forEach(([label,target])=>{ const o=document.createElement('button'); o.type='button'; o.setAttribute('role','option');
+    const on=target===cur; o.setAttribute('aria-selected',String(on)); o.innerHTML='<span></span>'+(on?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>':'');
+    o.firstChild.textContent=label;
+    o.addEventListener('click',e=>{e.stopPropagation(); closeSel(false); if(target!==current) show(target);}); list.appendChild(o); });
+  btn.addEventListener('click',e=>{e.stopPropagation(); const was=openSel&&openSel.list===list; closeSel(false); if(was) return;
+    closePop(false); list.classList.add('open'); btn.setAttribute('aria-expanded','true'); openSel={list,btn}; list.querySelector('[aria-selected="true"]')?.focus({preventScroll:true}); });
+  list.addEventListener('click',e=>e.stopPropagation());
+  wrap.append(btn,list); return wrap;
+}
 
 // ---------- build screens ----------
 const views=$('#pd-views'); let current='my-slip';
@@ -52,6 +97,7 @@ for(const [id,s] of Object.entries(SCREENS)){
   page.appendChild(img);
   (s.hot||[]).forEach(h=>{const b=document.createElement('button');b.type='button';b.className='pd-hot';b.setAttribute('aria-label',h.label);
     Object.assign(b.style,{left:u(h.x),top:u(h.y),width:u(h.w),height:u(h.h)});b.addEventListener('click',e=>{e.stopPropagation();h.act();});page.appendChild(b);});
+  (s.selects||[]).forEach(c=>page.appendChild(buildSelect(id,c)));
   if(s.scores){const c=s.scores, sc=document.createElement('div');sc.className='pd-scores';sc.setAttribute('role','group');sc.setAttribute('aria-label','Boating day scores, Friday to Thursday, scroll sideways');sc.tabIndex=0;
     Object.assign(sc.style,{left:u(c.x),top:u(c.y),width:u(c.w),height:u(c.h)});
     const t=document.createElement('div');t.className='pd-track';t.style.width=u(c.full);t.dataset.bg=BASE+'portal-on-water-scores.webp'+IV;
@@ -71,7 +117,7 @@ function activeCopy(){ return assistOpen?EXTRA.assistant: spotOpen?EXTRA.spot: S
 
 // ---------- navigation ----------
 function show(id){
-  const s=SCREENS[id]; if(!s) return;
+  const s=SCREENS[id]; if(!s) return; closeSel(false);
   const v=phone.querySelector('#pd-view-'+id); load(v);
   if(id!==current) phone.querySelector('#pd-view-'+current).classList.remove('on');
   v.classList.add('on'); current=id;
@@ -94,7 +140,7 @@ $$('.pd-tab[data-screen]').forEach(b=>b.addEventListener('click',()=>{closePop(f
 $$('.pd-pop [data-screen]').forEach(b=>b.addEventListener('click',()=>{const t=opener;closePop(false);closeSpot(false);show(b.dataset.screen);if(t)t.focus({preventScroll:true});}));
 $$('.pd-pop [aria-disabled="true"]').forEach(b=>b.addEventListener('click',()=>closePop(true)));
 $$('.pd-pop').forEach(p=>p.addEventListener('click',e=>e.stopPropagation()));
-document.addEventListener('click',()=>{closePop(false); if(spotOpen) closeSpot(false);});
+document.addEventListener('click',()=>{closePop(false); closeSel(false); if(spotOpen) closeSpot(false);});
 $$('[role="menu"]').forEach(m=>m.addEventListener('keydown',e=>{const it=[...m.querySelectorAll('[role="menuitem"]')],i=it.indexOf(document.activeElement);
   if(e.key==='ArrowDown'){e.preventDefault();it[(i+1)%it.length].focus();} if(e.key==='ArrowUp'){e.preventDefault();it[(i-1+it.length)%it.length].focus();}}));
 
@@ -195,7 +241,7 @@ $('.pd-fsclose').addEventListener('click',e=>{e.stopPropagation();closeFull(fals
 addEventListener('popstate',()=>{ if(isFull) closeFull(true); });
 
 document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return;
-  if(openPop) closePop(true); else if(assistOpen) closeAssist(true); else if(spotOpen) closeSpot(true); else if(isFull) closeFull(false); });
+  if(openSel) closeSel(true); else if(openPop) closePop(true); else if(assistOpen) closeAssist(true); else if(spotOpen) closeSpot(true); else if(isFull) closeFull(false); });
 
 // public hook for "Try it" links
 window.pdDemo={openSpot:()=>{ if(current!=='my-slip') show('my-slip'); openSpot(); }, openFull, isNarrow:()=>!!explore&&getComputedStyle(explore).display!=='none'};
