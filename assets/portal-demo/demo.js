@@ -281,7 +281,7 @@ const MODALS={
    win:{x:48,y:810,w:1110,h:756},
    hot:[{x:990,y:815,w:160,h:170,label:'Close Manage visit',act:'close'},
         {x:99,y:1029,w:1008,h:168,label:'Request a change',act:()=>openModal('move-visit')},
-        {x:99,y:1197,w:1008,h:168,label:'Cancel this visit',act:'inert'}]},
+        {x:99,y:1197,w:1008,h:168,label:'Cancel this visit',act:()=>openModal('cancel-this-visit')}]},
  'move-visit':{label:'Request another date or time',bg:'portal-move-visit-bg.webp',w:1206,h:2052,center:true,
    alt:"Request another date or time window over a dark backdrop.",
    win:{x:51,y:53,w:1104,h:1948},
@@ -297,7 +297,18 @@ const MODALS={
         {x:48,y:2182,w:1008,h:270,label:'Anything the scheduling team should know',act:'inert'},
         {x:48,y:2488,w:1008,h:156,label:'Send change request',act:'inert'},
         {x:48,y:2644,w:1008,h:156,label:'Back',act:'close'},
-        {x:48,y:2824,w:1008,h:156,label:'Cancel appointment',act:'inert'}]},
+        {x:48,y:2824,w:1008,h:156,label:'Cancel appointment',act:()=>openModal('cancel-this-visit')}]},
+ 'cancel-this-visit':{label:'Need to cancel?',bg:'portal-cancel-this-visit-bg.webp',w:1206,h:2376,
+   alt:"Need to cancel? window over the dimmed portal.",
+   win:{x:51,y:213,w:1104,h:1950},
+   scroll:{src:'portal-cancel-this-visit.webp',w:1104,h:2145,
+     alt:"Need to cancel? for the Full Detail on Tuesday, November 3, 2026 at 08:00. No cancellation fee: no cancellation fee applies. This cancels only this visit; it does not cancel your membership or later scheduled washes. Prefer to keep the visit? Requesting another date or time is free. For a same-day adjustment, call us and the scheduling team will check the route. Why are you cancelling? a cancellation reason field, then Keep appointment, Request a change, Give us a call and Confirm cancellation buttons."},
+   hot:[{x:950,y:0,w:154,h:170,label:'Close Need to cancel?',act:'close'},
+        {x:48,y:1143,w:1008,h:270,label:'Cancellation reason',act:'inert'},
+        {x:48,y:1449,w:1008,h:156,label:'Keep appointment',act:'inert'},
+        {x:48,y:1605,w:1008,h:156,label:'Request a change',act:'inert'},
+        {x:48,y:1761,w:1008,h:156,label:'Give us a call',act:'inert'},
+        {x:48,y:1929,w:1008,h:180,label:'Confirm cancellation',act:'inert'}]},
 };
 const modals={}; let modalOpen=null, modalOpener=null;
 const app=$('.pd-app');
