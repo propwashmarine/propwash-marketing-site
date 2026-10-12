@@ -177,3 +177,9 @@ html.pd-locked,html.pd-locked body{overflow:hidden}
 #pd-phone .pd-list-view [aria-selected="true"]{background:#1F8FFF;color:#0B1C2F}
 #pd-phone .pd-list-care [aria-selected="true"]{color:#8C98A6}
 #pd-phone .pd-list [role="option"]:focus-visible{outline:.4cqw solid #8EC5FF;outline-offset:-.4cqw}
+/* Assistant history view: the portal's Recent chats screen, shown over the panel (same height). */
+#pd-phone .pd-sheet .pd-hist{position:absolute;left:0;top:0;width:100%;height:auto;display:none}
+#pd-phone .pd-sheet.history .pd-hist{display:block}
+#pd-phone .pd-sheet.history .pd-chat,#pd-phone .pd-sheet.history .ask,#pd-phone .pd-sheet.history .pd-note{display:none}
+#pd-phone .pd-sheet .hist{position:absolute;top:8.6%;left:72.8%;width:11cqw;height:11cqw;border:0;background:transparent;border-radius:50%;z-index:2}
+#pd-phone .pd-sheet .x{z-index:2}

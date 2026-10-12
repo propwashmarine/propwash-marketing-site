@@ -149,10 +149,16 @@ const fab=$('.pd-fab'), sheet=$('#pd-sheet'), scrim=$('.pd-scrim'), note=$('.pd-
 let assistOpen=false;
 function openAssist(){ closePop(false); closeSpot(false); hideBubble(); fab.classList.remove('unread'); const i=sheet.querySelector('img'); if(!i.src){i.src=i.dataset.src;sheet.classList.add('loaded');}
   assistOpen=true; phone.classList.add('assist-open'); sheet.classList.add('open'); scrim.classList.add('open'); fab.setAttribute('aria-expanded','true'); setCopy(EXTRA.assistant); sheet.querySelector('.x').focus({preventScroll:true}); }
-function closeAssist(focus){ if(!assistOpen) return; assistOpen=false; resetChat(); phone.classList.remove('assist-open'); sheet.classList.remove('open'); scrim.classList.remove('open'); note.classList.remove('show');
+function closeAssist(focus){ if(!assistOpen) return; assistOpen=false; resetChat(); setHistory(false); phone.classList.remove('assist-open'); sheet.classList.remove('open'); scrim.classList.remove('open'); note.classList.remove('show');
   fab.setAttribute('aria-expanded','false'); setCopy(activeCopy()); if(focus) fab.focus({preventScroll:true}); }
 fab.addEventListener('click',e=>{e.stopPropagation(); assistOpen?closeAssist(true):openAssist();});
 sheet.querySelector('.x').addEventListener('click',e=>{e.stopPropagation();closeAssist(true);});
+// History: the history icon shows the Recent chats screen; tapping it again (the back arrow there) or
+// closing the assistant returns to the panel. History rows are not tappable.
+const histBtn=sheet.querySelector('.hist'), histImg=sheet.querySelector('.pd-hist');
+function setHistory(on){ sheet.classList.toggle('history',on); histBtn.setAttribute('aria-pressed',String(on));
+  histBtn.setAttribute('aria-label',on?'Back to the assistant':'Conversation history'); if(on&&!histImg.src) histImg.src=histImg.dataset.src; }
+histBtn.addEventListener('click',e=>{e.stopPropagation(); setHistory(!sheet.classList.contains('history'));});
 let noteT=0; sheet.querySelector('.ask').addEventListener('click',e=>{e.stopPropagation();note.classList.add('show');clearTimeout(noteT);noteT=setTimeout(()=>note.classList.remove('show'),1800);});
 sheet.addEventListener('click',e=>e.stopPropagation());
 
