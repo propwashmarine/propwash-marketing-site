@@ -305,8 +305,8 @@ const MODALS={
      alt:"Need to cancel? for the Full Detail on Tuesday, November 3, 2026 at 08:00. No cancellation fee: no cancellation fee applies. This cancels only this visit; it does not cancel your membership or later scheduled washes. Prefer to keep the visit? Requesting another date or time is free. For a same-day adjustment, call us and the scheduling team will check the route. Why are you cancelling? a cancellation reason field, then Keep appointment, Request a change, Give us a call and Confirm cancellation buttons."},
    hot:[{x:950,y:0,w:154,h:170,label:'Close Need to cancel?',act:'close'},
         {x:48,y:1143,w:1008,h:270,label:'Cancellation reason',act:'inert'},
-        {x:48,y:1449,w:1008,h:156,label:'Keep appointment',act:'inert'},
-        {x:48,y:1605,w:1008,h:156,label:'Request a change',act:'inert'},
+        {x:48,y:1449,w:1008,h:156,label:'Keep appointment',act:'close'},
+        {x:48,y:1605,w:1008,h:156,label:'Request a change',act:()=>openModal('move-visit')},
         {x:48,y:1761,w:1008,h:156,label:'Give us a call',act:'inert'},
         {x:48,y:1929,w:1008,h:180,label:'Confirm cancellation',act:'inert'}]},
 };
