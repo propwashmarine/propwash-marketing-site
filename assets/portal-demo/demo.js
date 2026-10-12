@@ -2,10 +2,15 @@
    optionally, #pd-now-h / #pd-now-p (caption), #pd-explore (mobile full-screen button). */
 (()=>{
 const phone=document.getElementById('pd-phone'); if(!phone) return;
+// ?hotspots=1 outlines every tap area (debug).
+if(new URLSearchParams(location.search).get('hotspots')==='1') phone.classList.add('pd-debug');
 const $=s=>phone.querySelector(s), $$=s=>[...phone.querySelectorAll(s)];
 const BASE='/assets/portal/', W=1206;                // all coordinates below are in 1206px image space
 const IV=(document.currentScript&&new URL(document.currentScript.src).search)||''; // reuse demo.js ?v= so edited images aren't served stale
 const u=px=>(px/W*100).toFixed(3)+'cqw';
+// Tap areas over a screenshot: a box in 1206px image space as percentages of that image (hgt = WebP height at 600 wide).
+const pct=v=>(v*100).toFixed(4)+'%';
+const placeHot=(el,r,hgt)=>{const H=hgt*W/600; Object.assign(el.style,{left:pct(r.x/W),top:pct(r.y/H),width:pct(r.w/W),height:pct(r.h/H)});};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ss={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
 
@@ -17,7 +22,10 @@ const VIEW_OF={'schedule-care-trip':'schedule-care','schedule-care-washdown':'sc
 const SCREENS={
  'my-slip':{tab:'my-slip',h:'My Slip',p:"Your boat's status, next visit and protection at a glance.",hgt:2429,
    alt:"My Slip screen: a welcome-back greeting for Jack, the Salty Dog boat card (43 ft Mag Bay, Boca Raton, service scheduled), you're all caught up, a protection status ring counting down 4 days to the next visit (we'll be by Nov 3; ceramic booster in about 2 months), the next visit, a Full Detail on Tuesday, Nov 3 at 8:00 AM in Boca Raton with a Move link, a Report a Spot card, latest photos, the service log with Member Washes on Tuesday, Oct 27, Oct 20 and Oct 13, and a paid-up balance.",
-   hot:[{x:36,y:2677,w:1134,h:285,label:'Report a Spot',act:()=>openSpot()},{x:60,y:4690,w:380,h:80,label:'View payments',act:()=>show('payments')}]},
+   hot:[{x:36,y:2677,w:1134,h:285,label:'Report a Spot',act:()=>openSpot()},
+     {x:60,y:3375,w:260,h:85,label:'View all photos',act:()=>show('photos')},
+     {x:60,y:4345,w:270,h:85,label:'View all service history',act:()=>show('service-history')},
+     {x:60,y:4690,w:380,h:80,label:'View payments',act:()=>show('payments')}]},
  'on-water':{tab:'on-water',h:'On the Water',p:'Know the conditions before you leave the dock.',hgt:4300,
    alt:"On the Water screen for Boca Raton: a weather alert, current conditions with wind, seas, water temperature and chance of rain, boating day scores for the week (scroll sideways), a day forecast, hour-by-hour forecast, tide table, sunrise, sunset and moon, peak bite windows, and a Book a wash prompt.",
    scores:{x:39,y:2040,w:1127,h:366,full:1841,snaps:[246,246,222,1127]}},
@@ -77,7 +85,7 @@ function buildSelect(screenId,c){
   const cur=c.kind==='view'?(VIEW_OF[screenId]||screenId):screenId;
   const curLabel=(c.options.find(o=>o[1]===cur)||c.options[0])[0];
   btn.setAttribute('aria-label',`${c.label}: ${curLabel}`); btn.setAttribute('aria-haspopup','listbox'); btn.setAttribute('aria-expanded','false');
-  Object.assign(btn.style,{left:u(c.box.x),top:u(c.box.y),width:u(c.box.w),height:u(c.box.h)});
+  placeHot(btn,c.box,SCREENS[screenId].hgt);
   const list=document.createElement('div'); list.className='pd-list pd-list-'+c.kind; list.setAttribute('role','listbox'); list.setAttribute('aria-label',c.label);
   Object.assign(list.style,{left:u(42),top:u(c.top),width:u(1126)});
   c.options.forEach(([label,target])=>{ const o=document.createElement('button'); o.type='button'; o.setAttribute('role','option');
@@ -91,6 +99,8 @@ function buildSelect(screenId,c){
 }
 
 // ---------- build screens ----------
+// The phone screen clips, it never scrolls: a focused or scrolled-to tap area near an edge must not shift the whole UI.
+const screenEl=$('.pd-screen'); screenEl.addEventListener('scroll',()=>{screenEl.scrollTop=0;screenEl.scrollLeft=0;});
 const views=$('#pd-views'); let current='my-slip';
 function lazyImg(src,w,h,alt){const i=new Image();i.width=w;i.height=h;i.alt=alt||'';i.decoding='async';i.dataset.src=src+IV;return i;}
 for(const [id,s] of Object.entries(SCREENS)){
@@ -101,7 +111,7 @@ for(const [id,s] of Object.entries(SCREENS)){
   img.addEventListener('load',()=>v.classList.add('ready'),{once:true});
   page.appendChild(img);
   (s.hot||[]).forEach(h=>{const b=document.createElement('button');b.type='button';b.className='pd-hot';b.setAttribute('aria-label',h.label);
-    Object.assign(b.style,{left:u(h.x),top:u(h.y),width:u(h.w),height:u(h.h)});b.addEventListener('click',e=>{e.stopPropagation();h.act();});page.appendChild(b);});
+    placeHot(b,h,s.hgt);b.addEventListener('click',e=>{e.stopPropagation();closePop(false);h.act();});page.appendChild(b);});
   (s.selects||[]).forEach(c=>page.appendChild(buildSelect(id,c)));
   if(s.scores){const c=s.scores, sc=document.createElement('div');sc.className='pd-scores';sc.setAttribute('role','group');sc.setAttribute('aria-label','Boating day scores, Friday to Thursday, scroll sideways');sc.tabIndex=0;
     Object.assign(sc.style,{left:u(c.x),top:u(c.y),width:u(c.w),height:u(c.h)});
@@ -213,7 +223,7 @@ function buildSpot(){
   const img=lazyImg(BASE+'portal-report-a-spot.webp',600,1617,"Report a Spot panel, Flag it, we'll handle it, on Salty Dog: an outline of the boat to drop a pin on, a reminder to call for anything urgent, request or question, area, side, title, details, add photos and a Report Spot button.");
   img.src=img.dataset.src; page.appendChild(img);
   const badge=document.createElement('span'); badge.className='pd-badge'; badge.textContent='Platinum'; Object.assign(badge.style,{left:u(440),top:u(64)}); page.appendChild(badge);
-  const x=document.createElement('button'); x.type='button'; x.className='pd-hot'; x.setAttribute('aria-label','Close Report a Spot'); Object.assign(x.style,{left:u(1080),top:u(24),width:u(100),height:u(100)}); x.addEventListener('click',e=>{e.stopPropagation();closeSpot(true);}); page.appendChild(x);
+  const x=document.createElement('button'); x.type='button'; x.className='pd-hot'; x.setAttribute('aria-label','Close Report a Spot'); placeHot(x,{x:1080,y:24,w:100,h:100},1617); x.addEventListener('click',e=>{e.stopPropagation();closeSpot(true);}); page.appendChild(x);
   const pin=document.createElement('button'); pin.type='button'; pin.className='pd-pin'; pin.setAttribute('aria-label','Pin on the boat. Drag to move, or use the arrow keys.');
   pin.innerHTML='<svg viewBox="0 0 36 46" aria-hidden="true"><path d="M18 44c-1.2 0-16-14.4-16-26.5C2 8.4 9.2 2 18 2s16 6.4 16 15.5C34 29.6 19.2 44 18 44Z" fill="#F5A623" stroke="#fff" stroke-width="3"/><circle cx="18" cy="17" r="6" fill="none" stroke="#fff" stroke-width="3"/></svg>';
   const hint=document.createElement('span'); hint.className='pd-hint'; hint.textContent='Drag me';
@@ -227,7 +237,7 @@ function buildSpot(){
   const end=()=>{dragging=false;}; pin.addEventListener('pointerup',end); pin.addEventListener('pointercancel',end);
   pin.addEventListener('keydown',e=>{const k={ArrowLeft:[-12,0],ArrowRight:[12,0],ArrowUp:[0,-12],ArrowDown:[0,12]}[e.key];if(!k)return;e.preventDefault();p=clampHull({x:p.x+k[0],y:p.y+k[1]});place();});
   const sent=document.createElement('div'); sent.className='pd-sent'; sent.setAttribute('role','status'); sent.setAttribute('aria-live','polite'); sent.style.top=u(2930);
-  const send=document.createElement('button'); send.type='button'; send.className='pd-hot'; send.setAttribute('aria-label','Report Spot (demo, nothing is sent)'); Object.assign(send.style,{left:u(60),top:u(3060),width:u(1086),height:u(96)});
+  const send=document.createElement('button'); send.type='button'; send.className='pd-hot'; send.setAttribute('aria-label','Report Spot (demo, nothing is sent)'); placeHot(send,{x:60,y:3060,w:1086,h:96},1617);
   let sentT=0; send.addEventListener('click',e=>{e.stopPropagation();sent.textContent="Sent to the crew. We'll take care of it.";sent.classList.add('show');clearTimeout(sentT);sentT=setTimeout(()=>sent.classList.remove('show'),2000);});
   page.append(sent,send); spot.appendChild(page);
   spot.addEventListener('click',e=>e.stopPropagation());
