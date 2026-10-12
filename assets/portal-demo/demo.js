@@ -10,6 +10,7 @@ const IV=(document.currentScript&&new URL(document.currentScript.src).search)||'
 const u=px=>(px/W*100).toFixed(3)+'cqw';
 // Tap areas over a screenshot: a box in 1206px image space as percentages of that image (hgt = WebP height at 600 wide).
 const pct=v=>(v*100).toFixed(4)+'%';
+const placeBox=(el,r,w,h)=>Object.assign(el.style,{left:pct(r.x/w),top:pct(r.y/h),width:pct(r.w/w),height:pct(r.h/h)});
 const placeHot=(el,r,hgt)=>{const H=hgt*W/600; Object.assign(el.style,{left:pct(r.x/W),top:pct(r.y/H),width:pct(r.w/W),height:pct(r.h/H)});};
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ss={get(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set(k,v){try{sessionStorage.setItem(k,v)}catch(e){}}};
@@ -42,7 +43,8 @@ const SCREENS={
    alt:"Membership screen headed Choose your level, we'll handle the rest: the active Platinum membership on Salty Dog (43 ft) with Change Plan open, the Gold plan (complete maintenance, keeps it maintained) and the Silver plan (essential care, keeps it clean), each priced for your boat as Custom, billed monthly, with what each handles, including recurring Member Washes, and Request Gold and Request Silver buttons; then My Membership with a Contract PDF link and what's included: 3 Member Washes a month every 7 days, 1 Full Detail a month, 4 booster events a year, a full exterior wash and salt rinse every visit, two Trip Ready preps a month, a dedicated detailer, on-call washdowns, See a Spot, top priority, first access to new services, invite-only for 15 boats; typical and booster months shown as Custom; active since Sep 29, 2026, renewing Sep 29, 2027; and Cancel membership."},
  'upcoming-visits':{tab:'svc',h:'Upcoming visits',p:'Confirm a date, request a change or cancel a visit without affecting your membership.',hgt:1558,
    alt:"Services and Visits screen on Upcoming Visits: four scheduled visits for Salty Dog in Boca Raton, each with a Manage visit button: a Full Detail on Tuesday, November 3, 2026 at 08:00, then Member Washes on November 10, 17 and 24, 2026 at 08:00 with covers put back on, and a Need to cancel? link.",
-   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}]},
+   selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}],
+   hot:[{x:80,y:1360,w:1046,h:190,label:'Manage visit, Full Detail, Tue, Nov 3',act:()=>openModal('manage-visit')}]},
  'service-history':{tab:'svc',h:'Every visit, on the record.',p:'Open a completed visit to see what was done, the photos and the invoice.',hgt:1767,
    alt:"Services and Visits screen on Service History: four completed visits. The Member Wash on October 27, 2026 is open, showing its service description, detailer Jack, notes, a photo and its related invoice, PWM-1234. Below it, completed Member Washes on October 20 and 13, 2026 and a Full Detail on October 6, 2026.",
    selects:[{box:{x:42,y:543,w:1122,h:132},top:688,kind:'view',label:'Service section',options:VIEWS}],
@@ -139,7 +141,7 @@ function activeCopy(){ return assistOpen?EXTRA.assistant: spotOpen?EXTRA.spot: S
 
 // ---------- navigation ----------
 function show(id){
-  const s=SCREENS[id]; if(!s) return; closeSel(false);
+  const s=SCREENS[id]; if(!s) return; closeSel(false); closeModal(false);
   const v=phone.querySelector('#pd-view-'+id); load(v);
   if(id!==current) phone.querySelector('#pd-view-'+current).classList.remove('on');
   v.classList.add('on'); current=id;
@@ -268,8 +270,48 @@ if(explore) explore.addEventListener('click',()=>openFull());
 $('.pd-fsclose').addEventListener('click',e=>{e.stopPropagation();closeFull(false);});
 addEventListener('popstate',()=>{ if(isFull) closeFull(true); });
 
+// ---------- visit windows (Manage visit, Request another date or time, Need to cancel?) ----------
+// Each is the portal's own window over the screenshot's own dimmed backdrop (a full-screen image), not over a live
+// demo screen. Coordinates are in the source image's pixels (bg: 1206 wide; a scrolling window's content: its own width).
+// act: 'close' closes the window, 'inert' shows "Available in your portal", or a function.
+const MODALS={
+ 'manage-visit':{label:'Manage visit',bg:'portal-manage-visit.webp',w:1206,h:2376,
+   alt:"Manage visit window for the Full Detail on Tuesday, November 3, 2026 at 08:00, over the dimmed Upcoming Visits screen: a Request a change button, a Cancel this visit button, and the note: Approved schedule changes are free. Cancellations under 12 hours incur $50; cancellations within 2 hours incur $99.",
+   win:{x:48,y:810,w:1110,h:756},
+   hot:[{x:990,y:815,w:160,h:170,label:'Close Manage visit',act:'close'},
+        {x:99,y:1029,w:1008,h:168,label:'Request a change',act:'inert'},
+        {x:99,y:1197,w:1008,h:168,label:'Cancel this visit',act:'inert'}]},
+};
+const modals={}; let modalOpen=null, modalOpener=null;
+const app=$('.pd-app');
+function buildModal(id){ const c=MODALS[id];
+  const m=document.createElement('div'); m.className='pd-modal'+(c.center?' center':''); m.id='pd-modal-'+id;
+  m.setAttribute('role','dialog'); m.setAttribute('aria-modal','true'); m.setAttribute('aria-label',c.label);
+  const st=document.createElement('div'); st.className='pd-mstage'; st.style.aspectRatio=c.w+'/'+c.h;
+  const bg=new Image(); bg.className='pd-mbg'; bg.alt=c.alt; bg.decoding='async'; bg.src=BASE+c.bg+IV; st.appendChild(bg);
+  const win=document.createElement('div'); win.className='pd-mwin'; placeBox(win,c.win,c.w,c.h); st.appendChild(win);
+  let host=st, hw=c.w, hh=c.h;
+  if(c.scroll){ win.classList.add('scroll'); win.tabIndex=0; win.setAttribute('aria-label',c.label+', scrolls');
+    const pg=document.createElement('div'); pg.className='pd-page'; const im=new Image(); im.alt=c.scroll.alt; im.decoding='async'; im.src=BASE+c.scroll.src+IV;
+    pg.appendChild(im); win.appendChild(pg); host=pg; hw=c.scroll.w; hh=c.scroll.h; }
+  win.addEventListener('click',e=>e.stopPropagation());   // taps inside the window never close it
+  const note=document.createElement('div'); note.className='pd-note pd-mnote'; note.setAttribute('role','status'); note.setAttribute('aria-live','polite'); note.textContent='Available in your portal';
+  let noteT=0; const inert=()=>{note.classList.add('show');clearTimeout(noteT);noteT=setTimeout(()=>note.classList.remove('show'),1800);};
+  c.hot.forEach(h=>{ const b=document.createElement('button'); b.type='button'; b.className='pd-hot'; b.setAttribute('aria-label',h.label); if(h.act==='close') b.dataset.close='';
+    placeBox(b,h,hw,hh); b.addEventListener('click',e=>{e.stopPropagation(); if(h.act==='close') closeModal(true); else if(h.act==='inert') inert(); else h.act();}); host.appendChild(b); });
+  m.append(st,note); m.addEventListener('click',e=>{e.stopPropagation(); closeModal(true);});   // the scrim
+  $('.pd-screen').appendChild(m); modals[id]=m; return m; }
+function openModal(id){ const m=modals[id]||buildModal(id);
+  closePop(false); closeSel(false); closeAssist(false); closeSpot(false);
+  if(modalOpen) modalOpen.classList.remove('open'); else modalOpener=document.activeElement;
+  modalOpen=m; m.classList.add('open'); app.inert=true; fab.inert=true;
+  const w=m.querySelector('.pd-mwin.scroll'); if(w) w.scrollTop=0;
+  m.querySelector('[data-close]')?.focus({preventScroll:true}); }
+function closeModal(focus){ if(!modalOpen) return; modalOpen.classList.remove('open'); modalOpen=null; app.inert=false; fab.inert=false;
+  if(focus&&modalOpener&&modalOpener.isConnected) modalOpener.focus({preventScroll:true}); modalOpener=null; }
+
 document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return;
-  if(openSel) closeSel(true); else if(openPop) closePop(true); else if(assistOpen) closeAssist(true); else if(spotOpen) closeSpot(true); else if(isFull) closeFull(false); });
+  if(modalOpen) closeModal(true); else if(openSel) closeSel(true); else if(openPop) closePop(true); else if(assistOpen) closeAssist(true); else if(spotOpen) closeSpot(true); else if(isFull) closeFull(false); });
 
 // public hook for "Try it" links
 window.pdDemo={openSpot:()=>{ if(current!=='my-slip') show('my-slip'); openSpot(); }, openFull, isNarrow:()=>!!explore&&getComputedStyle(explore).display!=='none'};
