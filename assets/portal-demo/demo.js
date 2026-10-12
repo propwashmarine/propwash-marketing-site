@@ -15,9 +15,9 @@ const CARE=[['Additional wash','schedule-care'],['Trip Ready','schedule-care-tri
 const VIEW_OF={'schedule-care-trip':'schedule-care','schedule-care-washdown':'schedule-care','schedule-care-quote':'schedule-care'};
 
 const SCREENS={
- 'my-slip':{tab:'my-slip',h:'My Slip',p:"Your boat's status, next visit and protection at a glance.",hgt:2536,
-   alt:"My Slip screen: a welcome-back greeting, the Salty Dog boat card (43 ft Mag Bay, Boca Raton, service scheduled), notifications, a protection status ring counting down to the next visit, the next scheduled Captain's Wash, a Report a Spot card, latest photos, the service log and a paid-up balance.",
-   hot:[{x:36,y:2721,w:1134,h:235,label:'Report a Spot',act:()=>openSpot()}]},
+ 'my-slip':{tab:'my-slip',h:'My Slip',p:"Your boat's status, next visit and protection at a glance.",hgt:2429,
+   alt:"My Slip screen: a welcome-back greeting for Jack, the Salty Dog boat card (43 ft Mag Bay, Boca Raton, service scheduled), you're all caught up, a protection status ring counting down 4 days to the next visit (we'll be by Nov 3; ceramic booster in about 2 months), the next visit, a Full Detail on Tuesday, Nov 3 at 8:00 AM in Boca Raton with a Move link, a Report a Spot card, latest photos, the service log with Member Washes on Tuesday, Oct 27, Oct 20 and Oct 13, and a paid-up balance.",
+   hot:[{x:36,y:2677,w:1134,h:285,label:'Report a Spot',act:()=>openSpot()}]},
  'on-water':{tab:'on-water',h:'On the Water',p:'Know the conditions before you leave the dock.',hgt:4300,
    alt:"On the Water screen for Boca Raton: a weather alert, current conditions with wind, seas, water temperature and chance of rain, boating day scores for the week (scroll sideways), a day forecast, hour-by-hour forecast, tide table, sunrise, sunset and moon, peak bite windows, and a Book a wash prompt.",
    scores:{x:39,y:2040,w:1127,h:366,full:1841,snaps:[246,246,222,1127]}},
