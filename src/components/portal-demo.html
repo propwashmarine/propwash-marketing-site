@@ -10,7 +10,7 @@
         <div class="pd-brand" aria-label="Propwash Owner Portal"><img class="mark" src="/assets/logo/brandmark.png" width="760" height="459" alt=""><span class="words"><img class="word" src="/assets/logo/wordmark.png" width="1019" height="150" alt="Propwash"><small>OWNER PORTAL</small></span></div>
         <span class="pd-sp"></span>
         <button class="pd-ibtn pd-bell" type="button" aria-label="Notifications" aria-haspopup="true" aria-expanded="false" aria-controls="pd-pop-bell" data-pop="pd-pop-bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></button>
-        <button class="pd-ibtn pd-avatar" type="button" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="pd-pop-acct" data-pop="pd-pop-acct">JF</button>
+        <button class="pd-ibtn pd-avatar" type="button" aria-label="Account menu" aria-haspopup="menu" aria-expanded="false" aria-controls="pd-pop-acct" data-pop="pd-pop-acct">J</button>
       </header>
       <div class="pd-body" id="pd-views"></div>
       <nav class="pd-tabs" aria-label="Portal sections">
@@ -29,9 +29,8 @@
       <button type="button" role="menuitem" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</button>
     </div>
     <div class="pd-pop pd-pop-svc" id="pd-pop-svc" role="menu" aria-label="Service">
-      <button type="button" role="menuitem" data-screen="book-a-service"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Book a service</button>
       <button type="button" role="menuitem" data-screen="membership"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9Z"/></svg>Membership</button>
-      <button type="button" role="menuitem" data-screen="services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Services</button>
+      <button type="button" role="menuitem" data-screen="upcoming-visits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>Services</button>
     </div>
     <div class="pd-pop pd-pop-act" id="pd-pop-act" role="menu" aria-label="Account">
       <button type="button" role="menuitem" data-screen="payments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Payments</button>
@@ -45,7 +44,7 @@
       <div class="pd-chat" role="log" aria-live="polite" aria-label="Assistant conversation">
         <div class="pd-msg"><span class="pd-av" aria-hidden="true"></span><p class="pd-b pd-welcome">Hey, I'm the Propwash assistant. Ask me anything about your boat, your plan, or your schedule. Not sure where to start? Tap one of these:</p></div>
         <div class="pd-qs" role="group" aria-label="Suggested questions">
-          <button class="pd-q" type="button" data-a="Your next wash is Tuesday, Oct 6 at 12:00 PM. Need to change it? Tap Move on your Next Visit card.">When's my next wash?</button>
+          <button class="pd-q" type="button" data-a="Your next visit is a Full Detail on Tuesday, Nov 3 at 8:00 AM. Need to change it? Tap Move on your Next Visit card.">When's my next wash?</button>
           <button class="pd-q" type="button" data-a="You're on Platinum: washes on a cadence built around your boat, a monthly Full Detail, two Trip Ready preps a month, a dedicated detailer and See a Spot. Full list under Service → Membership.">What's included in my plan?</button>
           <button class="pd-q" type="button" data-a="Tap Report a Spot on My Slip, pick the area of the boat, add a note and a photo if you have one. It goes straight to the crew.">How do I report a spot I noticed on my boat?</button>
           <button class="pd-q" type="button" data-a="Yep. Go to Service → Book a service, pick a day and request a time. We'll confirm it.">Can I book an extra wash?</button>
@@ -53,6 +52,8 @@
         </div>
         <p class="pd-urgent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>For urgent or on-water issues, call us at <a href="tel:+15612918554">(561) 291-8554</a>.</span></p>
       </div>
+      <img class="pd-hist" data-src="/assets/portal/portal-ai-history.webp" width="600" height="889" alt="Propwash Assistant conversation history, Recent chats, your last five conversations: When's my next wash? (Oct 11, 2026, 2 messages), How do I report a spot I noticed on my boat? (Oct 6, 2026, 4 messages), How do I pay my invoice? (Oct 4, 2026, 2 messages) and What's included in my plan? (Oct 4, 2026, 2 messages), with a New chat button.">
+      <button class="hist" type="button" aria-label="Conversation history" aria-pressed="false"></button>
       <button class="x" type="button" aria-label="Close the assistant"></button>
       <button class="ask" type="button" aria-label="Ask a question (available in your portal)"></button>
       <div class="pd-note" role="status" aria-live="polite">Available in your portal</div>

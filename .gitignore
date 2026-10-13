@@ -2,3 +2,10 @@
 .git-root-backup/
 assets/v3/
 dist/
+
+# Local Netlify folder
+.netlify
+
+# macOS and local tool folders
+.DS_Store
+.impeccable/
